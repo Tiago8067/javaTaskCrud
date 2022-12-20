@@ -1,4 +1,8 @@
-public class Admin extends Utilizador{
+package models;
+
+import enums.*;
+
+public class Admin extends Utilizador {
 
     public Admin() {
         super();

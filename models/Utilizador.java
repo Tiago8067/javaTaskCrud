@@ -1,15 +1,19 @@
+package models;
+
 import java.io.Serializable;
+
+import enums.TipoUtilizador;
 
 public abstract class Utilizador implements Serializable {
     private int id;
-    private  String username;
-    private  String email;
-    private  String password;
-    private  String nome;
-    private  String genero;
-    private  String dataDeNascimento;
-    private  String codigoPostal;
-    private  String morada;
+    private String username;
+    private String email;
+    private String password;
+    private String nome;
+    private String genero;
+    private String dataDeNascimento;
+    private String codigoPostal;
+    private String morada;
     private TipoUtilizador tipoUtilizador;
 
     public Utilizador() {

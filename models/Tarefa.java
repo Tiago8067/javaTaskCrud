@@ -1,3 +1,5 @@
+package models;
+
 public class Tarefa {
     private String curtaDuracao;
     private String dataInicioHora;

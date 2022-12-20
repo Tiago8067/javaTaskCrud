@@ -1,4 +1,8 @@
-public class User extends Utilizador{
+package models;
+
+import enums.*;
+
+public class User extends Utilizador {
 
     public User() {
         super();
