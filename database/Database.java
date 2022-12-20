@@ -18,7 +18,7 @@ public class Database {
     public void criaFicheiroSeNaoExistir() {
         if (!arquivo.exists() && !arquivo.isDirectory()) {
 
-            Admin admin = new Admin();
+            Admin admin = new Admin("admin");
 
             utilizadores.add(admin);
 
