@@ -9,5 +9,5 @@ Esse projeto foi desenvolvido por Tiago Soares e Basilio Barbosa.
 Apos ter feito o clone, rode o seguinte comando na raiz sempre que for compilar o projeto:
 
 ```bash
-javac -d ./classes **/*.java && javac -d ./classes Main.java && cd classes && java Main && cd ..
+javac **/*.java && java Main
 ```
