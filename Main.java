@@ -11,7 +11,7 @@ public class Main {
         db.criaFicheiroSeNaoExistir();
 
         Menu menu = new Menu();
-        menu.menuPrincipal();
+        menu.menuPrincipal(db.retornaDatabase());
 
     }
 }

@@ -47,4 +47,8 @@ public class Database {
         }
     }
 
+    public ArrayList<Utilizador> retornaDatabase() {
+        return this.utilizadores;
+    }
+
 }
