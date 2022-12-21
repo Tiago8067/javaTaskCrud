@@ -8,6 +8,7 @@ import utils.*;
 public class Menu {
     Utilizador utilizador;
     Scanner scanner = new Scanner(System.in);
+    CheckRole cr = new CheckRole();
     int opcao = 0;
 
     // CONSTRUTOR
@@ -16,8 +17,6 @@ public class Menu {
 
     public void menuPrincipal(ArrayList<Utilizador> utilizadores) {
         AutenticacaoController autenticacaoController = new AutenticacaoController(utilizadores);
-
-        CheckRole cr = new CheckRole();
 
         while (true) {
             System.out.println("\n\n### Menu Principal ###");
