@@ -13,5 +13,6 @@ public class Main {
         Menu menu = new Menu();
         menu.autenticacaoAmin(db.retornaDatabase());
 
+        System.out.println("sai do sol novo branch");
     }
 }
