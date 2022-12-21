@@ -22,7 +22,7 @@ public class AutenticacaoController {
         username = scanner.next();
 
         this.utilizador = this.autenticacaoService.login(username);
-        scanner.close();
+        // scanner.close(); //ERRO
 
         return this.utilizador;
     }
@@ -44,7 +44,7 @@ public class AutenticacaoController {
             this.autenticacaoService.verificarUsername(username.toLowerCase());
         } catch (UsernameDuplicatedException e) {
             System.out.println(e.getMessage());
-            scanner.close();
+            // scanner.close(); //ERRO
             return;
         }
 
@@ -68,7 +68,11 @@ public class AutenticacaoController {
         Utilizador utilizadores = new User(username.toLowerCase());// , email, pass, nome, genero, morada
 
         this.autenticacaoService.registar(utilizadores);
-        scanner.close();
+        // scanner.close(); //ERRO - resolvido "Opção: Exception in thread "main"
+        // java.util.NoSuchElementException"
+        // at java.base/java.util.Scanner.throwFor(Scanner.java:937)
+        // at java.base/java.util.Scanner.next(Scanner.java:1594)
+        // at java.base/java.util.Scanner.nextInt(Scanner.java:2258)
     }
 
 }

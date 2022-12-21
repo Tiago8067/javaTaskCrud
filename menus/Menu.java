@@ -99,6 +99,8 @@ public class Menu {
                     break;
             }
         } while (opcao != 0);
-        scanner.close();
+        // scanner.close();
+        // TESTAR PENSAMOS QUE ERA O SCANNER CLOSE(AUTENTICACAOCONTROLLER.JAVA)
+        // TESTAR AQUI TBM
     }
 }
