@@ -12,7 +12,34 @@ public class Menu {
 
     }
 
-    public void menuPrincipal(ArrayList<Utilizador> utilizadores) {
+    public void menuPrincipal() {
+
+        Scanner scanner = new Scanner(System.in);
+        int opcao = 0;
+
+        do {
+            System.out.println("\n\n### Gestao de tarefas de projeto ###");
+            System.out.println("\n");
+            System.out.println("1 - Admin");
+            System.out.println("2 - UserManager");
+            System.out.println("3 - User");
+            System.out.println("0 - Sair");
+            System.out.println("\n");
+
+            System.out.printf("Opção: ");
+            opcao = scanner.nextInt();
+            System.out.print("\n");
+            switch (opcao) {
+                case 1:
+                    break;
+                default:
+                    System.out.println("Programa Finalizado!");
+                    break;
+            }
+        } while (opcao != 0);
+    }
+
+    public void autenticacaoAmin(ArrayList<Utilizador> utilizadores) {
 
         AutenticacaoController autenticacaoController = new AutenticacaoController(utilizadores);
 
@@ -20,7 +47,7 @@ public class Menu {
         int opcao = 0;
 
         do {
-            System.out.println("\n\n### Gestao de tarefas de projeto ###");
+            System.out.println("\n\n### Autenticacao do Admin ###");
             System.out.println("\n");
             System.out.println("1 - Logar");
             System.out.println("2 - Registar");
@@ -38,6 +65,110 @@ public class Menu {
                         break;
                     }
                     System.out.println("logado\n");
+                    break;
+                default:
+                    System.out.println("Programa Finalizado!");
+                    break;
+            }
+        } while (opcao != 0);
+    }
+
+    public void autenticacaoUserManager() {
+
+        Scanner scanner = new Scanner(System.in);
+        int opcao = 0;
+
+        do {
+            System.out.println("\n\n### Autenticacao do UserManager ###");
+            System.out.println("\n");
+            System.out.println("1 - Logar");
+            System.out.println("2 - Registar");
+            System.out.println("0 - Sair");
+            System.out.println("\n");
+
+            System.out.printf("Opção: ");
+            opcao = scanner.nextInt();
+            System.out.print("\n");
+            switch (opcao) {
+                case 1:
+                    break;
+                default:
+                    System.out.println("Programa Finalizado!");
+                    break;
+            }
+        } while (opcao != 0);
+    }
+
+    public void autenticacaoUser() {
+
+        Scanner scanner = new Scanner(System.in);
+        int opcao = 0;
+
+        do {
+            System.out.println("\n\n### Autenticacao do User ###");
+            System.out.println("\n");
+            System.out.println("1 - Logar");
+            System.out.println("2 - Registar");
+            System.out.println("0 - Sair");
+            System.out.println("\n");
+
+            System.out.printf("Opção: ");
+            opcao = scanner.nextInt();
+            System.out.print("\n");
+            switch (opcao) {
+                case 1:
+                    break;
+                default:
+                    System.out.println("Programa Finalizado!");
+                    break;
+            }
+        } while (opcao != 0);
+    }
+
+    public void menuAdmin() {
+
+        Scanner scanner = new Scanner(System.in);
+        int opcao = 0;
+
+        do {
+            System.out.println("\n\n### Menu do Admin ###");
+            System.out.println("\n");
+            System.out.println("1 - Criar/editar utilizaores de todos os tipos, ou seja, atribuir o nivel de utilizador aos registos de cada um que se encotram inativos");
+            System.out.println("2 - Visualizar todos os registos disponiveis");
+            System.out.println("0 - Sair");
+            System.out.println("\n");
+
+            System.out.printf("Opção: ");
+            opcao = scanner.nextInt();
+            System.out.print("\n");
+            switch (opcao) {
+                case 1:
+                    break;
+                default:
+                    System.out.println("Programa Finalizado!");
+                    break;
+            }
+        } while (opcao != 0);
+    }
+
+    public void menuUserManager() {
+
+        Scanner scanner = new Scanner(System.in);
+        int opcao = 0;
+
+        do {
+            System.out.println("\n\n### Menu do UserManager ###");
+            System.out.println("\n");
+            System.out.println("1 - Criar/editar utilizaores do tipo User, ou seja, atribuir o nivel de utilizador aos registos de cada um dos Users que se encotram inativos");
+            System.out.println("2 - Visualizar todos os registos disponiveis dos Users");
+            System.out.println("0 - Sair");
+            System.out.println("\n");
+
+            System.out.printf("Opção: ");
+            opcao = scanner.nextInt();
+            System.out.print("\n");
+            switch (opcao) {
+                case 1:
                     break;
                 default:
                     System.out.println("Programa Finalizado!");
