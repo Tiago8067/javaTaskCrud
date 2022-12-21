@@ -2,24 +2,24 @@ package menus;
 
 import java.util.*;
 import models.*;
-import services.AutenticacaoService;
 import controllers.*;
+import utils.*;
 
 public class Menu {
     Utilizador utilizador;
+    Scanner scanner = new Scanner(System.in);
+    int opcao = 0;
 
+    // CONSTRUTOR
     public Menu() {
-
     }
 
     public void menuPrincipal(ArrayList<Utilizador> utilizadores) {
         AutenticacaoController autenticacaoController = new AutenticacaoController(utilizadores);
-        AutenticacaoService autenticacaoService = new AutenticacaoService(utilizadores);
 
-        Scanner scanner = new Scanner(System.in);
-        int opcao = 0;
+        CheckRole cr = new CheckRole();
 
-        do {
+        while (true) {
             System.out.println("\n\n### Menu Principal ###");
             System.out.println("\n");
             System.out.println("1 - Login");
@@ -28,7 +28,8 @@ public class Menu {
             System.out.println("\n");
 
             System.out.printf("Opção: ");
-            opcao = scanner.nextInt();
+            this.opcao = this.scanner.nextInt();
+
             System.out.print("\n");
             switch (opcao) {
                 case 1:
@@ -37,53 +38,48 @@ public class Menu {
                         System.out.println("nao existe esse usuario \n");
                         break;
                     }
-                    System.out.println("logado\n");
+
+                    if (cr.checkPermissao(this.utilizador).equals("admin")) {
+                        menuAdmin(utilizadores);
+                    }
                     break;
                 case 2:
                     autenticacaoController.registar();
                     break;
-                case 3:
-                    autenticacaoService.listarUtilizadores();
-                    break;
-                default:
-                    System.out.println("Programa Finalizado!");
-                    break;
+                case 0:
+                    return;
             }
-        } while (opcao != 0);
-        scanner.close();
+        }
     }
 
-    public void menuAdmin() {
-        Scanner scanner = new Scanner(System.in);
-        int opcao = 0;
+    public void menuAdmin(ArrayList<Utilizador> utilizadores) {
+        AdminController adminController = new AdminController(utilizadores);
 
-        do {
+        while (true) {
             System.out.println("\n\n### Menu do Admin ###");
             System.out.println("\n");
-            System.out.println(
-                    "1 - Criar/editar utilizaores de todos os tipos, ou seja, atribuir o nivel de utilizador aos registos de cada um que se encotram inativos");
+            System.out.println("1 - Alterar estado dos utilizadores");
             System.out.println("2 - Visualizar todos os registos disponiveis");
             System.out.println("0 - Sair");
             System.out.println("\n");
 
             System.out.printf("Opção: ");
-            opcao = scanner.nextInt();
+
+            this.opcao = this.scanner.nextInt();
+
             System.out.print("\n");
+
             switch (opcao) {
                 case 1:
+                    adminController.alterarEstadoDosUtilizadores();
                     break;
-                default:
-                    System.out.println("Programa Finalizado!");
-                    break;
+                case 0:
+                    return;
             }
-        } while (opcao != 0);
-        scanner.close();
+        }
     }
 
     public void menuUserManager() {
-        Scanner scanner = new Scanner(System.in);
-        int opcao = 0;
-
         do {
             System.out.println("\n\n### Menu do UserManager ###");
             System.out.println("\n");
@@ -106,5 +102,4 @@ public class Menu {
         } while (opcao != 0);
         scanner.close();
     }
-
 }

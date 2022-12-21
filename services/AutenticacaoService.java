@@ -21,15 +21,7 @@ public class AutenticacaoService {
     }
 
     public void registar(Utilizador utilizador) {
-
         utilizadores.add(utilizador);
-    }
-
-    public void listarUtilizadores() {
-        for (int i = 0; i < utilizadores.size(); i++) {
-            System.out.println(utilizadores.get(i));
-            System.out.println(utilizadores.get(i).getUsername());
-        }
     }
 
     public boolean verificarUsername(String username) throws UsernameDuplicatedException {

@@ -48,22 +48,24 @@ public class AutenticacaoController {
             return;
         }
 
-        System.out.println("Insira o email do utilizador: ");
-        email = scanner.next();
+        /*
+         * System.out.println("Insira o email do utilizador: ");
+         * email = scanner.next();
+         * 
+         * System.out.println("Insira a password do utilizador: ");
+         * pass = scanner.next();
+         * 
+         * System.out.println("Insira o nome de utilizador: ");
+         * nome = scanner.next();
+         * 
+         * System.out.println("Insira o genero do utilizador: ");
+         * genero = scanner.next();
+         * 
+         * System.out.println("Insira a morada do utilizador: ");
+         * morada = scanner.next();
+         */
 
-        System.out.println("Insira a password do utilizador: ");
-        pass = scanner.next();
-
-        System.out.println("Insira o nome de utilizador: ");
-        nome = scanner.next();
-
-        System.out.println("Insira o genero do utilizador: ");
-        genero = scanner.next();
-
-        System.out.println("Insira a morada do utilizador: ");
-        morada = scanner.next();
-
-        Utilizador utilizadores = new User(username.toLowerCase(), email, pass, nome, genero, morada);
+        Utilizador utilizadores = new User(username.toLowerCase());// , email, pass, nome, genero, morada
 
         this.autenticacaoService.registar(utilizadores);
         scanner.close();

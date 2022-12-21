@@ -6,7 +6,7 @@ public class User extends Utilizador {
         super();
     }
 
-    public User(String username, String email, String password, String nome, String genero, String morada) {
+    public User(String username) {// , String email, String password, String nome, String genero, String morada
         super();
     }
 }
