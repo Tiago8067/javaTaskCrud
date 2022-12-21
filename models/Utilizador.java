@@ -2,7 +2,7 @@ package models;
 
 import java.io.Serializable;
 
-import enums.TipoUtilizador;
+import enums.EstadoUtilizador;
 
 public abstract class Utilizador implements Serializable {
     private int id;
@@ -14,14 +14,24 @@ public abstract class Utilizador implements Serializable {
     private String dataDeNascimento;
     private String codigoPostal;
     private String morada;
-    private TipoUtilizador tipoUtilizador;
+    private EstadoUtilizador estadoUtilizador;
 
     public Utilizador() {
     }
 
-    public Utilizador(String username, TipoUtilizador tipoUtilizador) {
+    public Utilizador(String username){
         this.username = username;
-        this.tipoUtilizador = tipoUtilizador;
+        this.estadoUtilizador = EstadoUtilizador.ATIVO;
+    }
+
+    public Utilizador(String username, String email, String password, String nome, String genero, String morada){
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.nome = nome;
+        this.genero = genero;
+        this.morada = morada;
+        this.estadoUtilizador = EstadoUtilizador.INATIVO;
     }
 
     public int getId() {
@@ -40,12 +50,12 @@ public abstract class Utilizador implements Serializable {
         this.username = username;
     }
 
-    public TipoUtilizador getTipoUtilizador() {
-        return tipoUtilizador;
+    public EstadoUtilizador getEstadoUtilizador() {
+        return estadoUtilizador;
     }
 
-    public void setTipoUtilizador(TipoUtilizador tipoUtilizador) {
-        this.tipoUtilizador = tipoUtilizador;
+    public void setEstadoUtilizador(EstadoUtilizador estadoUtilizador) {
+        this.estadoUtilizador = estadoUtilizador;
     }
 
     public String getEmail() {

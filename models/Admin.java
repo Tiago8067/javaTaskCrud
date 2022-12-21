@@ -8,7 +8,7 @@ public class Admin extends Utilizador {
         super();
     }
 
-    public Admin(String nomeUtilizador) {
-        super(nomeUtilizador, TipoUtilizador.ADMIN);
+    public Admin(String username) {
+        super(username);
     }
 }

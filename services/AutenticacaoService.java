@@ -21,4 +21,8 @@ public class AutenticacaoService {
         return null;
     }
 
+    public void registar(Utilizador utilizador){
+        utilizadores.add(utilizador);
+    }
+
 }

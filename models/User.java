@@ -8,7 +8,7 @@ public class User extends Utilizador {
         super();
     }
 
-    public User(String nomeUtilizador) {
-        super(nomeUtilizador, TipoUtilizador.USER);
+    public User(String username, String email, String password, String nome, String genero, String morada){
+        super();
     }
 }

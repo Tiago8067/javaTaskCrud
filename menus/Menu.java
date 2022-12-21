@@ -12,34 +12,7 @@ public class Menu {
 
     }
 
-    public void menuPrincipal() {
-
-        Scanner scanner = new Scanner(System.in);
-        int opcao = 0;
-
-        do {
-            System.out.println("\n\n### Gestao de tarefas de projeto ###");
-            System.out.println("\n");
-            System.out.println("1 - Admin");
-            System.out.println("2 - UserManager");
-            System.out.println("3 - User");
-            System.out.println("0 - Sair");
-            System.out.println("\n");
-
-            System.out.printf("Opção: ");
-            opcao = scanner.nextInt();
-            System.out.print("\n");
-            switch (opcao) {
-                case 1:
-                    break;
-                default:
-                    System.out.println("Programa Finalizado!");
-                    break;
-            }
-        } while (opcao != 0);
-    }
-
-    public void autenticacaoAmin(ArrayList<Utilizador> utilizadores) {
+    public void menuPrincipal(ArrayList<Utilizador> utilizadores) {
 
         AutenticacaoController autenticacaoController = new AutenticacaoController(utilizadores);
 
@@ -47,9 +20,9 @@ public class Menu {
         int opcao = 0;
 
         do {
-            System.out.println("\n\n### Autenticacao do Admin ###");
+            System.out.println("\n\n### Menu Principal ###");
             System.out.println("\n");
-            System.out.println("1 - Logar");
+            System.out.println("1 - Login");
             System.out.println("2 - Registar");
             System.out.println("0 - Sair");
             System.out.println("\n");
@@ -73,60 +46,7 @@ public class Menu {
         } while (opcao != 0);
     }
 
-    public void autenticacaoUserManager() {
-
-        Scanner scanner = new Scanner(System.in);
-        int opcao = 0;
-
-        do {
-            System.out.println("\n\n### Autenticacao do UserManager ###");
-            System.out.println("\n");
-            System.out.println("1 - Logar");
-            System.out.println("2 - Registar");
-            System.out.println("0 - Sair");
-            System.out.println("\n");
-
-            System.out.printf("Opção: ");
-            opcao = scanner.nextInt();
-            System.out.print("\n");
-            switch (opcao) {
-                case 1:
-                    break;
-                default:
-                    System.out.println("Programa Finalizado!");
-                    break;
-            }
-        } while (opcao != 0);
-    }
-
-    public void autenticacaoUser() {
-
-        Scanner scanner = new Scanner(System.in);
-        int opcao = 0;
-
-        do {
-            System.out.println("\n\n### Autenticacao do User ###");
-            System.out.println("\n");
-            System.out.println("1 - Logar");
-            System.out.println("2 - Registar");
-            System.out.println("0 - Sair");
-            System.out.println("\n");
-
-            System.out.printf("Opção: ");
-            opcao = scanner.nextInt();
-            System.out.print("\n");
-            switch (opcao) {
-                case 1:
-                    break;
-                default:
-                    System.out.println("Programa Finalizado!");
-                    break;
-            }
-        } while (opcao != 0);
-    }
-
     public void menuAdmin() {
-
         Scanner scanner = new Scanner(System.in);
         int opcao = 0;
 
