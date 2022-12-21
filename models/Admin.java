@@ -1,7 +1,5 @@
 package models;
 
-import enums.*;
-
 public class Admin extends Utilizador {
 
     public Admin() {

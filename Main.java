@@ -1,7 +1,3 @@
-import java.io.File;
-import java.util.Scanner;
-
-import models.*;
 import database.*;
 import menus.*;
 

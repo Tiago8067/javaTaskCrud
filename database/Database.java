@@ -7,8 +7,9 @@ import models.*;
 public class Database {
     ArrayList<Utilizador> utilizadores = new ArrayList<>();
 
+    //diretoria padrao para guardar o ficheiro
     String path = System.getProperty("user.dir");
-
+    //FICHEIRO que GUARDA os UTILIZADORES no ESTADO ATIVO
     File arquivo = new File(path, "utilizadores.dat");
 
     public Database() {
@@ -23,7 +24,6 @@ public class Database {
             utilizadores.add(admin);
 
             try {
-
                 FileOutputStream outFileStream = new FileOutputStream(arquivo);
                 ObjectOutputStream outDataStream = new ObjectOutputStream(outFileStream);
 
@@ -39,7 +39,10 @@ public class Database {
             try {
                 FileInputStream readData = new FileInputStream(arquivo);
                 ObjectInputStream readStream = new ObjectInputStream(readData);
+                
+                //ler os arrays
                 utilizadores = (ArrayList<Utilizador>) readStream.readObject();
+                
                 readStream.close();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -50,5 +53,4 @@ public class Database {
     public ArrayList<Utilizador> retornaDatabase() {
         return this.utilizadores;
     }
-
 }

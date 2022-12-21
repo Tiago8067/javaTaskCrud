@@ -2,9 +2,9 @@ package services;
 
 import java.util.*;
 import models.*;
+import exceptions.*;
 
 public class AutenticacaoService {
-
     ArrayList<Utilizador> utilizadores = new ArrayList<>();
 
     public AutenticacaoService(ArrayList<Utilizador> utilizadores) {
@@ -17,12 +17,27 @@ public class AutenticacaoService {
                 return utilizadores.get(i);
             }
         }
-
         return null;
     }
 
-    public void registar(Utilizador utilizador){
+    public void registar(Utilizador utilizador) {
+
         utilizadores.add(utilizador);
     }
 
+    public void listarUtilizadores() {
+        for (int i = 0; i < utilizadores.size(); i++) {
+            System.out.println(utilizadores.get(i));
+            System.out.println(utilizadores.get(i).getUsername());
+        }
+    }
+
+    public boolean verificarUsername(String username) throws UsernameDuplicatedException {
+        for (int i = 0; i < utilizadores.size(); i++) {
+            if (utilizadores.get(i).getUsername().equals(username)) {
+                throw new UsernameDuplicatedException("O username está duplicado!!!");
+            }
+        }
+        return true;
+    }
 }

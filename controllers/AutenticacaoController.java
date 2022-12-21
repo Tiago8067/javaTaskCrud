@@ -1,6 +1,8 @@
 package controllers;
 
 import java.util.*;
+
+import exceptions.UsernameDuplicatedException;
 import services.*;
 import models.*;
 
@@ -20,6 +22,7 @@ public class AutenticacaoController {
         username = scanner.next();
 
         this.utilizador = this.autenticacaoService.login(username);
+        scanner.close();
 
         return this.utilizador;
     }
@@ -28,26 +31,42 @@ public class AutenticacaoController {
         String username, email, pass, nome, genero, morada;
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Insira o username do utilizador: " );
-        username = scanner.next();
+        do {
+            System.out.println("Insira o username do utilizador: ");
+            username = scanner.next();
+            if (username.length() < 4) {
+                System.out.println("O Username tem obrigatoriamente 4 carateres!");
+            }
+        } while (username.length() < 4);
 
-        System.out.println("Insira o email do utilizador: " );
+        // VERIFICA O USERNAME COM LOWERCASE
+        try {
+            this.autenticacaoService.verificarUsername(username.toLowerCase());
+        } catch (UsernameDuplicatedException e) {
+            System.out.println(e.getMessage());
+            scanner.close();
+            return;
+        }
+
+        System.out.println("Insira o email do utilizador: ");
         email = scanner.next();
 
-        System.out.println("Insira a password do utilizador: " );
+        System.out.println("Insira a password do utilizador: ");
         pass = scanner.next();
 
-        System.out.println("Insira o nome de utilizador: " );
+        System.out.println("Insira o nome de utilizador: ");
         nome = scanner.next();
 
-        System.out.println("Insira o genero do utilizador: " );
+        System.out.println("Insira o genero do utilizador: ");
         genero = scanner.next();
 
-        System.out.println("Insira a morada do utilizador: " );
+        System.out.println("Insira a morada do utilizador: ");
         morada = scanner.next();
 
-        Utilizador utilizador = new User(username, email, pass, nome, genero, morada);
-        
-        this.autenticacaoService.registar(utilizador);
+        Utilizador utilizadores = new User(username.toLowerCase(), email, pass, nome, genero, morada);
+
+        this.autenticacaoService.registar(utilizadores);
+        scanner.close();
     }
+
 }
