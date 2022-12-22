@@ -18,7 +18,8 @@ public class AdminController {
 
     public void listarUtilizadores() {
         for (int i = 0; i < utilizadores.size(); i++) {
-            System.out.println(utilizadores.get(i).getUsername());
+            System.out.println("Username: " + utilizadores.get(i).getUsername());
+            System.out.println("Estado do Utilizador: " + utilizadores.get(i).getEstadoUtilizador());
         }
     }
 
