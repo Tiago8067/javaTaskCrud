@@ -4,10 +4,10 @@ import menus.*;
 public class Main {
     public static void main(String[] args) {
         // SAI DEL SOL
-        Database db = new Database();
-        db.criaFicheiroSeNaoExistir();
+        Database database = new Database();
+        database.criaFicheiroSeNaoExistir();
 
-        Menu menu = new Menu();
-        menu.menuPrincipal(db.retornaDatabase());
+        Menu menu = new Menu(database);
+        menu.menuPrincipal();
     }
 }

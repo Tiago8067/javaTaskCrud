@@ -4,25 +4,34 @@ import java.util.*;
 import models.*;
 import controllers.*;
 import utils.*;
+import database.*;
 
 public class Menu {
+    AutenticacaoController autenticacaoController;
+    AdminController adminController;
     Utilizador utilizador;
-    Scanner scanner = new Scanner(System.in);
-    CheckRole cr = new CheckRole();
+    Scanner scanner;
+    CheckRole checkRole;
+    Database database;
     int opcao = 0;
 
     // CONSTRUTOR
-    public Menu() {
+    public Menu(Database database) {
+        this.scanner = new Scanner(System.in);
+        this.database = database;
+        this.checkRole = new CheckRole();
+        this.autenticacaoController = new AutenticacaoController(this.database);
+        this.adminController = new AdminController(this.database);
     }
 
-    public void menuPrincipal(ArrayList<Utilizador> utilizadores) {
-        AutenticacaoController autenticacaoController = new AutenticacaoController(utilizadores);
+    public void menuPrincipal() {
 
         while (true) {
             System.out.println("\n\n### Menu Principal ###");
             System.out.println("\n");
             System.out.println("1 - Login");
             System.out.println("2 - Registar");
+            System.out.println("3 - Listar");
             System.out.println("0 - Sair");
             System.out.println("\n");
 
@@ -34,16 +43,20 @@ public class Menu {
                 case 1:
                     this.utilizador = autenticacaoController.login();
                     if (this.utilizador == null) {
-                        System.out.println("nao existe esse usuario \n");
+                        System.out.println("Nao existe este utilizador!\n");
                         break;
                     }
 
-                    if (cr.checkPermissao(this.utilizador).equals("admin")) {
-                        menuAdmin(utilizadores);
+                    if (checkRole.checkPermissao(this.utilizador).equals("admin")) {
+                        menuAdmin(this.database.getUtilizadores());
                     }
                     break;
                 case 2:
-                    autenticacaoController.registar();
+                    this.autenticacaoController.registar();
+                    this.database.atualizaFicheiro();
+                    break;
+                case 3:
+                    this.adminController.listarUtilizadores();
                     break;
                 case 0:
                     return;
@@ -52,8 +65,6 @@ public class Menu {
     }
 
     public void menuAdmin(ArrayList<Utilizador> utilizadores) {
-        AdminController adminController = new AdminController(utilizadores);
-
         while (true) {
             System.out.println("\n\n### Menu do Admin ###");
             System.out.println("\n");
@@ -70,7 +81,7 @@ public class Menu {
 
             switch (opcao) {
                 case 1:
-                    adminController.alterarEstadoDosUtilizadores();
+                    this.adminController.alterarEstadoDosUtilizadores();
                     break;
                 case 0:
                     return;

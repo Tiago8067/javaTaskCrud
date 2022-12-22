@@ -5,13 +5,14 @@ import java.util.*;
 import exceptions.UsernameDuplicatedException;
 import services.*;
 import models.*;
+import database.*;
 
 public class AutenticacaoController {
     AutenticacaoService autenticacaoService;
     Utilizador utilizador;
 
-    public AutenticacaoController(ArrayList<Utilizador> utilizadores) {
-        this.autenticacaoService = new AutenticacaoService(utilizadores);
+    public AutenticacaoController(Database database) {
+        this.autenticacaoService = new AutenticacaoService(database);
     }
 
     public Utilizador login() {

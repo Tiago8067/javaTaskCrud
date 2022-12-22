@@ -2,14 +2,14 @@ package controllers;
 
 import java.util.*;
 import models.*;
-import exceptions.*;
-import enums.EstadoUtilizador;
+import database.*;
 
 public class AdminController {
-    ArrayList<Utilizador> utilizadores = new ArrayList<>();
 
-    public AdminController(ArrayList<Utilizador> utilizadores) {
-        this.utilizadores = utilizadores;
+    Database database;
+
+    public AdminController(Database database) {
+        this.database = database;
     }
 
     public void alterarEstadoDosUtilizadores() {
@@ -17,10 +17,8 @@ public class AdminController {
     }
 
     public void listarUtilizadores() {
-        for (int i = 0; i < utilizadores.size(); i++) {
-            System.out.println("Username: " + utilizadores.get(i).getUsername());
-            System.out.println("Estado do Utilizador: " + utilizadores.get(i).getEstadoUtilizador());
+        for (int i = 0; i < this.database.getUtilizadores().size(); i++) {
+            System.out.println("Username: " + this.database.getUtilizadores().get(i).getUsername());
         }
     }
-
 }
