@@ -14,16 +14,18 @@ public class Admin extends Utilizador {
     Scanner scanner;
     Utilizador utilizador;
     String username;
+    private int idAdmin;
+    UserManager userManager;
 
     public Admin() {
     }
 
-    public Admin(String username) {
-        super(username);
+    public Admin(String username, int idAdmin) {
+        super(username, idAdmin);
     }
 
-    public Admin(String username, Database database) {
-        super(username);
+    public Admin(String username, Database database, int idAdmin) {
+        super(username, idAdmin);
         this.database = database;
         this.util = new Util(database);
         this.autenticacaoService = new AutenticacaoService(database);
@@ -32,7 +34,8 @@ public class Admin extends Utilizador {
 
     public void listarUtilizadores() {
         for (int i = 0; i < this.database.getUtilizadores().size(); i++) {
-            System.out.println("Username: " + this.database.getUtilizadores().get(i).getUsername() + "\t-> Estado"
+            System.out.println("Id:" + this.database.getUtilizadores().get(i).getId() + "\t-> Username: "
+                    + this.database.getUtilizadores().get(i).getUsername() + "\t-> Estado"
                     + this.database.getUtilizadores().get(i).getEstadoUtilizador() + "\tTipo de utilizador: "
                     + this.util.checkPermissao(this.database.getUtilizadores().get(i))); //
         }
@@ -74,14 +77,17 @@ public class Admin extends Utilizador {
         opcao = scanner.nextInt();
 
         if (opcao == 1) {
-            this.utilizador = new Admin(this.username);
+            this.autenticacaoService.adicionaId(this.utilizador.getId());
+            this.utilizador = new Admin(this.username, this.autenticacaoService.adicionaId(this.utilizador.getId()));
             this.utilizador.setEstadoUtilizador(EstadoUtilizador.ATIVO);
             this.autenticacaoService.registar(this.utilizador);
             return;
         }
 
         if (opcao == 2) {
-            this.utilizador = new UserManager(this.username);
+            this.autenticacaoService.adicionaId(this.utilizador.getId());
+            this.utilizador = new UserManager(this.username,
+                    this.autenticacaoService.adicionaId(this.utilizador.getId()));
             this.utilizador.setEstadoUtilizador(EstadoUtilizador.ATIVO);
             this.autenticacaoService.registar(this.utilizador);
             return;

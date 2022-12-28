@@ -14,22 +14,32 @@ public class User extends Utilizador {
     String username;
     Projeto projeto;
     Tarefa tarefa;
+    private int idUser;
 
     public User() {
         super();
     }
 
-    public User(String username) {
-        super(username);
+    public User(String username, int idUser) {
+        super(username, idUser);
     }
 
-    public User(String username, Database database) {// , String email, String password, String nome, String genero,
-                                                     // String morada
-        super(username);
+    public User(String username, Database database, int idUser) {// , String email, String password, String nome, String
+                                                                 // genero,
+        // String morada
+        super(username, idUser);
         this.database = database;
         this.util = new Util(database);
         this.autenticacaoService = new AutenticacaoService(database);
         this.scanner = new Scanner(System.in);
+    }
+
+    public int getIdUser() {
+        return this.idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
     }
 
     public void editaDadosDaSuaConta() {
@@ -37,18 +47,27 @@ public class User extends Utilizador {
 
     // nome do projeto tem de ser unico
     public void criaProjeto() {
-        String nomeProjeto, nomeCliente, precoPorHora;
+        String nomeProjeto; // , nomeCliente, precoPorHora;
+        int idProjeto = 0;
+
+        // System.out.println(this.projeto.gerarIdProjeto(idProjeto));
+
+        // this.projeto.setIdProjeto(this.projeto.gerarIdProjeto(idProjeto));
 
         System.out.printf("Insira o nome do Projeto: ");
         nomeProjeto = this.scanner.next();
 
-        System.out.printf("Insira o nome do Cliente: ");
-        nomeCliente = this.scanner.next();
+        // System.out.printf("Insira o nome do Cliente: ");
+        // nomeCliente = this.scanner.next();
 
-        System.out.printf("Insira o preco por hora: ");
-        precoPorHora = this.scanner.next();
+        // System.out.printf("Insira o preco por hora: ");
+        // precoPorHora = this.scanner.next();
 
-        this.projeto = new Projeto(nomeProjeto, nomeCliente, precoPorHora);
+        // idProjeto++;
+        for (int i = 0; i < this.database.getProjetos().size(); i++) {
+            idProjeto++;
+        }
+        this.projeto = new Projeto(nomeProjeto, idProjeto); // , nomeCliente, precoPorHora, idProjeto
 
         this.autenticacaoService.adicionaProjeto(this.projeto);
     }
@@ -56,18 +75,22 @@ public class User extends Utilizador {
     // quando cria inicia uma tarefa, indicando uma curta descricao e data e hora de
     // inicio, se data e hora nao inseridas atribuir o data e hora ATUAL
     public void criaTarefa() {
-        String curtaDescricao, dataInicioHora, dataHoraTermino;
+        String curtaDescricao; // , dataInicioHora, dataHoraTermino;
+        int idTarefa = 0;
 
         System.out.printf("Insira a descricao da tarefa: ");
         curtaDescricao = this.scanner.nextLine();
 
-        System.out.printf("Insira a data e hora de inicio da tarefa: ");
-        dataInicioHora = this.scanner.next();
+        // System.out.printf("Insira a data e hora de inicio da tarefa: ");
+        // dataInicioHora = this.scanner.next();
 
-        System.out.printf("Insira a data e hora de termino da tarefa: ");
-        dataHoraTermino = this.scanner.next();
+        // System.out.printf("Insira a data e hora de termino da tarefa: ");
+        // dataHoraTermino = this.scanner.next();
 
-        this.tarefa = new Tarefa(curtaDescricao, dataInicioHora, dataHoraTermino);
+        for (int i = 0; i < this.database.getTarefas().size(); i++) {
+            idTarefa++;
+        }
+        this.tarefa = new Tarefa(curtaDescricao, idTarefa); // dataInicioHora, dataHoraTermino
 
         this.autenticacaoService.adicionaTarefa(this.tarefa);
     }
@@ -128,13 +151,15 @@ public class User extends Utilizador {
 
     public void listarProjetos() {
         for (int i = 0; i < this.database.getProjetos().size(); i++) {
-            System.out.println("Nome do projeto: " + this.database.getProjetos().get(i).getNomeProjeto());
+            System.out.println("Id: " + this.database.getProjetos().get(i).getIdProjeto() + "\t->" + "Nome do projeto: "
+                    + this.database.getProjetos().get(i).getNomeProjeto());
         }
     }
 
     public void listarTarefas() {
         for (int i = 0; i < this.database.getTarefas().size(); i++) {
-            System.out.println("Descricao da tarefa: " + this.database.getTarefas().get(i).getCurtaDescricao());
+            System.out.println("Id: " + this.database.getTarefas().get(i).getIdTarefa() + "\t->"
+                    + "Descricao da tarefa: " + this.database.getTarefas().get(i).getCurtaDescricao());
         }
     }
 }

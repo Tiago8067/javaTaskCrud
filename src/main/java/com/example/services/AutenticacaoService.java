@@ -19,6 +19,13 @@ public class AutenticacaoService {
         return null;
     }
 
+    public int adicionaId(int idUtilizador) {
+        for (int i = 0; i < this.database.getUtilizadores().size(); i++) {
+            idUtilizador++;
+        }
+        return idUtilizador;
+    }
+
     public void registar(Utilizador utilizador) {
         this.database.getUtilizadores().add(utilizador);
     }

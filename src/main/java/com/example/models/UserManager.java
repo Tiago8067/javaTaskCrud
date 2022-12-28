@@ -13,17 +13,18 @@ public class UserManager extends Utilizador {
     Scanner scanner;
     Utilizador utilizador;
     String username;
+    private int idUserManager;
 
     public UserManager() {
         super();
     }
 
-    public UserManager(String username) {
-        super(username);
+    public UserManager(String username, int idUserManager) {
+        super(username, idUserManager);
     }
 
-    public UserManager(String username, Database database) {
-        super(username);
+    public UserManager(String username, Database database, int idUserManager) {
+        super(username, idUserManager);
         this.database = database;
         this.util = new Util(database);
         this.autenticacaoService = new AutenticacaoService(database);
@@ -73,7 +74,7 @@ public class UserManager extends Utilizador {
         opcao = scanner.nextInt();
 
         if (opcao == 1) {
-            this.utilizador = new UserManager(this.username);
+            this.utilizador = new UserManager(this.username, this.idUserManager);
             this.utilizador.setEstadoUtilizador(EstadoUtilizador.ATIVO);
             this.autenticacaoService.registar(this.utilizador);
             return;

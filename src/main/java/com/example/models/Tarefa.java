@@ -9,15 +9,16 @@ public class Tarefa implements Serializable {
     private String curtaDescricao;
     private String dataInicioHora;
     private String dataHoraTermino;
-    private Projeto projeto; // associar o projeto há tarefa
+    private int idTarefa = 0;
 
     public Tarefa() {
     }
 
-    public Tarefa(String curtaDescricao, String dataInicioHora, String dataHoraTermino) {
+    public Tarefa(String curtaDescricao, int idTarefa) { // String dataInicioHora, String dataHoraTermino
         this.curtaDescricao = curtaDescricao;
-        this.dataInicioHora = dataInicioHora;
-        this.dataHoraTermino = dataHoraTermino;
+        // this.dataInicioHora = dataInicioHora;
+        // this.dataHoraTermino = dataHoraTermino;
+        this.idTarefa = idTarefa;
     }
 
     public String getCurtaDescricao() {
@@ -42,6 +43,14 @@ public class Tarefa implements Serializable {
 
     public void setDataHoraTermino(String dataHoraTermino) {
         this.dataHoraTermino = dataHoraTermino;
+    }
+
+    public int getIdTarefa() {
+        return this.idTarefa;
+    }
+
+    public void setIdTarefa(int idTarefa) {
+        this.idTarefa = idTarefa;
     }
 
 }

@@ -33,6 +33,7 @@ public class AutenticacaoController {
 
     public void registar() {
         String username; // , email, pass, nome, genero, morada;
+        int idUtilizador = 0;
 
         do {
             System.out.printf("Insira o username do utilizador: ");
@@ -67,8 +68,7 @@ public class AutenticacaoController {
          * System.out.println("Insira a morada do utilizador: ");
          * morada = scanner.next();
          */
-
-        Utilizador utilizadores = new User(username.toLowerCase());
+        Utilizador utilizadores = new User(username.toLowerCase(), this.autenticacaoService.adicionaId(idUtilizador));
 
         this.autenticacaoService.registar(utilizadores);
     }

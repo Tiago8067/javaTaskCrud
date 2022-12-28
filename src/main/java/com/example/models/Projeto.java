@@ -10,8 +10,9 @@ public class Projeto implements Serializable {
     private String nomeProjeto;
     private String nomeCliente;
     private String precoPorHora;
-    private Utilizador utilizador; // para fazer a associcaçao ao projeto
     Database database;
+    private int idProjeto;
+    // private int idUser;// para fazer a associcaçao ao projeto
 
     public Projeto() {
     }
@@ -21,10 +22,11 @@ public class Projeto implements Serializable {
         this.database = database;
     }
 
-    public Projeto(String nomeProjeto, String nomeCliente, String precoPorHora) {
+    public Projeto(String nomeProjeto, int idProjeto) { // , String nomeCliente, String precoPorHora, , int idProjeto
         this.nomeProjeto = nomeProjeto;
-        this.nomeCliente = nomeCliente;
-        this.precoPorHora = precoPorHora;
+        // this.nomeCliente = nomeCliente;
+        // this.precoPorHora = precoPorHora;
+        this.idProjeto = idProjeto;
     }
 
     public void setNomeProjeto(String nomeProjeto) {
@@ -51,4 +53,17 @@ public class Projeto implements Serializable {
         return this.precoPorHora;
     }
 
+    public int getIdProjeto() {
+        return this.idProjeto;
+    }
+
+    public void setIdProjeto(int idProjeto) {
+        this.idProjeto = idProjeto;
+    }
+
+    public int gerarIdProjeto(int idProjeto) {
+        idProjeto++;
+
+        return idProjeto;
+    }
 }

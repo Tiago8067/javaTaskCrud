@@ -52,15 +52,16 @@ public class Menu {
                     }
 
                     if (util.checkPermissao(this.utilizador).equals("admin")) {
-                        Admin admin = new Admin(this.utilizador.getUsername(), this.database);
+                        Admin admin = new Admin(this.utilizador.getUsername(), this.database, this.utilizador.getId());
                         menuAdmin(admin);
                     }
                     if (util.checkPermissao(this.utilizador).equals("usermanager")) {
-                        UserManager usermanager = new UserManager(this.utilizador.getUsername(), this.database);
+                        UserManager usermanager = new UserManager(this.utilizador.getUsername(), this.database,
+                                this.utilizador.getId());
                         menuUserManager(usermanager); // usermanager
                     }
                     if (util.checkPermissao(this.utilizador).equals("user")) {
-                        User user = new User(this.utilizador.getUsername(), this.database);
+                        User user = new User(this.utilizador.getUsername(), this.database, this.utilizador.getId());
                         menuUser(user);
                     }
                     break;
