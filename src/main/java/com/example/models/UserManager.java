@@ -31,6 +31,14 @@ public class UserManager extends Utilizador {
         this.scanner = new Scanner(System.in);
     }
 
+    public int getIdUserManager() {
+        return this.idUserManager;
+    }
+
+    public void setIdUserManager(int idUserManager) {
+        this.idUserManager = idUserManager;
+    }
+
     public void listarUtilizadores() {
         for (int i = 0; i < this.database.getUtilizadores().size(); i++) {
             System.out.println("Username: " + this.database.getUtilizadores().get(i).getUsername() + "\t-> Estado"

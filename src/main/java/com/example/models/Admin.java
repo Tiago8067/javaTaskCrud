@@ -77,15 +77,16 @@ public class Admin extends Utilizador {
         opcao = scanner.nextInt();
 
         if (opcao == 1) {
-            this.autenticacaoService.adicionaId(this.utilizador.getId());
-            this.utilizador = new Admin(this.username, this.autenticacaoService.adicionaId(this.utilizador.getId()));
+            // this.autenticacaoService.adicionaId(this.utilizador.getId());
+            this.utilizador = new Admin(this.username, this.autenticacaoService.adicionaId(this.idAdmin));
             this.utilizador.setEstadoUtilizador(EstadoUtilizador.ATIVO);
             this.autenticacaoService.registar(this.utilizador);
             return;
         }
 
         if (opcao == 2) {
-            this.autenticacaoService.adicionaId(this.utilizador.getId());
+            // this.autenticacaoService.adicionaId(this.utilizador.getId());
+            // this.userManager.getIdUserManager() // -> Erro id do user manager null
             this.utilizador = new UserManager(this.username,
                     this.autenticacaoService.adicionaId(this.utilizador.getId()));
             this.utilizador.setEstadoUtilizador(EstadoUtilizador.ATIVO);
