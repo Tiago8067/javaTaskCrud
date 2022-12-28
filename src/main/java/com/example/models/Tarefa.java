@@ -3,9 +3,13 @@ package com.example.models;
 import java.io.Serializable;
 
 public class Tarefa implements Serializable {
+
+    // id da tarefa
+    // associar por ids
     private String curtaDescricao;
     private String dataInicioHora;
     private String dataHoraTermino;
+    private Projeto projeto; // associar o projeto há tarefa
 
     public Tarefa() {
     }

@@ -88,8 +88,10 @@ public class User extends Utilizador {
     public void removeTarefa() {
     }
 
-    public void desassociarTarefa() {
-    }
+    /*
+     * public void desassociarTarefa() {
+     * }
+     */
 
     // FIM, se data e hora de fim nao inseridas atribuir o data e hora ATUAL
     public void terminaTarefa() {

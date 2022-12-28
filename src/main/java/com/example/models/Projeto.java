@@ -5,9 +5,12 @@ import com.example.database.Database;
 
 public class Projeto implements Serializable {
 
+    // id Projeto
+
     private String nomeProjeto;
     private String nomeCliente;
     private String precoPorHora;
+    private Utilizador utilizador; // para fazer a associcaçao ao projeto
     Database database;
 
     public Projeto() {
