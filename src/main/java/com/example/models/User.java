@@ -20,6 +20,10 @@ public class User extends Utilizador {
         super();
     }
 
+    public User(String username) {
+        super(username);
+    }
+
     public User(String username, int idUser) {
         super(username, idUser);
     }

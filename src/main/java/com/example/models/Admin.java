@@ -20,6 +20,10 @@ public class Admin extends Utilizador {
     public Admin() {
     }
 
+    public Admin(String username) {
+        super(username);
+    }
+
     public Admin(String username, int idAdmin) {
         super(username, idAdmin);
     }
@@ -56,7 +60,7 @@ public class Admin extends Utilizador {
     }
 
     public void alterarPermissaoDosUtilizadores() {
-        int opcao;
+        int opcao, idAnteriorUser;
 
         System.out.printf("username que deseja alterar: ");
         this.username = scanner.next();
@@ -67,6 +71,9 @@ public class Admin extends Utilizador {
             System.out.println("Nao existe este utilizador!\n");
             return;
         }
+
+        idAnteriorUser = this.utilizador.getId();
+
         this.autenticacaoService.removerUtilizador(this.utilizador);
 
         System.out.println("\n1 - Admin");
@@ -77,7 +84,7 @@ public class Admin extends Utilizador {
 
         if (opcao == 1) {
             // this.autenticacaoService.adicionaId(this.utilizador.getId());
-            this.utilizador = new Admin(this.username, this.autenticacaoService.adicionaId(this.idAdmin));
+            this.utilizador = new Admin(this.username, idAnteriorUser);
             this.utilizador.setEstadoUtilizador(EstadoUtilizador.ATIVO);
             this.autenticacaoService.registar(this.utilizador);
             return;
@@ -86,8 +93,7 @@ public class Admin extends Utilizador {
         if (opcao == 2) {
             // this.autenticacaoService.adicionaId(this.utilizador.getId());
             // this.userManager.getIdUserManager() // -> Erro id do user manager null
-            this.utilizador = new UserManager(this.username,
-                    this.autenticacaoService.adicionaId(this.utilizador.getId()));
+            this.utilizador = new UserManager(this.username, idAnteriorUser);
             this.utilizador.setEstadoUtilizador(EstadoUtilizador.ATIVO);
             this.autenticacaoService.registar(this.utilizador);
             return;

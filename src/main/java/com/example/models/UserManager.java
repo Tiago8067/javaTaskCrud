@@ -19,6 +19,10 @@ public class UserManager extends Utilizador {
         super();
     }
 
+    public UserManager(String username) {
+        super(username);
+    }
+
     public UserManager(String username, int idUserManager) {
         super(username, idUserManager);
     }
