@@ -11,7 +11,7 @@ public class Projeto implements Serializable {
     Database database;
     Tarefa tarefa;
     // private int idUser;
-    // private int idTarefa;
+    private int idTarefa;
 
     // private int idUser;// para fazer a associcaçao ao projeto
 
@@ -30,10 +30,9 @@ public class Projeto implements Serializable {
         this.idProjeto = idProjeto;
     }
 
-    public Projeto(String nomeProjeto, int idProjeto, Tarefa tarefa) {
-        this.nomeProjeto = nomeProjeto;
+    public Projeto(int idProjeto, int idTarefa) {
         this.idProjeto = idProjeto;
-        this.tarefa = tarefa;
+        this.idTarefa = idTarefa;
     }
 
     public void setNomeProjeto(String nomeProjeto) {

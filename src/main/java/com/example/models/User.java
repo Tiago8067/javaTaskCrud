@@ -251,12 +251,16 @@ public class User extends Utilizador {
         // String username, Database database, int idUser, int idProjeto, int idTarefa
         this.utilizador = new User(this.username, this.database, idUtilizadorAssociador, idProjetoAssociarTarefas,
                 idTarefaAssociadaNoProjeto);
-
         System.out.println(this.utilizador);
-
         this.database.getUtilizadores().add(this.utilizador);
-        // this.projeto = new Projeto();
-        // this.tarefa = new Tarefa();
+
+        this.projeto = new Projeto(idProjetoAssociarTarefas, idTarefaAssociadaNoProjeto);
+        this.database.getProjetos().add(this.projeto);
+        System.out.println(this.projeto);
+
+        this.tarefa = new Tarefa(idTarefaAssociadaNoProjeto, idProjetoAssociarTarefas);
+        this.database.getTarefas().add(this.tarefa);
+        System.out.println(this.tarefa);
     }
 
     public void editaDadosProjeto() {
