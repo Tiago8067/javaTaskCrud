@@ -83,7 +83,6 @@ public class Admin extends Utilizador {
         opcao = scanner.nextInt();
 
         if (opcao == 1) {
-            // this.autenticacaoService.adicionaId(this.utilizador.getId());
             this.utilizador = new Admin(this.username, idAnteriorUser);
             this.utilizador.setEstadoUtilizador(EstadoUtilizador.ATIVO);
             this.autenticacaoService.registar(this.utilizador);
@@ -91,12 +90,19 @@ public class Admin extends Utilizador {
         }
 
         if (opcao == 2) {
-            // this.autenticacaoService.adicionaId(this.utilizador.getId());
-            // this.userManager.getIdUserManager() // -> Erro id do user manager null
             this.utilizador = new UserManager(this.username, idAnteriorUser);
             this.utilizador.setEstadoUtilizador(EstadoUtilizador.ATIVO);
             this.autenticacaoService.registar(this.utilizador);
             return;
         }
+
+        // Em principio para resolver e com Switch case
+
+        // Fazer forma de se isenrir outra opcao sem ser 1 e 2 retornar ao menu de
+        // escolha de troca de permissao, ou seja, menu que tem opcoes 1-admin e
+        // 2-UserManager
+        // else {
+        // System.out.println("Opcao Invalida!!!\nEscolha a correta.");
+        // }
     }
 }

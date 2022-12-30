@@ -158,6 +158,7 @@ public class Menu {
             System.out.println("5 - Listar Projetos -> so para teste");
             System.out.println("6 - Criar Tarefa");
             System.out.println("7 - Listar Tarefas -> so para teste");
+            System.out.println("8 - Agrupar tarefas a projetos");
             System.out.println("0 - Sair");
             System.out.println("\n");
 
@@ -192,6 +193,9 @@ public class Menu {
                     break;
                 case 7:
                     user.listarTarefas();
+                    break;
+                case 8:
+                    user.agrupaTarefaParaProjeto();
                     break;
                 case 0:
                     return;

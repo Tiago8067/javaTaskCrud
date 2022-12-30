@@ -40,7 +40,7 @@ public class AutenticacaoService {
         this.database.getUtilizadores().remove(utilizador);
     }
 
-    public void adicionaProjeto(Projeto projeto) { // AO ADICIONAR PROJETO VERIFICAMOS O IDPROJETO
+    public void adicionaProjeto(Projeto projeto) {
         this.database.getProjetos().add(projeto);
     }
 

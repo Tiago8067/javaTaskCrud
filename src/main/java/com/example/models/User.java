@@ -40,12 +40,37 @@ public class User extends Utilizador {
         this.scanner = new Scanner(System.in);
     }
 
+    // Contrutor para associar tarefas a um projeto pretendido
+    public User(String username, Database database, int idUser, Projeto projeto, Tarefa tarefa) {
+        super(username, idUser);
+        this.database = database;
+        this.util = new Util(database);
+        this.autenticacaoService = new AutenticacaoService(database);
+        this.scanner = new Scanner(System.in);
+        this.projeto = projeto;
+        this.tarefa = tarefa;
+    }
+
     public int getIdUser() {
         return this.idUser;
     }
 
     public void setIdUser(int idUser) {
         this.idUser = idUser;
+    }
+
+    public void listarProjetos() {
+        for (int i = 0; i < this.database.getProjetos().size(); i++) {
+            System.out.println("Id: " + this.database.getProjetos().get(i).getIdProjeto() + "\t->" + "Nome do projeto: "
+                    + this.database.getProjetos().get(i).getNomeProjeto());
+        }
+    }
+
+    public void listarTarefas() {
+        for (int i = 0; i < this.database.getTarefas().size(); i++) {
+            System.out.println("Id: " + this.database.getTarefas().get(i).getIdTarefa() + "\t->"
+                    + "Descricao da tarefa: " + this.database.getTarefas().get(i).getCurtaDescricao());
+        }
     }
 
     public void editaDadosDaSuaConta() {
@@ -126,6 +151,50 @@ public class User extends Utilizador {
 
     // associar tarefas
     public void agrupaTarefaParaProjeto() {
+        int idUtilizadorAssociador, idProjetoAssociarTarefas, idTarefaAssociadaNoProjeto, opcaoVerProjetos,
+                opcaoEscolheProjeto;
+
+        System.out.printf("Verifique o seu Username, para puder agrupar Tarefas a Projetos: ");
+        this.username = scanner.next();
+
+        this.utilizador = this.autenticacaoService.login(this.username);
+
+        if (this.utilizador == null) {
+            System.out.println("Nao existe este utilizador!\n");
+            return;
+        }
+
+        idUtilizadorAssociador = this.utilizador.getId();
+
+        System.out.println("O id do user que vai realizar o agrupamento e: " + idUtilizadorAssociador);
+
+        while (true) {
+            System.out.println("\n1 - Sim");
+            System.out.println("2 - Nao");
+
+            System.out.printf("\nPretende ver a sua lista de projetos: ");
+            opcaoVerProjetos = scanner.nextInt();
+
+            switch (opcaoVerProjetos) {
+                case 1:
+                    System.out.println("listar");// Esta bugado
+                    listarProjetos();
+                    for (int i = 0; i < this.database.getProjetos().size(); i++) {
+                        System.out.println("Id: " + this.database.getProjetos().get(i).getIdProjeto() + "\t->"
+                                + "Nome do projeto: "
+                                + this.database.getProjetos().get(i).getNomeProjeto());
+                    }
+                    break;
+                case 2:
+                    return;
+                default:
+                    System.out.println("Opcao Invalida!!!\nEscolha a opcao correta.");
+                    break;
+            }
+        }
+
+        // System.out.printf("\nEsolha o Projeto que pretende associar: ");
+        // opcaoVerProjetos = scanner.nextInt();
     }
 
     public void editaDadosProjeto() {
@@ -161,19 +230,5 @@ public class User extends Utilizador {
     }
 
     public void removeConvidados() {
-    }
-
-    public void listarProjetos() {
-        for (int i = 0; i < this.database.getProjetos().size(); i++) {
-            System.out.println("Id: " + this.database.getProjetos().get(i).getIdProjeto() + "\t->" + "Nome do projeto: "
-                    + this.database.getProjetos().get(i).getNomeProjeto());
-        }
-    }
-
-    public void listarTarefas() {
-        for (int i = 0; i < this.database.getTarefas().size(); i++) {
-            System.out.println("Id: " + this.database.getTarefas().get(i).getIdTarefa() + "\t->"
-                    + "Descricao da tarefa: " + this.database.getTarefas().get(i).getCurtaDescricao());
-        }
     }
 }
