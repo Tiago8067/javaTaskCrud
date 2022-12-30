@@ -20,16 +20,14 @@ public class Util {
         return true;
     }
 
-    /*
-     * public boolean verificarIdUser(int idUser) throws IdDuplicatedException {
-     * for (int i = 0; i < this.database.getUtilizadores().size(); i++) {
-     * if (this.database.getUtilizadores().get(i).getId() == idUser) {
-     * throw new IdDuplicatedException("O id do user está duplicado!!!");
-     * }
-     * }
-     * return true;
-     * }
-     */
+    // public boolean verificarIdProjeto(int idUser) throws IdDuplicatedException {
+    // for (int i = 0; i < this.database.getUtilizadores().size(); i++) {
+    // if (this.database.getUtilizadores().get(i).getId() == idUser) {
+    // throw new IdDuplicatedException("O id do user está duplicado!!!");
+    // }
+    // }
+    // return true;
+    // }
 
     public boolean verificarNomeProjeto(String nomeProjeto) throws NomeDuplicatedException {
         for (int i = 0; i < this.database.getProjetos().size(); i++) {

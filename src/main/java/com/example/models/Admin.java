@@ -14,7 +14,7 @@ public class Admin extends Utilizador {
     Scanner scanner;
     Utilizador utilizador;
     String username;
-    private int idAdmin;
+    // private int idAdmin;
     UserManager userManager;
 
     public Admin() {

@@ -177,24 +177,17 @@ public class User extends Utilizador {
 
             switch (opcaoVerProjetos) {
                 case 1:
-                    System.out.println("listar");// Esta bugado
                     listarProjetos();
-                    for (int i = 0; i < this.database.getProjetos().size(); i++) {
-                        System.out.println("Id: " + this.database.getProjetos().get(i).getIdProjeto() + "\t->"
-                                + "Nome do projeto: "
-                                + this.database.getProjetos().get(i).getNomeProjeto());
-                    }
                     break;
                 case 2:
-                    return;
+                    break;
                 default:
                     System.out.println("Opcao Invalida!!!\nEscolha a opcao correta.");
                     break;
             }
+            System.out.println("Insere o Porjeto que vais agrupar?");
+            opcaoEscolheProjeto = scanner.nextInt();
         }
-
-        // System.out.printf("\nEsolha o Projeto que pretende associar: ");
-        // opcaoVerProjetos = scanner.nextInt();
     }
 
     public void editaDadosProjeto() {
