@@ -1,6 +1,8 @@
 package com.example.models;
 
 import com.example.database.*;
+import com.example.exceptions.NomeDuplicatedException;
+
 import java.util.*;
 import com.example.utils.*;
 import com.example.services.*;
@@ -54,12 +56,21 @@ public class User extends Utilizador {
         String nomeProjeto; // , nomeCliente, precoPorHora;
         int idProjeto = 0;
 
-        // System.out.println(this.projeto.gerarIdProjeto(idProjeto));
+        do {
+            System.out.printf("Insira o nome do Projeto: ");
+            nomeProjeto = this.scanner.nextLine();
 
-        // this.projeto.setIdProjeto(this.projeto.gerarIdProjeto(idProjeto));
+            if (nomeProjeto.length() < 4) {
+                System.out.println("O Nome do Projeto tem obrigatoriamente 4 carateres!");
+            }
+        } while (nomeProjeto.length() < 4);
 
-        System.out.printf("Insira o nome do Projeto: ");
-        nomeProjeto = this.scanner.next();
+        try {
+            this.util.verificarNomeProjeto(nomeProjeto.toLowerCase());
+        } catch (NomeDuplicatedException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
 
         // System.out.printf("Insira o nome do Cliente: ");
         // nomeCliente = this.scanner.next();
@@ -67,13 +78,14 @@ public class User extends Utilizador {
         // System.out.printf("Insira o preco por hora: ");
         // precoPorHora = this.scanner.next();
 
-        // idProjeto++;
         for (int i = 0; i < this.database.getProjetos().size(); i++) {
             idProjeto++;
         }
-        this.projeto = new Projeto(nomeProjeto, idProjeto); // , nomeCliente, precoPorHora, idProjeto
+        this.projeto = new Projeto(nomeProjeto.toLowerCase(), idProjeto); // , nomeCliente, precoPorHora, idProjeto
 
-        this.autenticacaoService.adicionaProjeto(this.projeto, idProjeto); // IDPROJETO
+        this.autenticacaoService.adicionaProjeto(this.projeto); // NOMEPROJETO - VERIFCAR QUANDO SE
+                                                                // ADICIONA USA O
+                                                                // MESMO NOME PARA DAR MENSAGEM DE ERRO
     }
 
     // quando cria inicia uma tarefa, indicando uma curta descricao e data e hora de
@@ -82,8 +94,21 @@ public class User extends Utilizador {
         String curtaDescricao; // , dataInicioHora, dataHoraTermino;
         int idTarefa = 0;
 
-        System.out.printf("Insira a descricao da tarefa: ");
-        curtaDescricao = this.scanner.nextLine();
+        do {
+            System.out.printf("Insira a descricao da tarefa: ");
+            curtaDescricao = this.scanner.nextLine();
+
+            if (curtaDescricao.length() < 4) {
+                System.out.println("A Descricao da Tarefa tem obrigatoriamente 4 carateres!");
+            }
+        } while (curtaDescricao.length() < 4);
+
+        try {
+            this.util.verificarDescricaoTarefa(curtaDescricao.toLowerCase());
+        } catch (NomeDuplicatedException e) {
+            System.out.println(e.getMessage());
+            return;
+        }
 
         // System.out.printf("Insira a data e hora de inicio da tarefa: ");
         // dataInicioHora = this.scanner.next();
@@ -94,7 +119,7 @@ public class User extends Utilizador {
         for (int i = 0; i < this.database.getTarefas().size(); i++) {
             idTarefa++;
         }
-        this.tarefa = new Tarefa(curtaDescricao, idTarefa); // dataInicioHora, dataHoraTermino
+        this.tarefa = new Tarefa(curtaDescricao.toLowerCase(), idTarefa); // dataInicioHora, dataHoraTermino
 
         this.autenticacaoService.adicionaTarefa(this.tarefa);
     }

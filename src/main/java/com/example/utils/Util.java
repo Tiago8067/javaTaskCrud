@@ -31,10 +31,19 @@ public class Util {
      * }
      */
 
-    public boolean verificarIdProjeto(int idProjeto) throws IdDuplicatedException {
+    public boolean verificarNomeProjeto(String nomeProjeto) throws NomeDuplicatedException {
         for (int i = 0; i < this.database.getProjetos().size(); i++) {
-            if (this.database.getProjetos().get(i).getIdProjeto() == idProjeto) {
-                throw new IdDuplicatedException("Id do projeto duplicado!!!");
+            if (this.database.getProjetos().get(i).getNomeProjeto().equals(nomeProjeto)) {
+                throw new NomeDuplicatedException("O Nome do projeto está duplicado!!!");
+            }
+        }
+        return true;
+    }
+
+    public boolean verificarDescricaoTarefa(String curtaDescricao) throws NomeDuplicatedException {
+        for (int i = 0; i < this.database.getTarefas().size(); i++) {
+            if (this.database.getTarefas().get(i).getCurtaDescricao().equals(curtaDescricao)) {
+                throw new NomeDuplicatedException("O descricao da tarefa está duplicada!!!");
             }
         }
         return true;

@@ -6,7 +6,7 @@ import com.example.utils.Util;
 import org.apache.commons.collections.functors.IdentityPredicate;
 
 import com.example.database.*;
-import com.example.exceptions.IdDuplicatedException;
+import com.example.exceptions.NomeDuplicatedException;
 
 public class AutenticacaoService {
     Database database;
@@ -40,15 +40,8 @@ public class AutenticacaoService {
         this.database.getUtilizadores().remove(utilizador);
     }
 
-    public void adicionaProjeto(Projeto projeto, int idProjeto) { // AO ADICIONAR PROJETO VERIFICAMOS O IDPROJETO
+    public void adicionaProjeto(Projeto projeto) { // AO ADICIONAR PROJETO VERIFICAMOS O IDPROJETO
         this.database.getProjetos().add(projeto);
-
-        try {
-            this.util.verificarIdProjeto(idProjeto);
-        } catch (IdDuplicatedException e) {
-            System.out.println(e.getMessage());
-            return;
-        }
     }
 
     /*
