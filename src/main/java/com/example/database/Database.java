@@ -17,7 +17,7 @@ public class Database implements Serializable {
     ArrayList<Projeto> projetos;
     ArrayList<Tarefa> tarefas;
     Map<String, String> tarefasAssociadasMap;
-    // List<HashMap<idUser, HashMap<idPorjeto, idTraefa>>> tarefasAssociadas;
+    List<HashMap<Utilizador, HashMap<Projeto, Tarefa>>> tarefasAssociadas;
 
     // diretoria padrao para guardar o ficheiro
     String path;

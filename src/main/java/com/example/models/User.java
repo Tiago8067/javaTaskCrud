@@ -1,6 +1,7 @@
 package com.example.models;
 
 import com.example.database.*;
+import com.example.exceptions.IdException;
 import com.example.exceptions.NomeDuplicatedException;
 
 import java.util.*;
@@ -17,6 +18,8 @@ public class User extends Utilizador {
     Projeto projeto;
     Tarefa tarefa;
     private int idUser;
+    private int idProjeto;
+    private int idTarefa;
 
     public User() {
         super();
@@ -41,14 +44,14 @@ public class User extends Utilizador {
     }
 
     // Contrutor para associar tarefas a um projeto pretendido
-    public User(String username, Database database, int idUser, Projeto projeto, Tarefa tarefa) {
+    public User(String username, Database database, int idUser, int idProjeto, int idTarefa) {
         super(username, idUser);
         this.database = database;
         this.util = new Util(database);
         this.autenticacaoService = new AutenticacaoService(database);
         this.scanner = new Scanner(System.in);
-        this.projeto = projeto;
-        this.tarefa = tarefa;
+        this.idProjeto = idProjeto;
+        this.idTarefa = idTarefa;
     }
 
     public int getIdUser() {
@@ -149,10 +152,65 @@ public class User extends Utilizador {
         this.autenticacaoService.adicionaTarefa(this.tarefa);
     }
 
+    public void opcaoMenuEscolheProjeto() {
+        int opcaoVerProjetos;
+
+        clearConsole();
+
+        while (true) {
+
+            System.out.printf("\nPretende ver a sua lista de Projetos: ");
+
+            System.out.println("\n1 - Sim");
+            System.out.println("2 - Nao");
+
+            System.out.printf("Escolha a Opcao: ");
+            opcaoVerProjetos = scanner.nextInt();
+
+            switch (opcaoVerProjetos) {
+                case 1:
+                    listarProjetos();
+                    return;
+                case 2:
+                    return;
+                default:
+                    System.out.println("Opcao Invalida!!!\nEscolha a opcao correta.");
+                    break;
+            }
+        }
+    }
+
+    public void opcaoMenuEscolheTarefa() {
+        int opcaoVerTarefas;
+
+        clearConsole();
+
+        while (true) {
+
+            System.out.printf("\nPretende ver a sua lista de Tarefas: ");
+
+            System.out.println("\n1 - Sim");
+            System.out.println("2 - Nao");
+
+            System.out.printf("Escolha a Opcao: ");
+            opcaoVerTarefas = scanner.nextInt();
+
+            switch (opcaoVerTarefas) {
+                case 1:
+                    listarTarefas();
+                    return;
+                case 2:
+                    return;
+                default:
+                    System.out.println("Opcao Invalida!!!\nEscolha a opcao correta.");
+                    break;
+            }
+        }
+    }
+
     // associar tarefas
     public void agrupaTarefaParaProjeto() {
-        int idUtilizadorAssociador, idProjetoAssociarTarefas, idTarefaAssociadaNoProjeto, opcaoVerProjetos,
-                opcaoEscolheProjeto;
+        int idUtilizadorAssociador, idProjetoAssociarTarefas, idTarefaAssociadaNoProjeto;
 
         System.out.printf("Verifique o seu Username, para puder agrupar Tarefas a Projetos: ");
         this.username = scanner.next();
@@ -168,26 +226,37 @@ public class User extends Utilizador {
 
         System.out.println("O id do user que vai realizar o agrupamento e: " + idUtilizadorAssociador);
 
-        while (true) {
-            System.out.println("\n1 - Sim");
-            System.out.println("2 - Nao");
+        opcaoMenuEscolheProjeto();
 
-            System.out.printf("\nPretende ver a sua lista de projetos: ");
-            opcaoVerProjetos = scanner.nextInt();
+        System.out.printf("Insere o Id do Projeto que deseja agrupar:  ");
+        idProjetoAssociarTarefas = scanner.nextInt();
 
-            switch (opcaoVerProjetos) {
-                case 1:
-                    listarProjetos();
-                    break;
-                case 2:
-                    break;
-                default:
-                    System.out.println("Opcao Invalida!!!\nEscolha a opcao correta.");
-                    break;
-            }
-            System.out.println("Insere o Porjeto que vais agrupar?");
-            opcaoEscolheProjeto = scanner.nextInt();
+        try {
+            this.util.verificarIdProjeto(idProjetoAssociarTarefas);
+        } catch (IdException e) {
+            System.out.println(e.getMessage());
         }
+
+        opcaoMenuEscolheTarefa();
+
+        System.out.printf("Insere o Id da Tarefa que deseja agrupar:  ");
+        idTarefaAssociadaNoProjeto = scanner.nextInt();
+
+        try {
+            this.util.verificarIdTarefa(idTarefaAssociadaNoProjeto);
+        } catch (IdException e) {
+            System.out.println(e.getMessage());
+        }
+
+        // String username, Database database, int idUser, int idProjeto, int idTarefa
+        this.utilizador = new User(this.username, this.database, idUtilizadorAssociador, idProjetoAssociarTarefas,
+                idTarefaAssociadaNoProjeto);
+
+        System.out.println(this.utilizador);
+
+        this.database.getUtilizadores().add(this.utilizador);
+        // this.projeto = new Projeto();
+        // this.tarefa = new Tarefa();
     }
 
     public void editaDadosProjeto() {
@@ -223,5 +292,32 @@ public class User extends Utilizador {
     }
 
     public void removeConvidados() {
+    }
+
+    public final static void clearConsole() {
+
+        /*
+         * try {
+         * final String os = System.getProperty("os.name");
+         * 
+         * if (os.contains("Windows")) {
+         * Runtime.getRuntime().exec("cls");
+         * 
+         * } else {
+         * Runtime.getRuntime().exec("clear");
+         * }
+         * } catch (final Exception e) {
+         * // Tratar Exceptions
+         * }
+         */
+
+        // ProcessBuilder pb;
+        // Limpa a tela no windows, no linux e no MacOS
+        /*
+         * if (System.getProperty("os.name").contains("Windows"))
+         * new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+         * else
+         * Runtime.getRuntime().exec("clear");
+         */
     }
 }

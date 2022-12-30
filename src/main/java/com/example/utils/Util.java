@@ -47,6 +47,24 @@ public class Util {
         return true;
     }
 
+    public boolean verificarIdProjeto(int idProjeto) throws IdException {
+        for (int i = 0; i < this.database.getProjetos().size(); i++) {
+            if (this.database.getProjetos().get(i).getIdProjeto() == idProjeto) {
+                return true;
+            }
+        }
+        throw new IdException("Id Inserido Invalido!!!");
+    }
+
+    public boolean verificarIdTarefa(int idTarefa) throws IdException {
+        for (int i = 0; i < this.database.getTarefas().size(); i++) {
+            if (this.database.getTarefas().get(i).getIdTarefa() == idTarefa) {
+                return true;
+            }
+        }
+        throw new IdException("Id Inserido Invalido!!!");
+    }
+
     public String checkPermissao(Utilizador utilizador) {
         if (utilizador instanceof Admin) {
             // Admin a = (Admin) utilizador;

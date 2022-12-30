@@ -10,6 +10,8 @@ public class Projeto implements Serializable {
     private String precoPorHora;
     Database database;
     Tarefa tarefa;
+    // private int idUser;
+    // private int idTarefa;
 
     // private int idUser;// para fazer a associcaçao ao projeto
 
