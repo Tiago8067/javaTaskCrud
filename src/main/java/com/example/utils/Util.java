@@ -5,7 +5,6 @@ import com.example.database.*;
 import com.example.exceptions.*;
 
 public class Util {
-
     Database database;
 
     public Util(Database database) {
@@ -16,6 +15,26 @@ public class Util {
         for (int i = 0; i < this.database.getUtilizadores().size(); i++) {
             if (this.database.getUtilizadores().get(i).getUsername().equals(username)) {
                 throw new UsernameDuplicatedException("O username está duplicado!!!");
+            }
+        }
+        return true;
+    }
+
+    /*
+     * public boolean verificarIdUser(int idUser) throws IdDuplicatedException {
+     * for (int i = 0; i < this.database.getUtilizadores().size(); i++) {
+     * if (this.database.getUtilizadores().get(i).getId() == idUser) {
+     * throw new IdDuplicatedException("O id do user está duplicado!!!");
+     * }
+     * }
+     * return true;
+     * }
+     */
+
+    public boolean verificarIdProjeto(int idProjeto) throws IdDuplicatedException {
+        for (int i = 0; i < this.database.getProjetos().size(); i++) {
+            if (this.database.getProjetos().get(i).getIdProjeto() == idProjeto) {
+                throw new IdDuplicatedException("Id do projeto duplicado!!!");
             }
         }
         return true;

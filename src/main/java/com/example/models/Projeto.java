@@ -4,14 +4,12 @@ import java.io.Serializable;
 import com.example.database.Database;
 
 public class Projeto implements Serializable {
-
-    // id Projeto
-
+    private int idProjeto;
     private String nomeProjeto;
     private String nomeCliente;
     private String precoPorHora;
     Database database;
-    private int idProjeto;
+
     // private int idUser;// para fazer a associcaçao ao projeto
 
     public Projeto() {
@@ -63,7 +61,6 @@ public class Projeto implements Serializable {
 
     public int gerarIdProjeto(int idProjeto) {
         idProjeto++;
-
         return idProjeto;
     }
 }

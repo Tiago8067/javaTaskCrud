@@ -59,7 +59,6 @@ public class UserManager extends Utilizador {
         }
 
         utilizador.setEstadoUtilizador(EstadoUtilizador.ATIVO);
-
     }
 
     public void alterarPermissaoDosUtilizadores() {

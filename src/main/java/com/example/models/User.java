@@ -69,7 +69,7 @@ public class User extends Utilizador {
         }
         this.projeto = new Projeto(nomeProjeto, idProjeto); // , nomeCliente, precoPorHora, idProjeto
 
-        this.autenticacaoService.adicionaProjeto(this.projeto);
+        this.autenticacaoService.adicionaProjeto(this.projeto, idProjeto); // IDPROJETO
     }
 
     // quando cria inicia uma tarefa, indicando uma curta descricao e data e hora de
@@ -111,11 +111,6 @@ public class User extends Utilizador {
     public void removeTarefa() {
     }
 
-    /*
-     * public void desassociarTarefa() {
-     * }
-     */
-
     // FIM, se data e hora de fim nao inseridas atribuir o data e hora ATUAL
     public void terminaTarefa() {
     }
@@ -123,21 +118,11 @@ public class User extends Utilizador {
     // pode listar tarefas no estado EM CURSO
     // tem de se obter o tempo total usado na tarefa realizada
     public void listarTarefasEmCurso() {
-        /*
-         * for (int i = 0; i < this.database; i++) {
-         * 
-         * }
-         */
     }
 
     // pode listar tarefas no estado FIANLIZADO
     // ENTRE DUAS Datas
     public void listarTarefasFinalizadas() {
-        /*
-         * for (int i = 0; i < this.database; i++) {
-         * 
-         * }
-         */
     }
 
     public void convidaUtilizadorParaParticiparNumProjeto() {

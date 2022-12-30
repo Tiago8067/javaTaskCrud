@@ -53,7 +53,6 @@ public class Admin extends Utilizador {
         }
 
         utilizador.setEstadoUtilizador(EstadoUtilizador.ATIVO);
-
     }
 
     public void alterarPermissaoDosUtilizadores() {
