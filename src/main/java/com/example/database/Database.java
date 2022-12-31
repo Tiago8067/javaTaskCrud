@@ -17,6 +17,7 @@ public class Database implements Serializable {
     ArrayList<Tarefa> tarefas;
     Map<String, String> tarefasAssociadasMap;
     List<HashMap<Utilizador, HashMap<Projeto, Tarefa>>> tarefasAssociadas;
+    ArrayList<Utilizador> utilizadoresConvidados;
 
     // diretoria padrao para guardar o ficheiro
     String path;
@@ -32,6 +33,7 @@ public class Database implements Serializable {
         // idTraefa>>>();
         this.arquivo = new File(this.path, "utilizadores.dat");
         this.arquivoTarefasAssociadas = new File(this.path, "TarefasAssociadas.csv");
+        this.utilizadoresConvidados = new ArrayList<>();
     }
 
     public void criaFicheiroSeNaoExistir() {
@@ -50,6 +52,7 @@ public class Database implements Serializable {
                 outDataStream.writeObject(this.utilizadores);
                 outDataStream.writeObject(this.projetos);
                 outDataStream.writeObject(this.tarefas);
+                // outDataStream.writeObject(this.utilizadoresConvidados);
 
                 outDataStream.close();
 
@@ -66,6 +69,8 @@ public class Database implements Serializable {
                 this.utilizadores = (ArrayList<Utilizador>) readStream.readObject();
                 this.projetos = (ArrayList<Projeto>) readStream.readObject();
                 this.tarefas = (ArrayList<Tarefa>) readStream.readObject();
+                // this.utilizadoresConvidados = (ArrayList<Utilizador>)
+                // readStream.readObject();
 
                 readStream.close();
             } catch (Exception e) {
@@ -83,6 +88,7 @@ public class Database implements Serializable {
             outDataStream.writeObject(this.utilizadores);
             outDataStream.writeObject(this.projetos);
             outDataStream.writeObject(this.tarefas);
+            // outDataStream.writeObject(this.utilizadoresConvidados);
 
             outDataStream.close();
 
@@ -103,6 +109,10 @@ public class Database implements Serializable {
 
     public ArrayList<Tarefa> getTarefas() {
         return this.tarefas;
+    }
+
+    public ArrayList<Utilizador> getUtilizadoresConvidados() {
+        return this.utilizadoresConvidados;
     }
 
     // public void insereDadosTesteNoMap() throws IOException {
@@ -214,27 +224,7 @@ public class Database implements Serializable {
     // this.tarefasAssociadas = tarefasAssociadas;
     // }
 
-    public String getPath() {
-        return this.path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public File getArquivo() {
-        return this.arquivo;
-    }
-
-    public void setArquivo(File arquivo) {
-        this.arquivo = arquivo;
-    }
-
-    public File getArquivoTarefasAssociadas() {
-        return this.arquivoTarefasAssociadas;
-    }
-
-    public void setArquivoTarefasAssociadas(File arquivoTarefasAssociadas) {
-        this.arquivoTarefasAssociadas = arquivoTarefasAssociadas;
+    public void setUtilizadoresConvidados(ArrayList<Utilizador> utilizadoresConvidados) {
+        this.utilizadoresConvidados = utilizadoresConvidados;
     }
 }

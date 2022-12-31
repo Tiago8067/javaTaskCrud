@@ -25,7 +25,17 @@ public class FuncionalidadesService {
         this.database.getTarefas().remove(tarefa);
     }
 
-    public void removeConvidadosDoProjeto(User user) {
-        this.database.getUtilizadores().remove(user);
+    public void removeConvidadosDoProjeto(Utilizador utilizador) {
+        this.database.getUtilizadoresConvidados().remove(utilizador);
+    }
+
+    // pode listar tarefas no estado EM CURSO
+    // tem de se obter o tempo total usado na tarefa realizada
+    public void listarTarefasEmCurso() {
+    }
+
+    // pode listar tarefas no estado FIANLIZADO
+    // ENTRE DUAS Datas
+    public void listarTarefasFinalizadas() {
     }
 }

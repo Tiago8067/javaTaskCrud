@@ -38,10 +38,10 @@ public class Util {
         return true;
     }
 
-    public boolean verificarIdProjeto(int idProjeto) throws IdException {
+    public Projeto verificarIdProjeto(int idProjeto) throws IdException {
         for (int i = 0; i < this.database.getProjetos().size(); i++) {
             if (this.database.getProjetos().get(i).getIdProjeto() == idProjeto) {
-                return true;
+                return this.database.getProjetos().get(i); // true
             }
         }
         throw new IdException("Id Inserido Invalido!!!");
@@ -50,9 +50,16 @@ public class Util {
     public Tarefa verificarIdTarefa(int idTarefa) throws IdException {
         for (int i = 0; i < this.database.getTarefas().size(); i++) {
             if (this.database.getTarefas().get(i).getIdTarefa() == idTarefa) {
-                return null;
-            } else {
-                return this.database.getTarefas().get(i);
+                return this.database.getTarefas().get(i); // true
+            }
+        }
+        throw new IdException("Id Inserido Invalido!!!");
+    }
+
+    public Utilizador verificarIdUtilizador(int idUtilizador) throws IdException {
+        for (int i = 0; i < this.database.getUtilizadoresConvidados().size(); i++) {
+            if (this.database.getUtilizadoresConvidados().get(i).getId() == idUtilizador) {
+                return this.database.getUtilizadoresConvidados().get(i); // true
             }
         }
         throw new IdException("Id Inserido Invalido!!!");

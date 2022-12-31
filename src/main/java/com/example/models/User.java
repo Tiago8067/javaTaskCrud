@@ -20,6 +20,7 @@ public class User extends Utilizador {
     private int idUser;
     private int idProjeto;
     private int idTarefa;
+    FuncionalidadesService funcionalidadesService;
 
     public User() {
         super();
@@ -52,6 +53,7 @@ public class User extends Utilizador {
         this.scanner = new Scanner(System.in);
         this.idProjeto = idProjeto;
         this.idTarefa = idTarefa;
+        this.funcionalidadesService = new FuncionalidadesService(database);
     }
 
     public int getIdUser() {
@@ -74,6 +76,13 @@ public class User extends Utilizador {
             System.out.println("Id: " + this.database.getTarefas().get(i).getIdTarefa() + "\t->"
                     + "Descricao da tarefa: " + this.database.getTarefas().get(i).getCurtaDescricao() + "-> Estado: "
                     + this.database.getTarefas().get(i).getEstadoTarefa());
+        }
+    }
+
+    public void listarUtilizadorConvidados() {
+        for (int i = 0; i < this.database.getUtilizadoresConvidados().size(); i++) {
+            System.out.println("Id: " + this.database.getUtilizadoresConvidados().get(i).getId() + "\t->"
+                    + "Username: " + this.database.getUtilizadoresConvidados().get(i).getUsername());
         }
     }
 
@@ -209,6 +218,34 @@ public class User extends Utilizador {
         }
     }
 
+    public void opcaoMenuEscolheUtilizadorConvidado() {
+        int opcaoVerUtilizadorConvidados;
+
+        clearConsole();
+
+        while (true) {
+
+            System.out.printf("\nPretende ver a sua lista de Utilizadores Convidados: ");
+
+            System.out.println("\n1 - Sim");
+            System.out.println("2 - Nao");
+
+            System.out.printf("Escolha a Opcao: ");
+            opcaoVerUtilizadorConvidados = scanner.nextInt();
+
+            switch (opcaoVerUtilizadorConvidados) {
+                case 1:
+                    listarUtilizadorConvidados();
+                    return;
+                case 2:
+                    return;
+                default:
+                    System.out.println("Opcao Invalida!!!\nEscolha a opcao correta.");
+                    break;
+            }
+        }
+    }
+
     // associar tarefas
     public void agrupaTarefaParaProjeto() {
         int idUtilizadorAssociador, idProjetoAssociarTarefas, idTarefaAssociadaNoProjeto;
@@ -268,16 +305,45 @@ public class User extends Utilizador {
     }
 
     public void removeProjeto() {
+        int idProjetoQueVaiSerRemovido;
+
+        opcaoMenuEscolheProjeto();
+
+        System.out.printf("Insere o Id do Projeto que deseja agrupar:  ");
+        idProjetoQueVaiSerRemovido = scanner.nextInt();
+
+        try {
+            this.projeto = this.util.verificarIdProjeto(idProjetoQueVaiSerRemovido);
+        } catch (IdException e) {
+            System.out.println(e.getMessage());
+        }
+
+        this.funcionalidadesService.removeProjeto(projeto);
     }
 
     // um utilizador tanto pode remover tarefas no estado EM CURSO, como no estado
     // FINALIZADO
     public void removeTarefa() {
+        int idTarefaQueVaiSerRemovido;
+
+        opcaoMenuEscolheTarefa();
+
+        System.out.printf("Insere o Id da Tarefa que deseja agrupar:  ");
+        idTarefaQueVaiSerRemovido = scanner.nextInt();
+
+        try {
+            this.tarefa = this.util.verificarIdTarefa(idTarefaQueVaiSerRemovido);
+        } catch (IdException e) {
+            System.out.println(e.getMessage());
+        }
+
+        this.funcionalidadesService.removeTarefa(this.tarefa);
     }
 
     // FIM, se data e hora de fim nao inseridas atribuir o data e hora ATUAL
     public void terminaTarefa() {
         int idTarefaAssociadaNoProjeto;
+        // Date dataFimTarefa;
 
         opcaoMenuEscolheTarefa();
 
@@ -310,6 +376,20 @@ public class User extends Utilizador {
     }
 
     public void removeConvidadosDoProjeto() {
+        int idUtilizadorConvidadoQueVaiSerRemovido;
+
+        opcaoMenuEscolheUtilizadorConvidado();
+
+        System.out.printf("Insere o Id do Utilizador Convidado que deseja Remover:  ");
+        idUtilizadorConvidadoQueVaiSerRemovido = scanner.nextInt();
+
+        try {
+            this.utilizador = this.util.verificarIdUtilizador(idUtilizadorConvidadoQueVaiSerRemovido);
+        } catch (IdException e) {
+            System.out.println(e.getMessage());
+        }
+
+        this.funcionalidadesService.removeConvidadosDoProjeto(this.utilizador);
     }
 
     public final static void clearConsole() {
