@@ -2,6 +2,8 @@ package com.example.models;
 
 import java.io.Serializable;
 
+import com.example.enums.EstadoTarefa;
+
 public class Tarefa implements Serializable {
 
     // id da tarefa
@@ -12,6 +14,7 @@ public class Tarefa implements Serializable {
     private int idTarefa = 0;
     Projeto projeto;
     private int idProjeto;
+    private EstadoTarefa estadoTarefa;
 
     public Tarefa() {
     }
@@ -21,6 +24,7 @@ public class Tarefa implements Serializable {
         // this.dataInicioHora = dataInicioHora;
         // this.dataHoraTermino = dataHoraTermino;
         this.idTarefa = idTarefa;
+        this.estadoTarefa = EstadoTarefa.EMCURSO;
     }
 
     public Tarefa(int idTarefa, int idProjeto) {
@@ -58,6 +62,30 @@ public class Tarefa implements Serializable {
 
     public void setIdTarefa(int idTarefa) {
         this.idTarefa = idTarefa;
+    }
+
+    public Projeto getProjeto() {
+        return this.projeto;
+    }
+
+    public void setProjeto(Projeto projeto) {
+        this.projeto = projeto;
+    }
+
+    public int getIdProjeto() {
+        return this.idProjeto;
+    }
+
+    public void setIdProjeto(int idProjeto) {
+        this.idProjeto = idProjeto;
+    }
+
+    public EstadoTarefa getEstadoTarefa() {
+        return this.estadoTarefa;
+    }
+
+    public void setEstadoTarefa(EstadoTarefa estadoTarefa) {
+        this.estadoTarefa = estadoTarefa;
     }
 
 }
