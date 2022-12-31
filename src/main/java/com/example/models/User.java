@@ -1,6 +1,7 @@
 package com.example.models;
 
 import com.example.database.*;
+import com.example.enums.EstadoTarefa;
 import com.example.exceptions.IdException;
 import com.example.exceptions.NomeDuplicatedException;
 import java.util.*;
@@ -276,6 +277,20 @@ public class User extends Utilizador {
 
     // FIM, se data e hora de fim nao inseridas atribuir o data e hora ATUAL
     public void terminaTarefa() {
+        int idTarefaAssociadaNoProjeto;
+
+        opcaoMenuEscolheTarefa();
+
+        System.out.printf("Insere o Id da Tarefa que deseja agrupar:  ");
+        idTarefaAssociadaNoProjeto = scanner.nextInt();
+
+        try {
+            this.tarefa = this.util.verificarIdTarefa(idTarefaAssociadaNoProjeto);
+        } catch (IdException e) {
+            System.out.println(e.getMessage());
+        }
+
+        this.tarefa.setEstadoTarefa(EstadoTarefa.FINALIZADO);
     }
 
     // pode listar tarefas no estado EM CURSO
@@ -294,7 +309,7 @@ public class User extends Utilizador {
     public void aceitaConvite() {
     }
 
-    public void removeConvidados() {
+    public void removeConvidadosDoProjeto() {
     }
 
     public final static void clearConsole() {

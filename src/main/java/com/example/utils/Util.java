@@ -47,10 +47,12 @@ public class Util {
         throw new IdException("Id Inserido Invalido!!!");
     }
 
-    public boolean verificarIdTarefa(int idTarefa) throws IdException {
+    public Tarefa verificarIdTarefa(int idTarefa) throws IdException {
         for (int i = 0; i < this.database.getTarefas().size(); i++) {
             if (this.database.getTarefas().get(i).getIdTarefa() == idTarefa) {
-                return true;
+                return null;
+            } else {
+                return this.database.getTarefas().get(i);
             }
         }
         throw new IdException("Id Inserido Invalido!!!");
