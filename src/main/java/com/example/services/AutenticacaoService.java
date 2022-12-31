@@ -2,9 +2,7 @@ package com.example.services;
 
 import com.example.models.*;
 import com.example.utils.Util;
-
 import org.apache.commons.collections.functors.IdentityPredicate;
-
 import com.example.database.*;
 import com.example.exceptions.NomeDuplicatedException;
 
@@ -43,15 +41,6 @@ public class AutenticacaoService {
     public void adicionaProjeto(Projeto projeto) {
         this.database.getProjetos().add(projeto);
     }
-
-    /*
-     * public int adicionaIdProjeto(int idProjeto) {
-     * for (int i = 0; i < this.database.getUtilizadores().size(); i++) {
-     * idProjeto++;
-     * }
-     * return idProjeto;
-     * }
-     */
 
     public void adicionaTarefa(Tarefa tarefa) {
         this.database.getTarefas().add(tarefa);

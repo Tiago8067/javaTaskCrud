@@ -3,7 +3,6 @@ package com.example.models;
 import com.example.database.*;
 import com.example.exceptions.IdException;
 import com.example.exceptions.NomeDuplicatedException;
-
 import java.util.*;
 import com.example.utils.*;
 import com.example.services.*;
@@ -72,7 +71,8 @@ public class User extends Utilizador {
     public void listarTarefas() {
         for (int i = 0; i < this.database.getTarefas().size(); i++) {
             System.out.println("Id: " + this.database.getTarefas().get(i).getIdTarefa() + "\t->"
-                    + "Descricao da tarefa: " + this.database.getTarefas().get(i).getCurtaDescricao());
+                    + "Descricao da tarefa: " + this.database.getTarefas().get(i).getCurtaDescricao() + "-> Estado: "
+                    + this.database.getTarefas().get(i).getEstadoTarefa());
         }
     }
 
@@ -264,7 +264,6 @@ public class User extends Utilizador {
     }
 
     public void editaDadosProjeto() {
-
     }
 
     public void removeProjeto() {

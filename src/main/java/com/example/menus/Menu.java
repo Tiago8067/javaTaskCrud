@@ -23,7 +23,6 @@ public class Menu {
     }
 
     public void menuPrincipal() {
-
         while (true) {
             System.out.println("\n\n### Menu Principal ###");
             System.out.println("\n");
@@ -111,7 +110,6 @@ public class Menu {
     }
 
     public void menuUserManager(UserManager usermanager) { // UserManager usermanager
-
         while (true) {
             System.out.println("\n\n### Menu do UserManager ###");
             System.out.println("\n");
@@ -150,15 +148,11 @@ public class Menu {
         while (true) {
             System.out.println("\n\n### Menu do User ###");
             System.out.println("\n");
-            System.out.println("1 - Visualizar todos os registos disponiveis"); // -> (E Listar os registos
-                                                                                // utilizadores???)
-            System.out.println("2 - Alterar estado dos utilizadores");
-            System.out.println("3 - Alterar permissao dos utilizadores");
-            System.out.println("4 - Criar Projeto");
-            System.out.println("5 - Listar Projetos -> so para teste");
-            System.out.println("6 - Criar Tarefa");
-            System.out.println("7 - Listar Tarefas -> so para teste");
-            System.out.println("8 - Agrupar tarefas a projetos");
+            System.out.println("1 - Criar Projeto");
+            System.out.println("2 - Listar Projetos -> so para teste");
+            System.out.println("3 - Criar Tarefa");
+            System.out.println("4 - Listar Tarefas -> so para teste");
+            System.out.println("5 - Agrupar tarefas a projetos");
             System.out.println("0 - Sair");
             System.out.println("\n");
 
@@ -170,31 +164,20 @@ public class Menu {
 
             switch (opcao) {
                 case 1:
-                    // user.listarUtilizadores();
-                    break;
-                case 2:
-                    // admin.alterarEstadoDosUtilizadores();
-                    this.database.atualizaFicheiro();
-                    break;
-                case 3:
-                    // admin.alterarPermissaoDosUtilizadores();
-                    this.database.atualizaFicheiro();
-                    break;
-                case 4:
                     user.criaProjeto();
                     this.database.atualizaFicheiro();
                     break;
-                case 5:
+                case 2:
                     user.listarProjetos();
                     break;
-                case 6:
+                case 3:
                     user.criaTarefa();
                     this.database.atualizaFicheiro();
                     break;
-                case 7:
+                case 4:
                     user.listarTarefas();
                     break;
-                case 8:
+                case 5:
                     user.agrupaTarefaParaProjeto();
                     break;
                 case 0:

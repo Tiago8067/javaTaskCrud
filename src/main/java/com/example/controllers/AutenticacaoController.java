@@ -1,7 +1,6 @@
 package com.example.controllers;
 
 import java.util.*;
-
 import com.example.exceptions.UsernameDuplicatedException;
 import com.example.services.*;
 import com.example.models.*;

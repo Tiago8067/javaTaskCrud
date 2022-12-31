@@ -1,7 +1,6 @@
 package com.example.models;
 
 import java.io.Serializable;
-
 import com.example.enums.EstadoTarefa;
 
 public class Tarefa implements Serializable {

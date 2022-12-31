@@ -1,7 +1,6 @@
 package com.example.models;
 
 import com.example.database.*;
-
 import java.util.*;
 import com.example.utils.*;
 import com.example.services.*;

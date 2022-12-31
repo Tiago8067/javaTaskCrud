@@ -1,8 +1,6 @@
-
 package com.example;
 
 import java.io.IOException;
-
 import com.example.database.Database;
 import com.example.menus.*;
 
