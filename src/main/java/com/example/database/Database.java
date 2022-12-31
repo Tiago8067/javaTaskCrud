@@ -52,7 +52,7 @@ public class Database implements Serializable {
                 outDataStream.writeObject(this.utilizadores);
                 outDataStream.writeObject(this.projetos);
                 outDataStream.writeObject(this.tarefas);
-                // outDataStream.writeObject(this.utilizadoresConvidados);
+                outDataStream.writeObject(this.utilizadoresConvidados);
 
                 outDataStream.close();
 
@@ -69,8 +69,7 @@ public class Database implements Serializable {
                 this.utilizadores = (ArrayList<Utilizador>) readStream.readObject();
                 this.projetos = (ArrayList<Projeto>) readStream.readObject();
                 this.tarefas = (ArrayList<Tarefa>) readStream.readObject();
-                // this.utilizadoresConvidados = (ArrayList<Utilizador>)
-                // readStream.readObject();
+                this.utilizadoresConvidados = (ArrayList<Utilizador>) readStream.readObject();
 
                 readStream.close();
             } catch (Exception e) {
@@ -88,7 +87,7 @@ public class Database implements Serializable {
             outDataStream.writeObject(this.utilizadores);
             outDataStream.writeObject(this.projetos);
             outDataStream.writeObject(this.tarefas);
-            // outDataStream.writeObject(this.utilizadoresConvidados);
+            outDataStream.writeObject(this.utilizadoresConvidados);
 
             outDataStream.close();
 

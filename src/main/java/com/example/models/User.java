@@ -1,9 +1,12 @@
 package com.example.models;
 
 import com.example.database.*;
+import com.example.enums.EstadoPedido;
 import com.example.enums.EstadoTarefa;
 import com.example.exceptions.IdException;
 import com.example.exceptions.NomeDuplicatedException;
+
+import java.io.IOException;
 import java.util.*;
 import com.example.utils.*;
 import com.example.services.*;
@@ -21,6 +24,8 @@ public class User extends Utilizador {
     private int idProjeto;
     private int idTarefa;
     FuncionalidadesService funcionalidadesService;
+    private int idUtilizadorConvidado;
+    EstadoPedido estadoPedido;
 
     public User() {
         super();
@@ -56,6 +61,12 @@ public class User extends Utilizador {
         this.funcionalidadesService = new FuncionalidadesService(database);
     }
 
+    public User(int idUser, int idUtilizadorConvidado, EstadoPedido estadoPedido) {
+        this.idUser = idUser;
+        this.idUtilizadorConvidado = idUtilizadorConvidado;
+        this.estadoPedido = estadoPedido;
+    }
+
     public int getIdUser() {
         return this.idUser;
     }
@@ -64,7 +75,18 @@ public class User extends Utilizador {
         this.idUser = idUser;
     }
 
+    public int getIdUtilizadorConvidado() {
+        return this.idUtilizadorConvidado;
+    }
+
+    public void setIdUtilizadorConvidado(int idUtilizadorConvidado) {
+        this.idUtilizadorConvidado = idUtilizadorConvidado;
+    }
+
     public void listarProjetos() {
+
+        clearConsole();
+
         for (int i = 0; i < this.database.getProjetos().size(); i++) {
             System.out.println("Id: " + this.database.getProjetos().get(i).getIdProjeto() + "\t->" + "Nome do projeto: "
                     + this.database.getProjetos().get(i).getNomeProjeto());
@@ -93,6 +115,8 @@ public class User extends Utilizador {
     public void criaProjeto() {
         String nomeProjeto; // , nomeCliente, precoPorHora;
         int idProjeto = 0;
+
+        clearConsole();
 
         do {
             System.out.printf("Insira o nome do Projeto: ");
@@ -165,8 +189,6 @@ public class User extends Utilizador {
     public void opcaoMenuEscolheProjeto() {
         int opcaoVerProjetos;
 
-        clearConsole();
-
         while (true) {
 
             System.out.printf("\nPretende ver a sua lista de Projetos: ");
@@ -193,8 +215,6 @@ public class User extends Utilizador {
     public void opcaoMenuEscolheTarefa() {
         int opcaoVerTarefas;
 
-        clearConsole();
-
         while (true) {
 
             System.out.printf("\nPretende ver a sua lista de Tarefas: ");
@@ -220,8 +240,6 @@ public class User extends Utilizador {
 
     public void opcaoMenuEscolheUtilizadorConvidado() {
         int opcaoVerUtilizadorConvidados;
-
-        clearConsole();
 
         while (true) {
 
@@ -362,17 +380,101 @@ public class User extends Utilizador {
     // pode listar tarefas no estado EM CURSO
     // tem de se obter o tempo total usado na tarefa realizada
     public void listarTarefasEmCurso() {
+        for (int i = 0; i < this.database.getTarefas().size(); i++) {
+            if (this.database.getTarefas().get(i).getEstadoTarefa().equals(EstadoTarefa.EMCURSO)) {
+                System.out.println("Id: " + this.database.getTarefas().get(i).getIdTarefa() + "\t->"
+                        + "Descricao da tarefa: " + this.database.getTarefas().get(i).getCurtaDescricao()
+                        + "-> Estado: "
+                        + this.database.getTarefas().get(i).getEstadoTarefa());
+            }
+        }
     }
 
     // pode listar tarefas no estado FIANLIZADO
     // ENTRE DUAS Datas
     public void listarTarefasFinalizadas() {
+        for (int i = 0; i < this.database.getTarefas().size(); i++) {
+            if (this.database.getTarefas().get(i).getEstadoTarefa().equals(EstadoTarefa.FINALIZADO)) {
+                System.out.println("Id: " + this.database.getTarefas().get(i).getIdTarefa() + "\t->"
+                        + "Descricao da tarefa: " + this.database.getTarefas().get(i).getCurtaDescricao()
+                        + "-> Estado: "
+                        + this.database.getTarefas().get(i).getEstadoTarefa());
+            }
+        }
     }
 
     public void convidaUtilizadorParaParticiparNumProjeto() {
+        int idUtilizadorQueConvida, idUtilizadorConvidado;
+
+        System.out.printf("Verifique o seu Username, para puder agrupar Tarefas a Projetos: ");
+        this.username = scanner.next();
+
+        this.utilizador = this.autenticacaoService.login(this.username);
+
+        if (this.utilizador == null) {
+            System.out.println("Nao existe este utilizador!\n");
+            return;
+        }
+
+        idUtilizadorQueConvida = this.utilizador.getId();
+
+        System.out.println("O id do user que vai realizar o CONVITE e: " + idUtilizadorQueConvida);
+
+        opcaoMenuEscolheUtilizadorConvidado();
+
+        System.out.printf("Insere o Id do Utilizador que deseja Convidar:  ");
+        idUtilizadorConvidado = scanner.nextInt();
+
+        try {
+            this.utilizador = this.util.verificarIdUtilizador(idUtilizadorConvidado);
+        } catch (IdException e) {
+            System.out.println(e.getMessage());
+        }
+
+        this.utilizador = new User(idUtilizadorQueConvida, idUtilizadorConvidado,
+                EstadoPedido.EMESPERA);
+
+        this.funcionalidadesService.registarUtilizadorConvidado(this.utilizador);
     }
 
     public void aceitaConvite() {
+        int opcaoAceita;
+
+        System.out.printf("Verifique o seu Username, para puder verificar se tem Convites: ");
+        this.username = scanner.next();
+
+        this.utilizador = this.autenticacaoService.login(this.username);
+
+        if (this.utilizador == null) {
+            System.out.println("Nao existe este utilizador!\n");
+            return;
+        }
+
+        if (this.utilizador.getEstadoPedido() == null) {
+            System.out.println("Nao tem pedidos, para puder Aceitar.");
+            return;
+        }
+
+        while (true) {
+            System.out.printf("\nPretende aceitar o convite?");
+
+            System.out.println("\n1 - Sim");
+            System.out.println("2 - Nao");
+
+            System.out.printf("Escolha a Opcao: ");
+            opcaoAceita = scanner.nextInt();
+
+            switch (opcaoAceita) {
+                case 1:
+                    this.utilizador.setEstadoPedido(EstadoPedido.ACEITE);
+                    return;
+                case 2:
+                    return;
+                default:
+                    System.out.println("Opcao Invalida!!!\nEscolha a opcao correta.");
+                    break;
+            }
+        }
     }
 
     public void removeConvidadosDoProjeto() {
@@ -392,30 +494,8 @@ public class User extends Utilizador {
         this.funcionalidadesService.removeConvidadosDoProjeto(this.utilizador);
     }
 
-    public final static void clearConsole() {
-
-        /*
-         * try {
-         * final String os = System.getProperty("os.name");
-         * 
-         * if (os.contains("Windows")) {
-         * Runtime.getRuntime().exec("cls");
-         * 
-         * } else {
-         * Runtime.getRuntime().exec("clear");
-         * }
-         * } catch (final Exception e) {
-         * // Tratar Exceptions
-         * }
-         */
-
-        // ProcessBuilder pb;
-        // Limpa a tela no windows, no linux e no MacOS
-        /*
-         * if (System.getProperty("os.name").contains("Windows"))
-         * new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-         * else
-         * Runtime.getRuntime().exec("clear");
-         */
+    public void clearConsole() {
+        System.out.print("\033[H\033[2J"); // Serve para limpar o ecra;
+        // System.out.flush();
     }
 }

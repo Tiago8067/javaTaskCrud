@@ -1,6 +1,8 @@
 package com.example.models;
 
 import java.io.Serializable;
+
+import com.example.enums.EstadoPedido;
 import com.example.enums.EstadoUtilizador;
 
 public abstract class Utilizador implements Serializable {
@@ -14,6 +16,7 @@ public abstract class Utilizador implements Serializable {
     private String codigoPostal;
     private String morada;
     private EstadoUtilizador estadoUtilizador;
+    private EstadoPedido estadoPedido;
 
     public Utilizador() {
     }
@@ -117,6 +120,14 @@ public abstract class Utilizador implements Serializable {
 
     public void setMorada(String morada) {
         this.morada = morada;
+    }
+
+    public EstadoPedido getEstadoPedido() {
+        return this.estadoPedido;
+    }
+
+    public void setEstadoPedido(EstadoPedido estadoPedido) {
+        this.estadoPedido = estadoPedido;
     }
 
 }

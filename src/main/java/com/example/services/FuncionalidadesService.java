@@ -38,4 +38,8 @@ public class FuncionalidadesService {
     // ENTRE DUAS Datas
     public void listarTarefasFinalizadas() {
     }
+
+    public void registarUtilizadorConvidado(Utilizador utilizador) {
+        this.database.getUtilizadoresConvidados().add(utilizador);
+    }
 }
