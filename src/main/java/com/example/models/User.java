@@ -336,7 +336,7 @@ public class User extends Utilizador {
             System.out.println(e.getMessage());
         }
 
-        this.funcionalidadesService.removeProjeto(projeto);
+        this.funcionalidadesService.removeProjeto(this.projeto);
     }
 
     // um utilizador tanto pode remover tarefas no estado EM CURSO, como no estado

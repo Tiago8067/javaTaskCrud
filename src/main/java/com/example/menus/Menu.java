@@ -153,6 +153,14 @@ public class Menu {
             System.out.println("3 - Criar Tarefa");
             System.out.println("4 - Listar Tarefas -> so para teste");
             System.out.println("5 - Agrupar tarefas a projetos");
+            System.out.println("6 - Remover Projetos");
+            System.out.println("7 - Terminar Tarefa em determinada data e hora");
+            System.out.println("8 - Remover Tarefas Em Curso e Finalizadas");
+            System.out.println("9 - Listar Tarefas Em Curso, obter tempo total ate ao momento na Tarefa usada");
+            System.out.println("10 - Listar Tarefas Finalizadas entre duas datas");
+            System.out.println("11 - Convidar outro Utilizador para participar no Projeto");
+            System.out.println("12 - Aceitar convites de Projetos");
+            System.out.println("13 - Remover Utilizadores Convidados");
             System.out.println("0 - Sair");
             System.out.println("\n");
 
@@ -179,6 +187,30 @@ public class Menu {
                     break;
                 case 5:
                     user.agrupaTarefaParaProjeto();
+                    break;
+                case 6:
+                    user.removeProjeto();
+                    break;
+                case 7:
+                    user.terminaTarefa();
+                    break;
+                case 8:
+                    user.removeTarefa();
+                    break;
+                case 9:
+                    user.listarTarefasEmCurso();
+                    break;
+                case 10:
+                    user.listarTarefasFinalizadas();
+                    break;
+                case 11:
+                    user.convidaUtilizadorParaParticiparNumProjeto();
+                    break;
+                case 12:
+                    user.aceitaConvite();
+                    break;
+                case 13:
+                    user.removeConvidadosDoProjeto();
                     break;
                 case 0:
                     return;
