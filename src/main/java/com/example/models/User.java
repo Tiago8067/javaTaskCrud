@@ -47,6 +47,7 @@ public class User extends Utilizador {
         this.util = new Util(database);
         this.autenticacaoService = new AutenticacaoService(database);
         this.scanner = new Scanner(System.in);
+        this.funcionalidadesService = new FuncionalidadesService(database);
     }
 
     // Contrutor para associar tarefas a um projeto pretendido

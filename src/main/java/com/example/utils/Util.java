@@ -41,7 +41,10 @@ public class Util {
     public Projeto verificarIdProjeto(int idProjeto) throws IdException {
         for (int i = 0; i < this.database.getProjetos().size(); i++) {
             if (this.database.getProjetos().get(i).getIdProjeto() == idProjeto) {
+                System.out.println("\nsai do sol\n");
+                // System.out.println(this.database.getProjetos().get(i));
                 return this.database.getProjetos().get(i); // true
+                // return this.database.getProjetos().remove(i);
             }
         }
         throw new IdException("Id Inserido Invalido!!!");
