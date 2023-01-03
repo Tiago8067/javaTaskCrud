@@ -7,9 +7,10 @@ public class Tarefa implements Serializable {
     private String curtaDescricao;
     private String dataInicioHora;
     private String dataHoraTermino;
-    private int idTarefa = 0;
+    private int idTarefa;
     Projeto projeto;
     private int idProjeto;
+    private int idUtilizador;
     private EstadoTarefa estadoTarefa;
 
     public Tarefa() {
@@ -85,6 +86,27 @@ public class Tarefa implements Serializable {
 
     public void setEstadoTarefa(EstadoTarefa estadoTarefa) {
         this.estadoTarefa = estadoTarefa;
+    }
+
+    public int getIdUtilizador() {
+        return this.idUtilizador;
+    }
+
+    public void setIdUtilizador(int idUtilizador) {
+        this.idUtilizador = idUtilizador;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                " curtaDescricao='" + getCurtaDescricao() + "'" +
+                ", dataInicioHora='" + getDataInicioHora() + "'" +
+                ", dataHoraTermino='" + getDataHoraTermino() + "'" +
+                ", idTarefa='" + getIdTarefa() + "'" +
+                ", idProjeto='" + getIdProjeto() + "'" +
+                ", idUtilizador='" + getIdUtilizador() + "'" +
+                ", estadoTarefa='" + getEstadoTarefa() + "'" +
+                "}";
     }
 
 }

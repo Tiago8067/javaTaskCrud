@@ -2,6 +2,7 @@ package com.example.menus;
 
 import java.util.*;
 import com.example.models.*;
+import com.example.services.FuncionalidadesService;
 import com.example.controllers.*;
 import com.example.utils.*;
 import com.example.database.*;
@@ -14,12 +15,14 @@ public class Menu {
     Util util;
     Database database;
     int opcao = 0;
+    FuncionalidadesService funcionalidadesService;
 
     public Menu(Database database) {
         this.scanner = new Scanner(System.in);
         this.database = database;
         this.util = new Util(database);
         this.autenticacaoController = new AutenticacaoController(this.database);
+        this.funcionalidadesService = new FuncionalidadesService(database);
     }
 
     public void menuPrincipal() {
@@ -216,7 +219,7 @@ public class Menu {
                     break;
                 case 2:
                     this.util.clearConsole();
-                    user.listarProjetos();
+                    this.funcionalidadesService.listarProjetos();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;

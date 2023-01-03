@@ -22,6 +22,7 @@ public class User extends Utilizador {
     Tarefa tarefa;
     private int idUser;
     private int idProjeto;
+    // private ArrayList<Integer> idTarefa = new ArrayList<>();
     private int idTarefa;
     FuncionalidadesService funcionalidadesService;
     private int idUtilizadorConvidado;
@@ -110,6 +111,8 @@ public class User extends Utilizador {
             System.out.println("Id: " + this.database.getProjetos().get(i).getIdProjeto() + "\t->" + "Nome do projeto: "
                     + this.database.getProjetos().get(i).getNomeProjeto());
         }
+
+        this.util.waitForCont();
     }
 
     public void listarTarefas() {
@@ -359,7 +362,7 @@ public class User extends Utilizador {
         idProjetoAssociarTarefas = scanner.nextInt();
 
         try {
-            this.funcionalidadesService.verificarIdProjeto(idProjetoAssociarTarefas);
+            this.projeto = this.funcionalidadesService.verificarIdProjeto(idProjetoAssociarTarefas);
         } catch (IdException e) {
             System.out.println(e.getMessage());
         }
@@ -370,24 +373,39 @@ public class User extends Utilizador {
         idTarefaAssociadaNoProjeto = scanner.nextInt();
 
         try {
-            this.funcionalidadesService.verificarIdTarefa(idTarefaAssociadaNoProjeto);
+            this.tarefa = this.funcionalidadesService.verificarIdTarefa(idTarefaAssociadaNoProjeto);
         } catch (IdException e) {
             System.out.println(e.getMessage());
         }
 
+        this.utilizador.setId(idUtilizadorAssociador);
+        this.utilizador.setIdProjeto(idProjetoAssociarTarefas);
+        this.utilizador.setIdTarefa(idTarefaAssociadaNoProjeto);
+
+        this.projeto.setIdUtilizador(idUtilizadorAssociador);
+        this.projeto.setIdProjeto(idProjetoAssociarTarefas);
+        this.projeto.setIdTarefa(idTarefaAssociadaNoProjeto);
+
+        this.tarefa.setIdUtilizador(idUtilizadorAssociador);
+        this.tarefa.setIdProjeto(idProjetoAssociarTarefas);
+        this.tarefa.setIdTarefa(idTarefaAssociadaNoProjeto);
+
         // String username, Database database, int idUser, int idProjeto, int idTarefa
-        this.utilizador = new User(this.username, this.database, idUtilizadorAssociador, idProjetoAssociarTarefas,
-                idTarefaAssociadaNoProjeto);
-        System.out.println(this.utilizador);
-        this.database.getUtilizadores().add(this.utilizador);
+        // this.utilizador = new User(this.username, this.database,
+        // idUtilizadorAssociador, idProjetoAssociarTarefas,
+        // idTarefaAssociadaNoProjeto);
+        // System.out.println(this.utilizador);
+        // this.database.getUtilizadores().add(this.utilizador);
 
-        this.projeto = new Projeto(idProjetoAssociarTarefas, idTarefaAssociadaNoProjeto);
-        this.database.getProjetos().add(this.projeto);
-        System.out.println(this.projeto);
+        // this.projeto = new Projeto(idProjetoAssociarTarefas,
+        // idTarefaAssociadaNoProjeto);
+        // this.database.getProjetos().add(this.projeto);
+        // System.out.println(this.projeto);
 
-        this.tarefa = new Tarefa(idTarefaAssociadaNoProjeto, idProjetoAssociarTarefas);
-        this.database.getTarefas().add(this.tarefa);
-        System.out.println(this.tarefa);
+        // this.tarefa = new Tarefa(idTarefaAssociadaNoProjeto,
+        // idProjetoAssociarTarefas);
+        // this.database.getTarefas().add(this.tarefa);
+        // System.out.println(this.tarefa);
     }
 
     public void editaDadosProjeto() {

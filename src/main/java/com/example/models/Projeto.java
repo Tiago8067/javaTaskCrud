@@ -6,11 +6,13 @@ import com.example.database.Database;
 public class Projeto implements Serializable {
     private int idProjeto;
     private int idTarefa;
+    private int idUtilizador;
     private String nomeProjeto;
     private String nomeCliente;
     private String precoPorHora;
     Database database;
     Tarefa tarefa;
+    // FuncionalidadesService funcionalidadesService;
 
     public Projeto() {
     }
@@ -18,6 +20,7 @@ public class Projeto implements Serializable {
     public Projeto(String nomeProjeto, Database database) {
         this.nomeProjeto = nomeProjeto;
         this.database = database;
+        // this.funcionalidadesService = new FuncionalidadesService(database);
     }
 
     public Projeto(String nomeProjeto, int idProjeto) { // , String nomeCliente, String precoPorHora
@@ -66,6 +69,30 @@ public class Projeto implements Serializable {
 
     public int getIdTarefa() {
         return this.idTarefa;
+    }
+
+    public void setIdTarefa(int idTarefa) {
+        this.idTarefa = idTarefa;
+    }
+
+    public int getIdUtilizador() {
+        return this.idUtilizador;
+    }
+
+    public void setIdUtilizador(int idUtilizador) {
+        this.idUtilizador = idUtilizador;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                " idProjeto='" + getIdProjeto() + "'" +
+                ", idTarefa='" + getIdTarefa() + "'" +
+                ", idUtilizador='" + getIdUtilizador() + "'" +
+                ", nomeProjeto='" + getNomeProjeto() + "'" +
+                ", nomeCliente='" + getNomeCliente() + "'" +
+                ", precoPorHora='" + getPrecoPorHora() + "'" +
+                "}";
     }
 
     public int gerarIdProjeto(int idProjeto) {

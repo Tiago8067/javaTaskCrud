@@ -16,6 +16,8 @@ public abstract class Utilizador implements Serializable {
     private String morada;
     private EstadoUtilizador estadoUtilizador;
     private EstadoPedido estadoPedido;
+    private int idProjeto;
+    private int idTarefa;
 
     public Utilizador() {
     }
@@ -127,6 +129,41 @@ public abstract class Utilizador implements Serializable {
 
     public void setEstadoPedido(EstadoPedido estadoPedido) {
         this.estadoPedido = estadoPedido;
+    }
+
+    public int getIdProjeto() {
+        return this.idProjeto;
+    }
+
+    public void setIdProjeto(int idProjeto) {
+        this.idProjeto = idProjeto;
+    }
+
+    public int getIdTarefa() {
+        return this.idTarefa;
+    }
+
+    public void setIdTarefa(int idTarefa) {
+        this.idTarefa = idTarefa;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                " id='" + getId() + "'" +
+                ", username='" + getUsername() + "'" +
+                ", email='" + getEmail() + "'" +
+                ", password='" + getPassword() + "'" +
+                ", nome='" + getNome() + "'" +
+                ", genero='" + getGenero() + "'" +
+                ", dataDeNascimento='" + getDataDeNascimento() + "'" +
+                ", codigoPostal='" + getCodigoPostal() + "'" +
+                ", morada='" + getMorada() + "'" +
+                ", estadoUtilizador='" + getEstadoUtilizador() + "'" +
+                ", estadoPedido='" + getEstadoPedido() + "'" +
+                ", idProjeto='" + getIdProjeto() + "'" +
+                ", idTarefa='" + getIdTarefa() + "'" +
+                "}";
     }
 
 }

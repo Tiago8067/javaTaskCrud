@@ -106,4 +106,25 @@ public class FuncionalidadesService {
         }
         throw new IdException("Id Inserido Invalido!!!");
     }
+
+    public void listarProjetos() {
+        for (int i = 0; i < this.database.getProjetos().size(); i++) {
+            System.out.println(this.database.getProjetos().get(i).toString());
+        }
+    }
+
+    public void listarTarefas() {
+        for (int i = 0; i < this.database.getTarefas().size(); i++) {
+            System.out.println(this.database.getTarefas().get(i).toString());
+        }
+    }
+
+    public void listarUtilizadorUserParaConvidar() {
+        for (int i = 0; i < this.database.getUtilizadores().size(); i++) {
+            if (this.database.getUtilizadores().get(i) instanceof User) {
+                System.out.println(this.database.getUtilizadores().get(i).toString());
+            }
+        }
+    }
+
 }
