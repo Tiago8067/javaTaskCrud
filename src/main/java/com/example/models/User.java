@@ -5,8 +5,6 @@ import com.example.enums.EstadoPedido;
 import com.example.enums.EstadoTarefa;
 import com.example.exceptions.IdException;
 import com.example.exceptions.NomeDuplicatedException;
-
-import java.io.IOException;
 import java.util.*;
 import com.example.utils.*;
 import com.example.services.*;
@@ -62,10 +60,10 @@ public class User extends Utilizador {
         this.funcionalidadesService = new FuncionalidadesService(database);
     }
 
-    public User(int idUser, int idUtilizadorConvidado, EstadoPedido estadoPedido) {
+    public User(int idUser, int idUtilizadorConvidado) {
         this.idUser = idUser;
         this.idUtilizadorConvidado = idUtilizadorConvidado;
-        this.estadoPedido = estadoPedido;
+        this.estadoPedido = EstadoPedido.EMESPERA;
     }
 
     public int getIdUser() {
@@ -84,9 +82,17 @@ public class User extends Utilizador {
         this.idUtilizadorConvidado = idUtilizadorConvidado;
     }
 
+    public int getIdProjeto() {
+        return this.idProjeto;
+    }
+
+    public int getIdTarefa() {
+        return this.idTarefa;
+    }
+
     public void listarProjetos() {
 
-        clearConsole();
+        this.util.clearConsole();
 
         for (int i = 0; i < this.database.getProjetos().size(); i++) {
             System.out.println("Id: " + this.database.getProjetos().get(i).getIdProjeto() + "\t->" + "Nome do projeto: "
@@ -102,10 +108,21 @@ public class User extends Utilizador {
         }
     }
 
+    public void listarUtilizadorUserParaConvidar() {
+        for (int i = 0; i < this.database.getUtilizadores().size(); i++) {
+            if (this.database.getUtilizadores().get(i) instanceof User) {
+                System.out.println("Id: " + this.database.getUtilizadores().get(i).getId() + "\t->"
+                        + "Username: " + this.database.getUtilizadores().get(i).getUsername());
+            }
+        }
+    }
+
     public void listarUtilizadorConvidados() {
         for (int i = 0; i < this.database.getUtilizadoresConvidados().size(); i++) {
-            System.out.println("Id: " + this.database.getUtilizadoresConvidados().get(i).getId() + "\t->"
-                    + "Username: " + this.database.getUtilizadoresConvidados().get(i).getUsername());
+            System.out.println("Id do que convida: " + this.database.getUtilizadoresConvidados().get(i).getId() + "\t->"
+                    + "Username: " + this.database.getUtilizadoresConvidados().get(i).getUsername()
+                    + "\tEstado Pedido: "
+                    + this.database.getUtilizadoresConvidados().get(i).getEstadoPedido());
         }
     }
 
@@ -117,7 +134,7 @@ public class User extends Utilizador {
         String nomeProjeto; // , nomeCliente, precoPorHora;
         int idProjeto = 0;
 
-        clearConsole();
+        this.util.clearConsole();
 
         do {
             System.out.printf("Insira o nome do Projeto: ");
@@ -129,7 +146,7 @@ public class User extends Utilizador {
         } while (nomeProjeto.length() < 4);
 
         try {
-            this.util.verificarNomeProjeto(nomeProjeto.toLowerCase());
+            this.funcionalidadesService.verificarNomeProjeto(nomeProjeto.toLowerCase());
         } catch (NomeDuplicatedException e) {
             System.out.println(e.getMessage());
             return;
@@ -157,6 +174,8 @@ public class User extends Utilizador {
         String curtaDescricao; // , dataInicioHora, dataHoraTermino;
         int idTarefa = 0;
 
+        this.util.clearConsole();
+
         do {
             System.out.printf("Insira a descricao da tarefa: ");
             curtaDescricao = this.scanner.nextLine();
@@ -167,7 +186,7 @@ public class User extends Utilizador {
         } while (curtaDescricao.length() < 4);
 
         try {
-            this.util.verificarDescricaoTarefa(curtaDescricao.toLowerCase());
+            this.funcionalidadesService.verificarDescricaoTarefa(curtaDescricao.toLowerCase());
         } catch (NomeDuplicatedException e) {
             System.out.println(e.getMessage());
             return;
@@ -239,6 +258,32 @@ public class User extends Utilizador {
         }
     }
 
+    public void opcaoMenuEscolheUtilizadorParaConvidar() {
+        int opcaoVerUtilizadorConvidados;
+
+        while (true) {
+
+            System.out.printf("\nPretende ver a sua lista de Utilizadores Convidados: ");
+
+            System.out.println("\n1 - Sim");
+            System.out.println("2 - Nao");
+
+            System.out.printf("Escolha a Opcao: ");
+            opcaoVerUtilizadorConvidados = scanner.nextInt();
+
+            switch (opcaoVerUtilizadorConvidados) {
+                case 1:
+                    listarUtilizadorUserParaConvidar();
+                    return;
+                case 2:
+                    return;
+                default:
+                    System.out.println("Opcao Invalida!!!\nEscolha a opcao correta.");
+                    break;
+            }
+        }
+    }
+
     public void opcaoMenuEscolheUtilizadorConvidado() {
         int opcaoVerUtilizadorConvidados;
 
@@ -289,7 +334,7 @@ public class User extends Utilizador {
         idProjetoAssociarTarefas = scanner.nextInt();
 
         try {
-            this.util.verificarIdProjeto(idProjetoAssociarTarefas);
+            this.funcionalidadesService.verificarIdProjeto(idProjetoAssociarTarefas);
         } catch (IdException e) {
             System.out.println(e.getMessage());
         }
@@ -300,7 +345,7 @@ public class User extends Utilizador {
         idTarefaAssociadaNoProjeto = scanner.nextInt();
 
         try {
-            this.util.verificarIdTarefa(idTarefaAssociadaNoProjeto);
+            this.funcionalidadesService.verificarIdTarefa(idTarefaAssociadaNoProjeto);
         } catch (IdException e) {
             System.out.println(e.getMessage());
         }
@@ -328,11 +373,11 @@ public class User extends Utilizador {
 
         opcaoMenuEscolheProjeto();
 
-        System.out.printf("Insere o Id do Projeto que deseja agrupar:  ");
+        System.out.printf("Insere o Id do Projeto que deseja remover:  ");
         idProjetoQueVaiSerRemovido = scanner.nextInt();
 
         try {
-            this.projeto = this.util.verificarIdProjeto(idProjetoQueVaiSerRemovido);
+            this.projeto = this.funcionalidadesService.verificarIdProjeto(idProjetoQueVaiSerRemovido);
         } catch (IdException e) {
             System.out.println(e.getMessage());
         }
@@ -347,11 +392,11 @@ public class User extends Utilizador {
 
         opcaoMenuEscolheTarefa();
 
-        System.out.printf("Insere o Id da Tarefa que deseja agrupar:  ");
+        System.out.printf("Insere o Id da Tarefa que deseja remover:  ");
         idTarefaQueVaiSerRemovido = scanner.nextInt();
 
         try {
-            this.tarefa = this.util.verificarIdTarefa(idTarefaQueVaiSerRemovido);
+            this.tarefa = this.funcionalidadesService.verificarIdTarefa(idTarefaQueVaiSerRemovido);
         } catch (IdException e) {
             System.out.println(e.getMessage());
         }
@@ -366,11 +411,11 @@ public class User extends Utilizador {
 
         opcaoMenuEscolheTarefa();
 
-        System.out.printf("Insere o Id da Tarefa que deseja agrupar:  ");
+        System.out.printf("Insere o Id da Tarefa que deseja terrminar:  ");
         idTarefaAssociadaNoProjeto = scanner.nextInt();
 
         try {
-            this.tarefa = this.util.verificarIdTarefa(idTarefaAssociadaNoProjeto);
+            this.tarefa = this.funcionalidadesService.verificarIdTarefa(idTarefaAssociadaNoProjeto);
         } catch (IdException e) {
             System.out.println(e.getMessage());
         }
@@ -421,19 +466,20 @@ public class User extends Utilizador {
 
         System.out.println("O id do user que vai realizar o CONVITE e: " + idUtilizadorQueConvida);
 
-        opcaoMenuEscolheUtilizadorConvidado();
+        opcaoMenuEscolheUtilizadorParaConvidar();
 
         System.out.printf("Insere o Id do Utilizador que deseja Convidar:  ");
         idUtilizadorConvidado = scanner.nextInt();
 
         try {
-            this.utilizador = this.util.verificarIdUtilizador(idUtilizadorConvidado);
+            this.utilizador = this.funcionalidadesService.verificarIdUtilizador(idUtilizadorConvidado);
         } catch (IdException e) {
             System.out.println(e.getMessage());
         }
 
-        this.utilizador = new User(idUtilizadorQueConvida, idUtilizadorConvidado,
-                EstadoPedido.EMESPERA);
+        this.utilizador.setEstadoPedido(EstadoPedido.EMESPERA);
+
+        this.utilizador = new User(idUtilizadorQueConvida, idUtilizadorConvidado);
 
         this.funcionalidadesService.registarUtilizadorConvidado(this.utilizador);
     }
@@ -487,16 +533,12 @@ public class User extends Utilizador {
         idUtilizadorConvidadoQueVaiSerRemovido = scanner.nextInt();
 
         try {
-            this.utilizador = this.util.verificarIdUtilizador(idUtilizadorConvidadoQueVaiSerRemovido);
+            this.utilizador = this.funcionalidadesService
+                    .verificarIdUtilizadorConvidado(idUtilizadorConvidadoQueVaiSerRemovido);
         } catch (IdException e) {
             System.out.println(e.getMessage());
         }
 
         this.funcionalidadesService.removeConvidadosDoProjeto(this.utilizador);
-    }
-
-    public void clearConsole() {
-        System.out.print("\033[H\033[2J"); // Serve para limpar o ecra;
-        // System.out.flush();
     }
 }

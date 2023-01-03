@@ -13,7 +13,6 @@ public class Admin extends Utilizador {
     Scanner scanner;
     Utilizador utilizador;
     String username;
-    // private int idAdmin;
     UserManager userManager;
 
     public Admin() {
@@ -40,7 +39,7 @@ public class Admin extends Utilizador {
             System.out.println("Id:" + this.database.getUtilizadores().get(i).getId() + "\t-> Username: "
                     + this.database.getUtilizadores().get(i).getUsername() + "\t-> Estado"
                     + this.database.getUtilizadores().get(i).getEstadoUtilizador() + "\tTipo de utilizador: "
-                    + this.util.checkPermissao(this.database.getUtilizadores().get(i))); //
+                    + this.util.checkPermissao(this.database.getUtilizadores().get(i)));
         }
     }
 
@@ -77,31 +76,30 @@ public class Admin extends Utilizador {
 
         System.out.println("\n1 - Admin");
         System.out.println("2 - User Manager");
+        System.out.println("0 - Sair");
 
-        System.out.printf("\nnova permissao: ");
+        System.out.printf("\nInsere a Nova Permissao para o Utilizador: ");
         opcao = scanner.nextInt();
 
-        if (opcao == 1) {
-            this.utilizador = new Admin(this.username, idAnteriorUser);
-            this.utilizador.setEstadoUtilizador(EstadoUtilizador.ATIVO);
-            this.autenticacaoService.registar(this.utilizador);
-            return;
+        switch (opcao) {
+            case 1:
+                this.utilizador = new Admin(this.username, idAnteriorUser);
+                this.utilizador.setEstadoUtilizador(EstadoUtilizador.ATIVO);
+                this.autenticacaoService.registar(this.utilizador);
+                break;
+            case 2:
+                this.utilizador = new UserManager(this.username, idAnteriorUser);
+                this.utilizador.setEstadoUtilizador(EstadoUtilizador.ATIVO);
+                this.autenticacaoService.registar(this.utilizador);
+                break;
+            case 0:
+                this.autenticacaoService.registar(this.utilizador);
+                System.out.println("Sair");
+                break;
+            default:
+                this.autenticacaoService.registar(this.utilizador);
+                System.out.println("Opcao Invalida!!!");
+                break;
         }
-
-        if (opcao == 2) {
-            this.utilizador = new UserManager(this.username, idAnteriorUser);
-            this.utilizador.setEstadoUtilizador(EstadoUtilizador.ATIVO);
-            this.autenticacaoService.registar(this.utilizador);
-            return;
-        }
-
-        // Em principio para resolver e com Switch case
-
-        // Fazer forma de se isenrir outra opcao sem ser 1 e 2 retornar ao menu de
-        // escolha de troca de permissao, ou seja, menu que tem opcoes 1-admin e
-        // 2-UserManager
-        // else {
-        // System.out.println("Opcao Invalida!!!\nEscolha a correta.");
-        // }
     }
 }

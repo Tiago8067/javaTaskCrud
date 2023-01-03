@@ -23,6 +23,9 @@ public class Menu {
     }
 
     public void menuPrincipal() {
+
+        // this.util.clearConsole();
+
         while (true) {
             System.out.println("\n\n### Menu Principal ###");
             System.out.println("\n");
@@ -69,17 +72,23 @@ public class Menu {
                     this.database.atualizaFicheiro();
                     break;
                 case 0:
+                    System.out.println("Sair");
+                    return;
+                default:
+                    System.out.println("Opcao Invalida!!!");
                     return;
             }
         }
     }
 
     public void menuAdmin(Admin admin) {
+
+        this.util.clearConsole();
+
         while (true) {
             System.out.println("\n\n### Menu do Admin ###");
             System.out.println("\n");
-            System.out.println("1 - Visualizar todos os registos disponiveis"); // -> (E Listar os registos
-                                                                                // utilizadores???)
+            System.out.println("1 - Visualizar todos os registos disponiveis");
             System.out.println("2 - Alterar estado dos utilizadores");
             System.out.println("3 - Alterar permissao dos utilizadores");
             System.out.println("0 - Sair");
@@ -93,28 +102,43 @@ public class Menu {
 
             switch (opcao) {
                 case 1:
+                    this.util.clearConsole();
                     admin.listarUtilizadores();
+                    this.util.waitForCont();
+                    this.util.clearConsole();
                     break;
                 case 2:
+                    this.util.clearConsole();
                     admin.alterarEstadoDosUtilizadores();
                     this.database.atualizaFicheiro();
+                    this.util.waitForCont();
+                    this.util.clearConsole();
                     break;
                 case 3:
+                    this.util.clearConsole();
                     admin.alterarPermissaoDosUtilizadores();
                     this.database.atualizaFicheiro();
+                    this.util.waitForCont();
+                    this.util.clearConsole();
                     break;
                 case 0:
+                    System.out.println("Sair");
+                    return;
+                default:
+                    System.out.println("Opcao Invalida!!!");
                     return;
             }
         }
     }
 
-    public void menuUserManager(UserManager usermanager) { // UserManager usermanager
+    public void menuUserManager(UserManager usermanager) {
+
+        this.util.clearConsole();
+
         while (true) {
             System.out.println("\n\n### Menu do UserManager ###");
             System.out.println("\n");
-            System.out.println("1 - Visualizar todos os registos disponiveis"); // -> (E Listar os registos
-                                                                                // utilizadores???)
+            System.out.println("1 - Visualizar todos os registos disponiveis");
             System.out.println("2 - Alterar estado dos utilizadores");
             System.out.println("3 - Alterar permissao dos utilizadores");
             System.out.println("0 - Sair");
@@ -128,15 +152,24 @@ public class Menu {
 
             switch (opcao) {
                 case 1:
+                    this.util.clearConsole();
                     usermanager.listarUtilizadores();
+                    this.util.waitForCont();
+                    this.util.clearConsole();
                     break;
                 case 2:
+                    this.util.clearConsole();
                     usermanager.alterarEstadoDosUtilizadores();
                     this.database.atualizaFicheiro();
+                    this.util.waitForCont();
+                    this.util.clearConsole();
                     break;
                 case 3:
+                    this.util.clearConsole();
                     usermanager.alterarPermissaoDosUtilizadores();
                     this.database.atualizaFicheiro();
+                    this.util.waitForCont();
+                    this.util.clearConsole();
                     break;
                 case 0:
                     return;
@@ -145,6 +178,9 @@ public class Menu {
     }
 
     public void menuUser(User user) {
+
+        this.util.clearConsole();
+
         while (true) {
             System.out.println("\n\n### Menu do User ###");
             System.out.println("\n");
@@ -172,47 +208,94 @@ public class Menu {
 
             switch (opcao) {
                 case 1:
+                    this.util.clearConsole();
                     user.criaProjeto();
                     this.database.atualizaFicheiro();
+                    this.util.waitForCont();
+                    this.util.clearConsole();
                     break;
                 case 2:
+                    this.util.clearConsole();
                     user.listarProjetos();
+                    this.util.waitForCont();
+                    this.util.clearConsole();
                     break;
                 case 3:
+                    this.util.clearConsole();
                     user.criaTarefa();
                     this.database.atualizaFicheiro();
+                    this.util.waitForCont();
+                    this.util.clearConsole();
                     break;
                 case 4:
+                    this.util.clearConsole();
                     user.listarTarefas();
+                    this.util.waitForCont();
+                    this.util.clearConsole();
                     break;
                 case 5:
+                    this.util.clearConsole();
                     user.agrupaTarefaParaProjeto();
+                    this.database.atualizaFicheiro();
+                    this.util.waitForCont();
+                    this.util.clearConsole();
                     break;
                 case 6:
+                    this.util.clearConsole();
                     user.removeProjeto();
+                    this.database.atualizaFicheiro();
+                    this.util.waitForCont();
+                    this.util.clearConsole();
                     break;
                 case 7:
+                    this.util.clearConsole();
                     user.terminaTarefa();
+                    this.database.atualizaFicheiro();
+                    this.util.waitForCont();
+                    this.util.clearConsole();
                     break;
                 case 8:
+                    this.util.clearConsole();
                     user.removeTarefa();
+                    this.database.atualizaFicheiro();
+                    this.util.waitForCont();
+                    this.util.clearConsole();
                     break;
                 case 9:
+                    this.util.clearConsole();
                     user.listarTarefasEmCurso();
+                    this.util.waitForCont();
+                    this.util.clearConsole();
                     break;
                 case 10:
+                    this.util.clearConsole();
                     user.listarTarefasFinalizadas();
+                    this.util.waitForCont();
+                    this.util.clearConsole();
                     break;
                 case 11:
+                    this.util.clearConsole();
                     user.convidaUtilizadorParaParticiparNumProjeto();
+                    this.util.waitForCont();
+                    this.util.clearConsole();
                     break;
                 case 12:
+                    this.util.clearConsole();
                     user.aceitaConvite();
+                    this.util.waitForCont();
+                    this.util.clearConsole();
                     break;
                 case 13:
+                    this.util.clearConsole();
                     user.removeConvidadosDoProjeto();
+                    this.util.waitForCont();
+                    this.util.clearConsole();
                     break;
                 case 0:
+                    System.out.println("Sair");
+                    return;
+                default:
+                    System.out.println("Opcao Invalida!!!");
                     return;
             }
         }

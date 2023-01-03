@@ -1,7 +1,6 @@
 package com.example.models;
 
 import java.io.Serializable;
-
 import com.example.enums.EstadoPedido;
 import com.example.enums.EstadoUtilizador;
 

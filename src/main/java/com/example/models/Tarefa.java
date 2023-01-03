@@ -4,9 +4,6 @@ import java.io.Serializable;
 import com.example.enums.EstadoTarefa;
 
 public class Tarefa implements Serializable {
-
-    // id da tarefa
-    // associar por ids
     private String curtaDescricao;
     private String dataInicioHora;
     private String dataHoraTermino;

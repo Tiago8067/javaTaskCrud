@@ -5,15 +5,12 @@ import com.example.database.Database;
 
 public class Projeto implements Serializable {
     private int idProjeto;
+    private int idTarefa;
     private String nomeProjeto;
     private String nomeCliente;
     private String precoPorHora;
     Database database;
     Tarefa tarefa;
-    // private int idUser;
-    private int idTarefa;
-
-    // private int idUser;// para fazer a associcaçao ao projeto
 
     public Projeto() {
     }
@@ -23,7 +20,7 @@ public class Projeto implements Serializable {
         this.database = database;
     }
 
-    public Projeto(String nomeProjeto, int idProjeto) { // , String nomeCliente, String precoPorHora, , int idProjeto
+    public Projeto(String nomeProjeto, int idProjeto) { // , String nomeCliente, String precoPorHora
         this.nomeProjeto = nomeProjeto;
         // this.nomeCliente = nomeCliente;
         // this.precoPorHora = precoPorHora;
@@ -65,6 +62,10 @@ public class Projeto implements Serializable {
 
     public void setIdProjeto(int idProjeto) {
         this.idProjeto = idProjeto;
+    }
+
+    public int getIdTarefa() {
+        return this.idTarefa;
     }
 
     public int gerarIdProjeto(int idProjeto) {

@@ -2,9 +2,7 @@ package com.example.services;
 
 import com.example.models.*;
 import com.example.utils.Util;
-import org.apache.commons.collections.functors.IdentityPredicate;
 import com.example.database.*;
-import com.example.exceptions.NomeDuplicatedException;
 
 public class AutenticacaoService {
     Database database;

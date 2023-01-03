@@ -3,13 +3,13 @@ package com.example.database;
 import java.io.*;
 import java.util.*;
 import com.example.models.*;
-import com.fasterxml.jackson.dataformat.csv.CsvMapper;
-import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import com.opencsv.CSVWriter;
+// import com.fasterxml.jackson.dataformat.csv.CsvMapper;
+// import com.fasterxml.jackson.dataformat.csv.CsvSchema;
+// import com.opencsv.CSVWriter;
 import com.example.enums.*;
-import org.supercsv.io.CsvMapWriter;
-import org.supercsv.io.ICsvMapWriter;
-import org.supercsv.prefs.CsvPreference;
+// import org.supercsv.io.CsvMapWriter;
+// import org.supercsv.io.ICsvMapWriter;
+// import org.supercsv.prefs.CsvPreference;
 
 public class Database implements Serializable {
     ArrayList<Utilizador> utilizadores;
@@ -194,36 +194,11 @@ public class Database implements Serializable {
     // }
     // }
 
-    public void setUtilizadores(ArrayList<Utilizador> utilizadores) {
-        this.utilizadores = utilizadores;
-    }
-
-    public void setProjetos(ArrayList<Projeto> projetos) {
-        this.projetos = projetos;
-    }
-
-    public void setTarefas(ArrayList<Tarefa> tarefas) {
-        this.tarefas = tarefas;
-    }
-
     public Map<String, String> getTarefasAssociadasMap() {
         return this.tarefasAssociadasMap;
-    }
-
-    public void setTarefasAssociadasMap(Map<String, String> tarefasAssociadasMap) {
-        this.tarefasAssociadasMap = tarefasAssociadasMap;
     }
 
     // public List<HashMap<String, String>> getTarefasAssociadas() {
     // return this.tarefasAssociadas;
     // }
-
-    // public void setTarefasAssociadas(List<HashMap<String, String>>
-    // tarefasAssociadas) {
-    // this.tarefasAssociadas = tarefasAssociadas;
-    // }
-
-    public void setUtilizadoresConvidados(ArrayList<Utilizador> utilizadoresConvidados) {
-        this.utilizadoresConvidados = utilizadoresConvidados;
-    }
 }

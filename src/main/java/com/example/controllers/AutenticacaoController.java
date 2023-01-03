@@ -9,18 +9,22 @@ import com.example.utils.*;
 
 public class AutenticacaoController {
     AutenticacaoService autenticacaoService;
-    Util util;
     Utilizador utilizador;
     Scanner scanner;
+    FuncionalidadesService funcionalidadesService;
+    Util util;
 
     public AutenticacaoController(Database database) {
         this.scanner = new Scanner(System.in);
-        this.util = new Util(database);
         this.autenticacaoService = new AutenticacaoService(database);
+        this.funcionalidadesService = new FuncionalidadesService(database);
+        this.util = new Util(database);
     }
 
     public Utilizador login() {
         String username;
+
+        this.util.clearConsole();
 
         System.out.printf("username: ");
         username = this.scanner.next();
@@ -34,6 +38,8 @@ public class AutenticacaoController {
         String username; // , email, pass, nome, genero, morada;
         int idUtilizador = 0;
 
+        this.util.clearConsole();
+
         do {
             System.out.printf("Insira o username do utilizador: ");
             username = this.scanner.next();
@@ -45,7 +51,7 @@ public class AutenticacaoController {
 
         // VERIFICA O USERNAME COM LOWERCASE
         try {
-            this.util.verificarUsername(username.toLowerCase());
+            this.funcionalidadesService.verificarUsername(username.toLowerCase());
         } catch (UsernameDuplicatedException e) {
             System.out.println(e.getMessage());
             return;

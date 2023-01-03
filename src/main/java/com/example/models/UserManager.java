@@ -79,16 +79,26 @@ public class UserManager extends Utilizador {
         }
         this.autenticacaoService.removerUtilizador(this.utilizador);
 
-        System.out.println("1 - User Manager");
+        System.out.println("\n1 - User Manager");
+        System.out.println("0 - Sair");
 
-        System.out.printf("\nnova permissao: ");
+        System.out.printf("\nInsere a Nova Permissao para o Utilizador: ");
         opcao = scanner.nextInt();
 
-        if (opcao == 1) {
-            this.utilizador = new UserManager(this.username, this.idUserManager);
-            this.utilizador.setEstadoUtilizador(EstadoUtilizador.ATIVO);
-            this.autenticacaoService.registar(this.utilizador);
-            return;
+        switch (opcao) {
+            case 1:
+                this.utilizador = new UserManager(this.username, this.idUserManager);
+                this.utilizador.setEstadoUtilizador(EstadoUtilizador.ATIVO);
+                this.autenticacaoService.registar(this.utilizador);
+                break;
+            case 0:
+                this.autenticacaoService.registar(this.utilizador);
+                System.out.println("Sair");
+                break;
+            default:
+                this.autenticacaoService.registar(this.utilizador);
+                System.out.println("Opcao Invalida!!!");
+                break;
         }
     }
 }
