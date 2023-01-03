@@ -1,6 +1,10 @@
 package com.example.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import com.example.enums.EstadoPedido;
 import com.example.enums.EstadoUtilizador;
 
@@ -17,7 +21,11 @@ public abstract class Utilizador implements Serializable {
     private EstadoUtilizador estadoUtilizador;
     private EstadoPedido estadoPedido;
     private int idProjeto;
+    // private ArrayList<Integer> idProjeto2 = new ArrayList<>();
     private int idTarefa;
+    // private ArrayList<Integer> idTarefa = new ArrayList<>();
+    // private Map<ArrayList<Integer>, ArrayList<Integer>> tarefasAssociadasMap;
+    // private List<HashMap<Integer, Integer>> tarefasAssociadas;
 
     public Utilizador() {
     }

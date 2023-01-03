@@ -6,7 +6,9 @@ import com.example.database.Database;
 public class Projeto implements Serializable {
     private int idProjeto;
     private int idTarefa;
+    // private ArrayList<Integer> idTarefa = new ArrayList<>();
     private int idUtilizador;
+    // private ArrayList<Integer> idUtilizadorConvidados = new ArrayList<>();
     private String nomeProjeto;
     private String nomeCliente;
     private String precoPorHora;
