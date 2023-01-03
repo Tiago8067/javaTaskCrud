@@ -15,10 +15,9 @@ public class Tarefa implements Serializable {
     public Tarefa() {
     }
 
-    public Tarefa(String curtaDescricao, int idTarefa) { // String dataInicioHora, String dataHoraTermino
+    public Tarefa(String curtaDescricao, String dataInicioHora, int idTarefa) {
         this.curtaDescricao = curtaDescricao;
-        // this.dataInicioHora = dataInicioHora;
-        // this.dataHoraTermino = dataHoraTermino;
+        this.dataInicioHora = dataInicioHora;
         this.idTarefa = idTarefa;
         this.estadoTarefa = EstadoTarefa.EMCURSO;
     }
@@ -26,6 +25,10 @@ public class Tarefa implements Serializable {
     public Tarefa(int idTarefa, int idProjeto) {
         this.idTarefa = idTarefa;
         this.idProjeto = idProjeto;
+    }
+
+    public Tarefa(String dataHoraTermino) {
+        this.dataHoraTermino = dataHoraTermino;
     }
 
     public String getCurtaDescricao() {

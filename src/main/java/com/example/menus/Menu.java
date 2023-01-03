@@ -191,7 +191,7 @@ public class Menu {
             System.out.println("5 - Agrupar tarefas a projetos");
             System.out.println("6 - Remover Projetos");
             System.out.println("7 - Terminar Tarefa em determinada data e hora");
-            System.out.println("8 - Remover Tarefas Em Curso e Finalizadas");
+            System.out.println("8 - Remover Tarefas Em Curso e/ou Finalizadas");
             System.out.println("9 - Listar Tarefas Em Curso, obter tempo total ate ao momento na Tarefa usada");
             System.out.println("10 - Listar Tarefas Finalizadas entre duas datas");
             System.out.println("11 - Convidar outro Utilizador para participar no Projeto");

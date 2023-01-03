@@ -5,6 +5,7 @@ import com.example.enums.EstadoPedido;
 import com.example.enums.EstadoTarefa;
 import com.example.exceptions.IdException;
 import com.example.exceptions.NomeDuplicatedException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import com.example.utils.*;
 import com.example.services.*;
@@ -24,6 +25,7 @@ public class User extends Utilizador {
     FuncionalidadesService funcionalidadesService;
     private int idUtilizadorConvidado;
     EstadoPedido estadoPedido;
+    RegexDados regex;
 
     public User() {
         super();
@@ -46,6 +48,7 @@ public class User extends Utilizador {
         this.autenticacaoService = new AutenticacaoService(database);
         this.scanner = new Scanner(System.in);
         this.funcionalidadesService = new FuncionalidadesService(database);
+        this.regex = new RegexDados(database);
     }
 
     // Contrutor para associar tarefas a um projeto pretendido
@@ -103,7 +106,9 @@ public class User extends Utilizador {
     public void listarTarefas() {
         for (int i = 0; i < this.database.getTarefas().size(); i++) {
             System.out.println("Id: " + this.database.getTarefas().get(i).getIdTarefa() + "\t->"
-                    + "Descricao da tarefa: " + this.database.getTarefas().get(i).getCurtaDescricao() + "-> Estado: "
+                    + "Descricao da tarefa: " + this.database.getTarefas().get(i).getCurtaDescricao() + "\tData inico: "
+                    + this.database.getTarefas().get(i).getDataInicioHora() + "\tData Termino: "
+                    + this.database.getTarefas().get(i).getDataHoraTermino() + "\t-> Estado: "
                     + this.database.getTarefas().get(i).getEstadoTarefa());
         }
     }
@@ -171,7 +176,7 @@ public class User extends Utilizador {
     // quando cria inicia uma tarefa, indicando uma curta descricao e data e hora de
     // inicio, se data e hora nao inseridas atribuir o data e hora ATUAL
     public void criaTarefa() {
-        String curtaDescricao; // , dataInicioHora, dataHoraTermino;
+        String curtaDescricao, dataInicioHora; // dataHoraTermino;
         int idTarefa = 0;
 
         this.util.clearConsole();
@@ -192,16 +197,27 @@ public class User extends Utilizador {
             return;
         }
 
-        // System.out.printf("Insira a data e hora de inicio da tarefa: ");
-        // dataInicioHora = this.scanner.next();
+        System.out.printf("Insira a data e hora de inicio da tarefa: ");
+        dataInicioHora = this.scanner.nextLine();
 
-        // System.out.printf("Insira a data e hora de termino da tarefa: ");
-        // dataHoraTermino = this.scanner.next();
+        if (dataInicioHora.equals("")) {
+            Date date = new Date();
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            dataInicioHora = formatter.format(date);
+            System.out.println(dataInicioHora + " Registada");
+        } else {
+            if (this.regex.validateJavaDate(dataInicioHora)) {
+                System.out.println(dataInicioHora + "Registada");
+            } else {
+                System.out.println(dataInicioHora
+                        + " não é uma data e horas válidas, introduza uma com o seguinte formato: dd(31)/MM(12)/AAAA hh:mm:ss");
+            }
+        }
 
         for (int i = 0; i < this.database.getTarefas().size(); i++) {
             idTarefa++;
         }
-        this.tarefa = new Tarefa(curtaDescricao.toLowerCase(), idTarefa); // dataInicioHora, dataHoraTermino
+        this.tarefa = new Tarefa(curtaDescricao.toLowerCase(), dataInicioHora, idTarefa);
 
         this.autenticacaoService.adicionaTarefa(this.tarefa);
     }
@@ -407,7 +423,7 @@ public class User extends Utilizador {
     // FIM, se data e hora de fim nao inseridas atribuir o data e hora ATUAL
     public void terminaTarefa() {
         int idTarefaAssociadaNoProjeto;
-        // Date dataFimTarefa;
+        String dataFimTarefa;
 
         opcaoMenuEscolheTarefa();
 
@@ -420,7 +436,25 @@ public class User extends Utilizador {
             System.out.println(e.getMessage());
         }
 
+        System.out.printf("Insira a data e hora de Fim da tarefa: ");
+        dataFimTarefa = this.scanner.nextLine();
+
+        if (dataFimTarefa.equals("")) {
+            Date date = new Date();
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            dataFimTarefa = formatter.format(date);
+            System.out.println(dataFimTarefa + " Registada");
+        } else {
+            if (this.regex.validateJavaDate(dataFimTarefa)) {
+                System.out.println(dataFimTarefa + "Registada");
+            } else {
+                System.out.println(dataFimTarefa
+                        + " não é uma data e horas válidas, introduza uma com o seguinte formato: dd(31)/MM(12)/AAAA HH:mm:ss");
+            }
+        }
+
         this.tarefa.setEstadoTarefa(EstadoTarefa.FINALIZADO);
+        this.tarefa.setDataHoraTermino(dataFimTarefa);
     }
 
     // pode listar tarefas no estado EM CURSO
