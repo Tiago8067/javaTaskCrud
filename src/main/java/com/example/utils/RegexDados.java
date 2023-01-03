@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.print.DocFlavor.READER;
-
 import com.example.database.Database;
 
 public class RegexDados {

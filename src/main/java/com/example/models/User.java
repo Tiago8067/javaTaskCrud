@@ -5,6 +5,7 @@ import com.example.enums.EstadoPedido;
 import com.example.enums.EstadoTarefa;
 import com.example.exceptions.IdException;
 import com.example.exceptions.NomeDuplicatedException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import com.example.utils.*;
@@ -91,6 +92,14 @@ public class User extends Utilizador {
 
     public int getIdTarefa() {
         return this.idTarefa;
+    }
+
+    public void setIdProjeto(int idProjeto) {
+        this.idProjeto = idProjeto;
+    }
+
+    public void setIdTarefa(int idTarefa) {
+        this.idTarefa = idTarefa;
     }
 
     public void listarProjetos() {
@@ -460,13 +469,52 @@ public class User extends Utilizador {
     // pode listar tarefas no estado EM CURSO
     // tem de se obter o tempo total usado na tarefa realizada
     public void listarTarefasEmCurso() {
-        for (int i = 0; i < this.database.getTarefas().size(); i++) {
-            if (this.database.getTarefas().get(i).getEstadoTarefa().equals(EstadoTarefa.EMCURSO)) {
-                System.out.println("Id: " + this.database.getTarefas().get(i).getIdTarefa() + "\t->"
-                        + "Descricao da tarefa: " + this.database.getTarefas().get(i).getCurtaDescricao()
-                        + "-> Estado: "
-                        + this.database.getTarefas().get(i).getEstadoTarefa());
+        String dataCalculaTempoTarefa;
+        Date data1, data2;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+        System.out.printf("Insira a data e hora de Fim da tarefa: ");
+        dataCalculaTempoTarefa = this.scanner.nextLine();
+
+        if (dataCalculaTempoTarefa.equals("")) {
+            Date date = new Date();
+            dataCalculaTempoTarefa = formatter.format(date);
+            System.out.println(dataCalculaTempoTarefa + " Registada");
+        } else {
+            if (this.regex.validateJavaDate(dataCalculaTempoTarefa)) {
+                System.out.println(dataCalculaTempoTarefa + "Registada");
+            } else {
+                System.out.println(dataCalculaTempoTarefa
+                        + " não é uma data e horas válidas, introduza uma com o seguinte formato: dd(31)/MM(12)/AAAA HH:mm:ss");
             }
+        }
+
+        try {
+            data2 = formatter.parse(dataCalculaTempoTarefa);
+
+            for (int i = 0; i < this.database.getTarefas().size(); i++) {
+                if (this.database.getTarefas().get(i).getEstadoTarefa().equals(EstadoTarefa.EMCURSO)) {
+
+                    data1 = formatter.parse(this.database.getTarefas().get(i).getDataInicioHora());
+
+                    long diff = data2.getTime() - data1.getTime();
+
+                    long diffSeconds = diff / 1000 % 60;
+                    long diffMinutes = diff / (60 * 1000) % 60;
+                    long diffHours = diff / (60 * 60 * 1000) % 24;
+                    long diffDays = diff / (24 * 60 * 60 * 1000);
+
+                    System.out.println("Id: " + this.database.getTarefas().get(i).getIdTarefa() + "\t->"
+                            + "Descricao da tarefa: " + this.database.getTarefas().get(i).getCurtaDescricao()
+                            + "\tData inico: "
+                            + this.database.getTarefas().get(i).getDataInicioHora() + "\t-> Estado: "
+                            + this.database.getTarefas().get(i).getEstadoTarefa()
+                            + "\tTempo total utilizado ate ao momento na Tarefa e: " + diffDays + " dias " + diffHours
+                            + " Horas " + diffMinutes + " Minutos " + diffSeconds + " Segundos");
+                }
+            }
+        } catch (ParseException e1) {
+            e1.printStackTrace();
         }
     }
 
