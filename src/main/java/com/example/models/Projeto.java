@@ -2,6 +2,7 @@ package com.example.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+//import java.util.Scanner;
 
 import com.example.database.Database;
 
@@ -15,15 +16,18 @@ public class Projeto implements Serializable {
     private String precoPorHora;
     private int idProjeto;
     Database database;
+    // tentativa
+    // Scanner scanner;
 
     public Projeto() {
     }
 
-    public Projeto(String nomeProjeto, String user) {
+    public Projeto(String nomeProjeto, String user) { // , String user
         this.nomeProjeto = nomeProjeto;
         this.user = user;
         this.idProjeto = totalProjetos;
         totalProjetos++;
+        // this.scanner = new Scanner(System.in);
     }
 
     public String getNomeProjeto() {

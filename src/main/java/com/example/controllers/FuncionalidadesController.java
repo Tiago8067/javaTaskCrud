@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import com.example.database.Database;
 import com.example.models.Projeto;
+import com.example.models.User;
 import com.example.models.Utilizador;
 import com.example.services.FuncionalidadesService;
 
@@ -12,11 +13,13 @@ public class FuncionalidadesController {
     FuncionalidadesService funcionalidadesService;
     Database database;
     Utilizador utilizador;
+    // User user;
 
     public FuncionalidadesController(Database database) {
         this.scanner = new Scanner(System.in);
         this.funcionalidadesService = new FuncionalidadesService(database);
         this.database = database;
+        this.utilizador = new User();
     }
 
     public void criaProjeto() {
@@ -32,8 +35,14 @@ public class FuncionalidadesController {
             }
         } while (nomeProjeto.length() < 4);
 
-        projeto = new Projeto(nomeProjeto.toLowerCase(), this.utilizador.getUsername());
+        projeto = new Projeto(nomeProjeto.toLowerCase(),
+                this.utilizador.getUsername()); // ,
+                                                // this.utilizador.getUsername()
         this.funcionalidadesService.criarProjeto(projeto);
+    }
+
+    public void listarProjetos() {
+        this.funcionalidadesService.listarProjetos();
     }
 
 }

@@ -12,6 +12,8 @@ public class User extends Utilizador {
 
     public User(String username) {
         super(username);
+        // tentatica
+        // this.scanner = new Scanner(System.in);
     }
 
     public ArrayList<Projeto> getProjetos() {
@@ -22,7 +24,7 @@ public class User extends Utilizador {
     }
 
     public void provisoria() {
-        Projeto projeto = new Projeto("testani", getUsername());
+        Projeto projeto = new Projeto("testani", getUsername()); // , getUsername()
         this.projetos.add(projeto);
     }
 
@@ -39,7 +41,7 @@ public class User extends Utilizador {
             }
         } while (nomeProjeto.length() < 4);
 
-        projeto = new Projeto(nomeProjeto.toLowerCase(), getUsername());
+        projeto = new Projeto(nomeProjeto.toLowerCase(), getUsername()); // , getUsername()
         this.projetos.add(projeto);
     }
 

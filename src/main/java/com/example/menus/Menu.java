@@ -217,6 +217,7 @@ public class Menu {
                 case 1:
                     this.util.clearConsole();
                     user.criaProjeto();
+                    // this.funcionalidadesController.criaProjeto();
                     this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();
@@ -224,6 +225,7 @@ public class Menu {
                 case 2:
                     this.util.clearConsole();
                     user.listarProjetos();
+                    // this.funcionalidadesController.listarProjetos();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
