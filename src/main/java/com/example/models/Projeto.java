@@ -1,44 +1,29 @@
 package com.example.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+
 import com.example.database.Database;
 
 public class Projeto implements Serializable {
-    private int idProjeto;
-    private int idTarefa;
-    // private ArrayList<Integer> idTarefa = new ArrayList<>();
-    private int idUtilizador;
-    // private ArrayList<Integer> idUtilizadorConvidados = new ArrayList<>();
+    static int totalProjetos = 0;
+    private ArrayList<Tarefa> tarefas = new ArrayList<Tarefa>();
+    private String user;
+    // private ArrayList<String> usersConvidados = new ArrayList<>();
     private String nomeProjeto;
     private String nomeCliente;
     private String precoPorHora;
+    private int idProjeto;
     Database database;
-    Tarefa tarefa;
-    // FuncionalidadesService funcionalidadesService;
 
     public Projeto() {
     }
 
-    public Projeto(String nomeProjeto, Database database) {
+    public Projeto(String nomeProjeto, String user) {
         this.nomeProjeto = nomeProjeto;
-        this.database = database;
-        // this.funcionalidadesService = new FuncionalidadesService(database);
-    }
-
-    public Projeto(String nomeProjeto, int idProjeto) { // , String nomeCliente, String precoPorHora
-        this.nomeProjeto = nomeProjeto;
-        // this.nomeCliente = nomeCliente;
-        // this.precoPorHora = precoPorHora;
-        this.idProjeto = idProjeto;
-    }
-
-    public Projeto(int idProjeto, int idTarefa) {
-        this.idProjeto = idProjeto;
-        this.idTarefa = idTarefa;
-    }
-
-    public void setNomeProjeto(String nomeProjeto) {
-        this.nomeProjeto = nomeProjeto;
+        this.user = user;
+        this.idProjeto = totalProjetos;
+        totalProjetos++;
     }
 
     public String getNomeProjeto() {
@@ -65,40 +50,28 @@ public class Projeto implements Serializable {
         return this.idProjeto;
     }
 
-    public void setIdProjeto(int idProjeto) {
-        this.idProjeto = idProjeto;
+    public String getUser() {
+        return this.user;
     }
 
-    public int getIdTarefa() {
-        return this.idTarefa;
+    public void addTarefa(Tarefa tarefa) {
+        this.tarefas.add(tarefa);
     }
 
-    public void setIdTarefa(int idTarefa) {
-        this.idTarefa = idTarefa;
-    }
-
-    public int getIdUtilizador() {
-        return this.idUtilizador;
-    }
-
-    public void setIdUtilizador(int idUtilizador) {
-        this.idUtilizador = idUtilizador;
+    public ArrayList<Tarefa> getTarefas() {
+        return this.tarefas;
     }
 
     @Override
     public String toString() {
         return "{" +
                 " idProjeto='" + getIdProjeto() + "'" +
-                ", idTarefa='" + getIdTarefa() + "'" +
-                ", idUtilizador='" + getIdUtilizador() + "'" +
+                ", user='" + getUser() + "'" +
                 ", nomeProjeto='" + getNomeProjeto() + "'" +
                 ", nomeCliente='" + getNomeCliente() + "'" +
                 ", precoPorHora='" + getPrecoPorHora() + "'" +
+                ", tarefas='" + getTarefas() + "'" +
                 "}";
     }
 
-    public int gerarIdProjeto(int idProjeto) {
-        idProjeto++;
-        return idProjeto;
-    }
 }

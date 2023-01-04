@@ -30,7 +30,7 @@ public class Util {
 
     public void clearConsole() {
         System.out.print("\033[H\033[2J"); // Serve para limpar o ecra;
-        // System.out.flush();
+        System.out.flush();
     }
 
     public void waitForCont() {

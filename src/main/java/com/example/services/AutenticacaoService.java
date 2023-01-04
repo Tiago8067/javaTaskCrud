@@ -3,6 +3,7 @@ package com.example.services;
 import com.example.models.*;
 import com.example.utils.Util;
 import com.example.database.*;
+import com.example.exceptions.UsernameDuplicatedException;
 
 public class AutenticacaoService {
     Database database;
@@ -10,6 +11,7 @@ public class AutenticacaoService {
 
     public AutenticacaoService(Database database) {
         this.database = database;
+        this.util = new Util(database);
     }
 
     public Utilizador login(String username) {
@@ -21,11 +23,22 @@ public class AutenticacaoService {
         return null;
     }
 
-    public int adicionaId(int idUtilizador) {
+    public boolean verificarUsername(String username) throws UsernameDuplicatedException {
         for (int i = 0; i < this.database.getUtilizadores().size(); i++) {
-            idUtilizador++;
+            if (this.database.getUtilizadores().get(i).getUsername().equals(username)) {
+                throw new UsernameDuplicatedException("O username está duplicado!!!");
+            }
         }
-        return idUtilizador;
+        return true;
+    }
+
+    public void listarUtilizadores() {
+        for (int i = 0; i < this.database.getUtilizadores().size(); i++) {
+            System.out.println("Username: "
+                    + this.database.getUtilizadores().get(i).getUsername() + "\t-> Estado"
+                    + this.database.getUtilizadores().get(i).getEstadoUtilizador() + "\tTipo de utilizador: "
+                    + this.util.checkPermissao(this.database.getUtilizadores().get(i)));
+        }
     }
 
     public void registar(Utilizador utilizador) {
@@ -36,11 +49,4 @@ public class AutenticacaoService {
         this.database.getUtilizadores().remove(utilizador);
     }
 
-    public void adicionaProjeto(Projeto projeto) {
-        this.database.getProjetos().add(projeto);
-    }
-
-    public void adicionaTarefa(Tarefa tarefa) {
-        this.database.getTarefas().add(tarefa);
-    }
 }

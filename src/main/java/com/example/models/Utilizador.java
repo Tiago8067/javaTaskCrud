@@ -1,15 +1,13 @@
 package com.example.models;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import com.example.database.Database;
 import com.example.enums.EstadoPedido;
 import com.example.enums.EstadoUtilizador;
+import com.example.utils.Util;
 
 public abstract class Utilizador implements Serializable {
-    private int id;
     private String username;
     private String email;
     private String password;
@@ -20,24 +18,14 @@ public abstract class Utilizador implements Serializable {
     private String morada;
     private EstadoUtilizador estadoUtilizador;
     private EstadoPedido estadoPedido;
-    private int idProjeto;
-    // private ArrayList<Integer> idProjeto2 = new ArrayList<>();
-    private int idTarefa;
-    // private ArrayList<Integer> idTarefa = new ArrayList<>();
-    // private Map<ArrayList<Integer>, ArrayList<Integer>> tarefasAssociadasMap;
-    // private List<HashMap<Integer, Integer>> tarefasAssociadas;
+    Database database;
+    Util util;
 
     public Utilizador() {
     }
 
     public Utilizador(String username) {
         this.username = username;
-        this.estadoUtilizador = EstadoUtilizador.INATIVO;
-    }
-
-    public Utilizador(String username, int idUtilizador) {
-        this.username = username;
-        this.id = idUtilizador;
         this.estadoUtilizador = EstadoUtilizador.INATIVO;
     }
 
@@ -49,14 +37,6 @@ public abstract class Utilizador implements Serializable {
         this.genero = genero;
         this.morada = morada;
         this.estadoUtilizador = EstadoUtilizador.INATIVO;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getUsername() {
@@ -139,26 +119,9 @@ public abstract class Utilizador implements Serializable {
         this.estadoPedido = estadoPedido;
     }
 
-    public int getIdProjeto() {
-        return this.idProjeto;
-    }
-
-    public void setIdProjeto(int idProjeto) {
-        this.idProjeto = idProjeto;
-    }
-
-    public int getIdTarefa() {
-        return this.idTarefa;
-    }
-
-    public void setIdTarefa(int idTarefa) {
-        this.idTarefa = idTarefa;
-    }
-
     @Override
     public String toString() {
         return "{" +
-                " id='" + getId() + "'" +
                 ", username='" + getUsername() + "'" +
                 ", email='" + getEmail() + "'" +
                 ", password='" + getPassword() + "'" +
@@ -169,8 +132,6 @@ public abstract class Utilizador implements Serializable {
                 ", morada='" + getMorada() + "'" +
                 ", estadoUtilizador='" + getEstadoUtilizador() + "'" +
                 ", estadoPedido='" + getEstadoPedido() + "'" +
-                ", idProjeto='" + getIdProjeto() + "'" +
-                ", idTarefa='" + getIdTarefa() + "'" +
                 "}";
     }
 

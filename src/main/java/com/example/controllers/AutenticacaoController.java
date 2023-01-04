@@ -1,23 +1,25 @@
 package com.example.controllers;
 
 import java.util.*;
-import com.example.exceptions.UsernameDuplicatedException;
+
 import com.example.services.*;
 import com.example.models.*;
 import com.example.database.*;
+import com.example.enums.EstadoUtilizador;
+import com.example.exceptions.UsernameDuplicatedException;
 import com.example.utils.*;
 
 public class AutenticacaoController {
     AutenticacaoService autenticacaoService;
     Utilizador utilizador;
     Scanner scanner;
-    FuncionalidadesService funcionalidadesService;
     Util util;
+    Database database;
 
     public AutenticacaoController(Database database) {
+        this.database = database;
         this.scanner = new Scanner(System.in);
         this.autenticacaoService = new AutenticacaoService(database);
-        this.funcionalidadesService = new FuncionalidadesService(database);
         this.util = new Util(database);
     }
 
@@ -35,8 +37,7 @@ public class AutenticacaoController {
     }
 
     public void registar() {
-        String username; // , email, pass, nome, genero, morada;
-        int idUtilizador = 0;
+        String username;
 
         this.util.clearConsole();
 
@@ -49,9 +50,8 @@ public class AutenticacaoController {
             }
         } while (username.length() < 4);
 
-        // VERIFICA O USERNAME COM LOWERCASE
         try {
-            this.funcionalidadesService.verificarUsername(username.toLowerCase());
+            this.autenticacaoService.verificarUsername(username.toLowerCase());
         } catch (UsernameDuplicatedException e) {
             System.out.println(e.getMessage());
             return;
@@ -73,9 +73,113 @@ public class AutenticacaoController {
          * System.out.println("Insira a morada do utilizador: ");
          * morada = scanner.next();
          */
-        Utilizador utilizadores = new User(username.toLowerCase(), this.autenticacaoService.adicionaId(idUtilizador));
+        Utilizador utilizadores = new User(username.toLowerCase());
 
         this.autenticacaoService.registar(utilizadores);
+    }
+
+    public void listarUtilizadores() {
+        this.autenticacaoService.listarUtilizadores();
+    }
+
+    public void alterarEstadoDosUtilizadores() {
+        String username;
+
+        System.out.printf("username que deseja alterar: ");
+        username = scanner.next();
+
+        this.utilizador = this.autenticacaoService.login(username);
+
+        if (this.utilizador == null) {
+            System.out.println("Nao existe este utilizador!\n");
+            return;
+        }
+
+        utilizador.setEstadoUtilizador(EstadoUtilizador.ATIVO);
+    }
+
+    public void alterarPermissaoDosUtilizadoresAdmin() {
+        int opcao;
+        String username;
+
+        System.out.printf("username que deseja alterar: ");
+        username = scanner.next();
+
+        this.utilizador = this.autenticacaoService.login(username);
+
+        if (this.utilizador == null) {
+            System.out.println("Nao existe este utilizador!\n");
+            return;
+        }
+
+        this.autenticacaoService.removerUtilizador(this.utilizador);
+
+        System.out.println("\n1 - Admin");
+        System.out.println("2 - User Manager");
+        System.out.println("0 - Sair");
+
+        System.out.printf("\nInsere a Nova Permissao para o Utilizador: ");
+        opcao = scanner.nextInt();
+
+        switch (opcao) {
+            case 1:
+                this.utilizador = new Admin(username);
+                this.utilizador.setEstadoUtilizador(EstadoUtilizador.ATIVO);
+                this.autenticacaoService.registar(this.utilizador);
+                break;
+            case 2:
+                this.utilizador = new UserManager(username);
+                this.utilizador.setEstadoUtilizador(EstadoUtilizador.ATIVO);
+                this.autenticacaoService.registar(this.utilizador);
+                break;
+            case 0:
+                this.autenticacaoService.registar(this.utilizador);
+                System.out.println("Sair");
+                break;
+            default:
+                this.autenticacaoService.registar(this.utilizador);
+                System.out.println("Opcao Invalida!!!");
+                break;
+        }
+    }
+
+    public void alterarPermissaoDosUtilizadoresUserManager() {
+        int opcao;
+        String username;
+
+        System.out.printf("username que deseja alterar: ");
+        username = scanner.next();
+
+        this.utilizador = this.autenticacaoService.login(username);
+
+        if (this.utilizador == null) {
+            System.out.println("Nao existe este utilizador!\n");
+            return;
+        }
+
+        this.autenticacaoService.removerUtilizador(this.utilizador);
+
+        System.out.println("\n1 - User Manager");
+        System.out.println("0 - Sair");
+
+        System.out.printf("\nInsere a Nova Permissao para o Utilizador: ");
+        opcao = scanner.nextInt();
+
+        switch (opcao) {
+            case 1:
+                this.utilizador = new UserManager(username);
+                this.utilizador.setEstadoUtilizador(EstadoUtilizador.ATIVO);
+                this.autenticacaoService.registar(this.utilizador);
+                break;
+            case 0:
+                this.autenticacaoService.registar(this.utilizador);
+                System.out.println("Sair");
+                break;
+            default:
+                this.autenticacaoService.registar(this.utilizador);
+                System.out.println("Opcao Invalida!!!");
+                break;
+        }
     }
 
 }

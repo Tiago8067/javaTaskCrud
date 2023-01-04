@@ -4,6 +4,7 @@ import java.io.Serializable;
 import com.example.enums.EstadoTarefa;
 
 public class Tarefa implements Serializable {
+    private static int totalTarefas = 0;
     private String curtaDescricao;
     private String dataInicioHora;
     private String dataHoraTermino;
@@ -13,23 +14,10 @@ public class Tarefa implements Serializable {
     private int idUtilizador;
     private EstadoTarefa estadoTarefa;
 
-    public Tarefa() {
-    }
-
-    public Tarefa(String curtaDescricao, String dataInicioHora, int idTarefa) {
+    public Tarefa(String curtaDescricao) {
         this.curtaDescricao = curtaDescricao;
-        this.dataInicioHora = dataInicioHora;
-        this.idTarefa = idTarefa;
-        this.estadoTarefa = EstadoTarefa.EMCURSO;
-    }
-
-    public Tarefa(int idTarefa, int idProjeto) {
-        this.idTarefa = idTarefa;
-        this.idProjeto = idProjeto;
-    }
-
-    public Tarefa(String dataHoraTermino) {
-        this.dataHoraTermino = dataHoraTermino;
+        this.idTarefa = totalTarefas;
+        totalTarefas++;
     }
 
     public String getCurtaDescricao() {

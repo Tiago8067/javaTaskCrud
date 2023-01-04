@@ -2,7 +2,6 @@ package com.example.menus;
 
 import java.util.*;
 import com.example.models.*;
-import com.example.services.FuncionalidadesService;
 import com.example.controllers.*;
 import com.example.utils.*;
 import com.example.database.*;
@@ -10,19 +9,19 @@ import com.example.enums.EstadoUtilizador;
 
 public class Menu {
     AutenticacaoController autenticacaoController;
+    FuncionalidadesController funcionalidadesController;
     Utilizador utilizador;
     Scanner scanner;
     Util util;
     Database database;
     int opcao = 0;
-    FuncionalidadesService funcionalidadesService;
 
     public Menu(Database database) {
         this.scanner = new Scanner(System.in);
         this.database = database;
         this.util = new Util(database);
         this.autenticacaoController = new AutenticacaoController(this.database);
-        this.funcionalidadesService = new FuncionalidadesService(database);
+        this.funcionalidadesController = new FuncionalidadesController(database);
     }
 
     public void menuPrincipal() {
@@ -49,24 +48,22 @@ public class Menu {
                         System.out.println("Nao existe este utilizador!\n");
                         break;
                     }
-
                     if (this.utilizador.getEstadoUtilizador().equals(EstadoUtilizador.INATIVO)) {
                         System.out.println(
                                 "Estado do utilizador inserido e INATIVO. \n Tem de ser ATIVADO para puder realizar Login");
                         break;
                     }
-
                     if (util.checkPermissao(this.utilizador).equals("admin")) {
-                        Admin admin = new Admin(this.utilizador.getUsername(), this.database, this.utilizador.getId());
+                        Admin admin = (Admin) this.utilizador;
                         menuAdmin(admin);
                     }
                     if (util.checkPermissao(this.utilizador).equals("usermanager")) {
-                        UserManager usermanager = new UserManager(this.utilizador.getUsername(), this.database,
-                                this.utilizador.getId());
-                        menuUserManager(usermanager); // usermanager
+                        UserManager usermanager = (UserManager) this.utilizador;
+                        menuUserManager(usermanager);
                     }
                     if (util.checkPermissao(this.utilizador).equals("user")) {
-                        User user = new User(this.utilizador.getUsername(), this.database, this.utilizador.getId());
+                        User user = (User) this.utilizador;
+                        System.out.println(user);
                         menuUser(user);
                     }
                     break;
@@ -106,20 +103,21 @@ public class Menu {
             switch (opcao) {
                 case 1:
                     this.util.clearConsole();
-                    admin.listarUtilizadores();
+                    this.autenticacaoController.listarUtilizadores();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 2:
                     this.util.clearConsole();
-                    admin.alterarEstadoDosUtilizadores();
+                    this.autenticacaoController.alterarEstadoDosUtilizadores();
                     this.database.atualizaFicheiro();
+                    System.out.println("\nO Estado do username inserido foi alterado Ativo");
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 3:
                     this.util.clearConsole();
-                    admin.alterarPermissaoDosUtilizadores();
+                    this.autenticacaoController.alterarPermissaoDosUtilizadoresAdmin();
                     this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();
@@ -156,25 +154,31 @@ public class Menu {
             switch (opcao) {
                 case 1:
                     this.util.clearConsole();
-                    usermanager.listarUtilizadores();
+                    this.autenticacaoController.listarUtilizadores();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 2:
                     this.util.clearConsole();
-                    usermanager.alterarEstadoDosUtilizadores();
+                    this.autenticacaoController.alterarEstadoDosUtilizadores();
+                    this.database.atualizaFicheiro();
+                    System.out.println("\nO Estado do username inserido foi alterado Ativo");
                     this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 3:
                     this.util.clearConsole();
-                    usermanager.alterarPermissaoDosUtilizadores();
+                    this.autenticacaoController.alterarPermissaoDosUtilizadoresUserManager();
                     this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 0:
+                    System.out.println("Sair");
+                    return;
+                default:
+                    System.out.println("Opcao Invalida!!!");
                     return;
             }
         }
@@ -219,78 +223,78 @@ public class Menu {
                     break;
                 case 2:
                     this.util.clearConsole();
-                    this.funcionalidadesService.listarProjetos();
+                    user.listarProjetos();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 3:
                     this.util.clearConsole();
-                    user.criaTarefa();
+                    // user.criaTarefa();
                     this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 4:
                     this.util.clearConsole();
-                    user.listarTarefas();
+                    // user.listarTarefas();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 5:
                     this.util.clearConsole();
-                    user.agrupaTarefaParaProjeto();
+                    // user.agrupaTarefaParaProjeto();
                     this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 6:
                     this.util.clearConsole();
-                    user.removeProjeto();
+                    // user.removeProjeto();
                     this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 7:
                     this.util.clearConsole();
-                    user.terminaTarefa();
+                    // user.terminaTarefa();
                     this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 8:
                     this.util.clearConsole();
-                    user.removeTarefa();
+                    // user.removeTarefa();
                     this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 9:
                     this.util.clearConsole();
-                    user.listarTarefasEmCurso();
+                    // user.listarTarefasEmCurso();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 10:
                     this.util.clearConsole();
-                    user.listarTarefasFinalizadas();
+                    // user.listarTarefasFinalizadas();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 11:
                     this.util.clearConsole();
-                    user.convidaUtilizadorParaParticiparNumProjeto();
+                    // user.convidaUtilizadorParaParticiparNumProjeto();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 12:
                     this.util.clearConsole();
-                    user.aceitaConvite();
+                    // user.aceitaConvite();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 13:
                     this.util.clearConsole();
-                    user.removeConvidadosDoProjeto();
+                    // user.removeConvidadosDoProjeto();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
