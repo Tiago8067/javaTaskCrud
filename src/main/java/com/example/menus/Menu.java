@@ -9,7 +9,6 @@ import com.example.enums.EstadoUtilizador;
 
 public class Menu {
     AutenticacaoController autenticacaoController;
-    FuncionalidadesController funcionalidadesController;
     Utilizador utilizador;
     Scanner scanner;
     Util util;
@@ -21,12 +20,11 @@ public class Menu {
         this.database = database;
         this.util = new Util(database);
         this.autenticacaoController = new AutenticacaoController(this.database);
-        this.funcionalidadesController = new FuncionalidadesController(database);
     }
 
     public void menuPrincipal() {
 
-        // this.util.clearConsole();
+        this.util.clearConsole();
 
         while (true) {
             System.out.println("\n\n### Menu Principal ###");
@@ -63,7 +61,6 @@ public class Menu {
                     }
                     if (util.checkPermissao(this.utilizador).equals("user")) {
                         User user = (User) this.utilizador;
-                        System.out.println(user);
                         menuUser(user);
                     }
                     break;
@@ -192,9 +189,9 @@ public class Menu {
             System.out.println("\n\n### Menu do User ###");
             System.out.println("\n");
             System.out.println("1 - Criar Projeto");
-            System.out.println("2 - Listar Projetos -> so para teste");
+            System.out.println("2 - Listar Projetos");
             System.out.println("3 - Criar Tarefa");
-            System.out.println("4 - Listar Tarefas -> so para teste");
+            System.out.println("4 - Listar Tarefas");
             System.out.println("5 - Agrupar tarefas a projetos");
             System.out.println("6 - Remover Projetos");
             System.out.println("7 - Terminar Tarefa em determinada data e hora");
@@ -217,7 +214,6 @@ public class Menu {
                 case 1:
                     this.util.clearConsole();
                     user.criaProjeto();
-                    // this.funcionalidadesController.criaProjeto();
                     this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();
@@ -225,26 +221,25 @@ public class Menu {
                 case 2:
                     this.util.clearConsole();
                     user.listarProjetos();
-                    // this.funcionalidadesController.listarProjetos();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 3:
                     this.util.clearConsole();
-                    // user.criaTarefa();
+                    user.criarTarefa();
                     this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 4:
                     this.util.clearConsole();
-                    // user.listarTarefas();
+                    user.listarTarefas();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 5:
                     this.util.clearConsole();
-                    // user.agrupaTarefaParaProjeto();
+                    user.agruparTarefaProjeto();
                     this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();

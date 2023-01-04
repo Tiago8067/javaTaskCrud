@@ -10,14 +10,11 @@ public class Database implements Serializable {
 
     String path;
     File arquivo, arquivoTarefasAssociadas;
-    // tentativa
-    // Scanner scanner = new Scanner(System.in);
 
     public Database() {
         this.path = System.getProperty("user.dir");
         this.utilizadores = new ArrayList<>();
         this.arquivo = new File(this.path, "utilizadores.dat");
-        // this.scanner = new Scanner(System.in);
     }
 
     public void criaFicheiroSeNaoExistir() {
@@ -34,9 +31,6 @@ public class Database implements Serializable {
 
             user.provisoria();
             user.provisoria();
-            user.provisorioTarefa();
-            user.provisorioTarefa();
-            user.provisorioTarefa();
 
             this.utilizadores.add(admin);
             this.utilizadores.add(user);

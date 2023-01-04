@@ -1,7 +1,6 @@
 package com.example.models;
 
 import java.io.Serializable;
-import java.util.Scanner;
 
 import com.example.database.Database;
 import com.example.enums.EstadoPedido;
@@ -21,8 +20,6 @@ public abstract class Utilizador implements Serializable {
     private EstadoPedido estadoPedido;
     Database database;
     Util util;
-    // tentativa
-    // Scanner scanner;
 
     public Utilizador() {
     }
@@ -30,7 +27,6 @@ public abstract class Utilizador implements Serializable {
     public Utilizador(String username) {
         this.username = username;
         this.estadoUtilizador = EstadoUtilizador.INATIVO;
-        // this.scanner = new Scanner(System.in);
     }
 
     public Utilizador(String username, String email, String password, String nome, String genero, String morada) {
