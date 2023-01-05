@@ -2,14 +2,13 @@ package com.example.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-//import java.util.Scanner;
 
 import com.example.database.Database;
 
 public class Projeto implements Serializable {
     private ArrayList<Tarefa> tarefas = new ArrayList<Tarefa>();
     private String user;
-    // private ArrayList<String> usersConvidados = new ArrayList<>();
+    private ArrayList<Utilizador> usersConvidados = new ArrayList<Utilizador>();
     private String nomeProjeto;
     private String nomeCliente;
     private String precoPorHora;
@@ -51,8 +50,16 @@ public class Projeto implements Serializable {
         this.tarefas.add(tarefa);
     }
 
+    public void addUserConvidado(Utilizador user) {
+        this.usersConvidados.add(user);
+    }
+
     public ArrayList<Tarefa> getTarefas() {
         return this.tarefas;
+    }
+
+    public ArrayList<Utilizador> getUsersConvidados() {
+        return this.usersConvidados;
     }
 
     @Override
@@ -63,7 +70,7 @@ public class Projeto implements Serializable {
                 ", nomeCliente='" + getNomeCliente() + "'" +
                 ", precoPorHora='" + getPrecoPorHora() + "'" +
                 ", tarefas='" + getTarefas() + "'" +
+                ", usersConvidados='" + getUsersConvidados() + "'" +
                 "}";
     }
-
 }

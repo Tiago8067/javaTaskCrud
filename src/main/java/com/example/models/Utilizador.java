@@ -18,8 +18,9 @@ public abstract class Utilizador implements Serializable {
     private String morada;
     private EstadoUtilizador estadoUtilizador;
     private EstadoPedido estadoPedido;
-    Database database;
+    // Database database;
     Util util;
+    private String projeto;
 
     public Utilizador() {
     }
@@ -119,10 +120,18 @@ public abstract class Utilizador implements Serializable {
         this.estadoPedido = estadoPedido;
     }
 
+    public String getProjeto() {
+        return this.projeto;
+    }
+
+    public void setProjeto(String nomeProjeto) {
+        this.projeto = nomeProjeto;
+    }
+
     @Override
     public String toString() {
         return "{" +
-                ", username='" + getUsername() + "'" +
+                " username='" + getUsername() + "'" +
                 ", email='" + getEmail() + "'" +
                 ", password='" + getPassword() + "'" +
                 ", nome='" + getNome() + "'" +
@@ -132,6 +141,7 @@ public abstract class Utilizador implements Serializable {
                 ", morada='" + getMorada() + "'" +
                 ", estadoUtilizador='" + getEstadoUtilizador() + "'" +
                 ", estadoPedido='" + getEstadoPedido() + "'" +
+                ", projeto='" + getProjeto() + "'" +
                 "}";
     }
 

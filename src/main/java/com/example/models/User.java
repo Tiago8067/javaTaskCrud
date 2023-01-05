@@ -4,15 +4,19 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import com.example.database.Database;
 import com.example.enums.EstadoTarefa;
-import com.example.exceptions.NomeDuplicatedException;
+import com.example.services.AutenticacaoService;
 import com.example.utils.RegexDados;
 
 public class User extends Utilizador {
     private ArrayList<Projeto> projetos = new ArrayList<Projeto>();
     private ArrayList<Tarefa> tarefas = new ArrayList<Tarefa>();
+    private ArrayList<Utilizador> usersConvidados = new ArrayList<Utilizador>(); // arraylist de utilizadores usado para
+                                                                                 // o
+    // case 11
 
-    public User() {
+    public User(Database database) {
         super();
     }
 
@@ -395,6 +399,15 @@ public class User extends Utilizador {
         return false;
     }
 
+    public boolean verificarNomeUtilizadorConvidado(String nome) {
+        for (int i = 0; i < this.usersConvidados.size(); i++) {
+            if (this.usersConvidados.get(i).getUsername().equals(nome)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void opcaoMenuEscolheProjeto() {
         Scanner scanner = new Scanner(System.in);
         int opcaoVerProjetos;
@@ -445,6 +458,94 @@ public class User extends Utilizador {
                 default:
                     System.out.println("Opcao Invalida!!!\nEscolha a opcao correta.");
                     break;
+            }
+        }
+    }
+
+    // convidar utilizador CASE 11
+    public void convidaUtilizadorParaParticiparNumProjeto() {
+        Scanner scanner = new Scanner(System.in);
+
+        opcaoMenuEscolheUtilizador();
+
+        System.out.printf("Nome do utilizador que deseja convidar: ");
+        String nomeUtilizador = scanner.nextLine();
+
+        opcaoMenuEscolheProjeto();
+
+        System.out.printf("Nome projeto que deseja partilhar com o utilizador: ");
+        String nomeProjeto = scanner.nextLine();
+
+        verificarNomeUtilizadorConvidado(nomeUtilizador);
+        verificarNomeProjeto(nomeProjeto.toLowerCase());
+
+        if (!verificarNomeUtilizadorConvidado(nomeUtilizador.toLowerCase())
+                || !verificarNomeProjeto(nomeProjeto.toLowerCase())) {
+            System.out.println("Invalido!!!");
+            return;
+        }
+
+        linkaUsernameProjeto(nomeProjeto, getSpecificUtilizador(nomeUtilizador));
+        getSpecificUtilizador(nomeUtilizador).setProjeto(nomeProjeto);
+    }
+
+    // Menu que nos mostra a lista de utilizadores
+    public void opcaoMenuEscolheUtilizador() {
+        Scanner scanner = new Scanner(System.in);
+        int opcaoVerTarefas;
+        // AutenticacaoService autenticacaoService = new AutenticacaoService(database);
+
+        while (true) {
+
+            System.out.printf("\nPretende ver a sua lista de Utilizadores?");
+
+            System.out.println("\n1 - Sim");
+            System.out.println("2 - Nao");
+
+            System.out.printf("Escolha a Opcao: ");
+            opcaoVerTarefas = scanner.nextInt();
+
+            switch (opcaoVerTarefas) {
+                case 1:
+                    // listarUtilizadores();
+                    // autenticacaoService.listarUtilizadores();
+                    listarUtilizadorUserParaConvidar();
+                    return;
+                case 2:
+                    return;
+                default:
+                    System.out.println("Opcao Invalida!!!\nEscolha a opcao correta.");
+                    break;
+            }
+        }
+    }
+
+    // VAI SE PUDER CONVIDAR SÓ USERS OU TODOS OS UTILIZADORES?
+    public void listarUtilizadorUserParaConvidar() {
+        Database database = new Database();
+        for (int i = 0; i < database.getUtilizadores().size(); i++) {
+            // for (int i = 0; i < this.usersConvidados.size(); i++) {
+            // if (database.getUtilizadores().get(i) instanceof User) {
+            System.out.println(database.getUtilizadores().get(i).toString());
+            // }
+        }
+    }
+
+    // Retorna o arraylist dos utilizadores
+    public Utilizador getSpecificUtilizador(String nomeUtilizador) {
+        for (int index = 0; index < this.usersConvidados.size(); index++) {
+            if (this.usersConvidados.get(index).getUsername().equals(nomeUtilizador)) {
+                return this.usersConvidados.get(index);
+            }
+        }
+        return null;
+    }
+
+    //
+    public void linkaUsernameProjeto(String nomeProjeto, Utilizador user) {
+        for (int index = 0; index < this.projetos.size(); index++) {
+            if (this.projetos.get(index).getNomeProjeto().equals(nomeProjeto)) {
+                this.projetos.get(index).addUserConvidado(user);
             }
         }
     }
