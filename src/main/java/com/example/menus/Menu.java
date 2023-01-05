@@ -246,34 +246,34 @@ public class Menu {
                     break;
                 case 6:
                     this.util.clearConsole();
-                    // user.removeProjeto();
+                    user.removeProjeto();
                     this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 7:
                     this.util.clearConsole();
-                    // user.terminaTarefa();
+                    user.terminaTarefa();
                     this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 8:
                     this.util.clearConsole();
-                    // user.removeTarefa();
+                    user.removeTarefa();
                     this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 9:
                     this.util.clearConsole();
-                    // user.listarTarefasEmCurso();
+                    user.listarTarefasEmCurso();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 10:
                     this.util.clearConsole();
-                    // user.listarTarefasFinalizadas();
+                    user.listarTarefasFinalizadas();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;

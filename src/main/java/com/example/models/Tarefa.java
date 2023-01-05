@@ -4,20 +4,16 @@ import java.io.Serializable;
 import com.example.enums.EstadoTarefa;
 
 public class Tarefa implements Serializable {
-    private static int totalTarefas = 0;
     private String curtaDescricao;
     private String dataInicioHora;
     private String dataHoraTermino;
-    private int idTarefa;
-    Projeto projeto;
-    private int idProjeto;
-    private int idUtilizador;
+    private String projeto;
     private EstadoTarefa estadoTarefa;
 
-    public Tarefa(String curtaDescricao) {
+    public Tarefa(String curtaDescricao, String dataInicioHora) {
         this.curtaDescricao = curtaDescricao;
-        this.idTarefa = totalTarefas;
-        totalTarefas++;
+        this.dataInicioHora = dataInicioHora;
+        this.estadoTarefa = EstadoTarefa.EMCURSO;
     }
 
     public String getCurtaDescricao() {
@@ -44,28 +40,12 @@ public class Tarefa implements Serializable {
         this.dataHoraTermino = dataHoraTermino;
     }
 
-    public int getIdTarefa() {
-        return this.idTarefa;
-    }
-
-    public void setIdTarefa(int idTarefa) {
-        this.idTarefa = idTarefa;
-    }
-
-    public Projeto getProjeto() {
+    public String getProjeto() {
         return this.projeto;
     }
 
-    public void setProjeto(Projeto projeto) {
-        this.projeto = projeto;
-    }
-
-    public int getIdProjeto() {
-        return this.idProjeto;
-    }
-
-    public void setIdProjeto(int idProjeto) {
-        this.idProjeto = idProjeto;
+    public void setProjeto(String nomeProjeto) {
+        this.projeto = nomeProjeto;
     }
 
     public EstadoTarefa getEstadoTarefa() {
@@ -76,24 +56,14 @@ public class Tarefa implements Serializable {
         this.estadoTarefa = estadoTarefa;
     }
 
-    public int getIdUtilizador() {
-        return this.idUtilizador;
-    }
-
-    public void setIdUtilizador(int idUtilizador) {
-        this.idUtilizador = idUtilizador;
-    }
-
     @Override
     public String toString() {
         return "{" +
                 " curtaDescricao='" + getCurtaDescricao() + "'" +
                 ", dataInicioHora='" + getDataInicioHora() + "'" +
                 ", dataHoraTermino='" + getDataHoraTermino() + "'" +
-                ", idTarefa='" + getIdTarefa() + "'" +
-                ", idProjeto='" + getIdProjeto() + "'" +
-                ", idUtilizador='" + getIdUtilizador() + "'" +
                 ", estadoTarefa='" + getEstadoTarefa() + "'" +
+                ", Nome projeto ='" + getProjeto() + "'" +
                 "}";
     }
 

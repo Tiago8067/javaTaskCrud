@@ -7,17 +7,13 @@ import java.util.ArrayList;
 import com.example.database.Database;
 
 public class Projeto implements Serializable {
-    static int totalProjetos = 0;
     private ArrayList<Tarefa> tarefas = new ArrayList<Tarefa>();
     private String user;
     // private ArrayList<String> usersConvidados = new ArrayList<>();
     private String nomeProjeto;
     private String nomeCliente;
     private String precoPorHora;
-    private int idProjeto;
     Database database;
-    // tentativa
-    // Scanner scanner;
 
     public Projeto() {
     }
@@ -25,9 +21,6 @@ public class Projeto implements Serializable {
     public Projeto(String nomeProjeto, String user) { // , String user
         this.nomeProjeto = nomeProjeto;
         this.user = user;
-        this.idProjeto = totalProjetos;
-        totalProjetos++;
-        // this.scanner = new Scanner(System.in);
     }
 
     public String getNomeProjeto() {
@@ -50,10 +43,6 @@ public class Projeto implements Serializable {
         return this.precoPorHora;
     }
 
-    public int getIdProjeto() {
-        return this.idProjeto;
-    }
-
     public String getUser() {
         return this.user;
     }
@@ -69,7 +58,6 @@ public class Projeto implements Serializable {
     @Override
     public String toString() {
         return "{" +
-                " idProjeto='" + getIdProjeto() + "'" +
                 ", user='" + getUser() + "'" +
                 ", nomeProjeto='" + getNomeProjeto() + "'" +
                 ", nomeCliente='" + getNomeCliente() + "'" +

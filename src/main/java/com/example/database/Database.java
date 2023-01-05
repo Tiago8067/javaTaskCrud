@@ -29,8 +29,7 @@ public class Database implements Serializable {
             User gabriel = new User("gabriel");
             gabriel.setEstadoUtilizador(EstadoUtilizador.ATIVO);
 
-            user.provisoria();
-            user.provisoria();
+            // user.provisoria();
 
             this.utilizadores.add(admin);
             this.utilizadores.add(user);
