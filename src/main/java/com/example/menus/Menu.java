@@ -280,7 +280,7 @@ public class Menu {
                     break;
                 case 11:
                     this.util.clearConsole();
-                    user.convidaUtilizadorParaParticiparNumProjeto();
+                    user.convidaUtilizadorParaParticiparNumProjeto(); // database
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
@@ -298,9 +298,11 @@ public class Menu {
                     break;
                 case 14:
                     this.util.clearConsole();
-                    user.listarUtilizadorUserParaConvidar();
+                    // user.listarUtilizadorUserParaConvidar(database);
+                    user.listarUtilizadorUserConvidados();
                     this.util.waitForCont();
                     this.util.clearConsole();
+                    break;
                 case 0:
                     System.out.println("Sair");
                     return;

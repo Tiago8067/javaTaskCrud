@@ -50,6 +50,7 @@ public class Projeto implements Serializable {
         this.tarefas.add(tarefa);
     }
 
+    // adiciona um utilizador convidado aos projetos
     public void addUserConvidado(Utilizador user) {
         this.usersConvidados.add(user);
     }
@@ -58,6 +59,7 @@ public class Projeto implements Serializable {
         return this.tarefas;
     }
 
+    // retorna os utilizadores convidados
     public ArrayList<Utilizador> getUsersConvidados() {
         return this.usersConvidados;
     }

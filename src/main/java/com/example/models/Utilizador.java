@@ -2,7 +2,7 @@ package com.example.models;
 
 import java.io.Serializable;
 
-import com.example.database.Database;
+//import com.example.database.Database;
 import com.example.enums.EstadoPedido;
 import com.example.enums.EstadoUtilizador;
 import com.example.utils.Util;

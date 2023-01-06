@@ -5,19 +5,23 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.example.database.Database;
+import com.example.enums.EstadoPedido;
 import com.example.enums.EstadoTarefa;
-import com.example.services.AutenticacaoService;
 import com.example.utils.RegexDados;
 
 public class User extends Utilizador {
     private ArrayList<Projeto> projetos = new ArrayList<Projeto>();
     private ArrayList<Tarefa> tarefas = new ArrayList<Tarefa>();
-    private ArrayList<Utilizador> usersConvidados = new ArrayList<Utilizador>(); // arraylist de utilizadores usado para
-                                                                                 // o
+    private ArrayList<Utilizador> usersConvidados = new ArrayList<Utilizador>();
+
+    private Database database; // arraylist de utilizadores usado para
+                               // o
     // case 11
 
-    public User(Database database) {
+    // passamos a database
+    public User() { // Database database
         super();
+        // this.database = database;
     }
 
     public User(String username) {
@@ -399,9 +403,12 @@ public class User extends Utilizador {
         return false;
     }
 
-    public boolean verificarNomeUtilizadorConvidado(String nome) {
-        for (int i = 0; i < this.usersConvidados.size(); i++) {
-            if (this.usersConvidados.get(i).getUsername().equals(nome)) {
+    // verifica nome do user convidado
+    public boolean verificarNomeUtilizadorConvidado(String nome, Database database) {
+        this.database = database;
+        for (int i = 0; i < this.database.getUtilizadores().size(); i++) {
+            if (this.database.getUtilizadores().get(i).getUsername().equals(nome)) {
+                this.database.getUtilizadores().get(i).setEstadoPedido(EstadoPedido.EMESPERA);
                 return true;
             }
         }
@@ -463,7 +470,8 @@ public class User extends Utilizador {
     }
 
     // convidar utilizador CASE 11
-    public void convidaUtilizadorParaParticiparNumProjeto() {
+    public void convidaUtilizadorParaParticiparNumProjeto() { // Database database
+        // this.database = database;
         Scanner scanner = new Scanner(System.in);
 
         opcaoMenuEscolheUtilizador();
@@ -476,40 +484,47 @@ public class User extends Utilizador {
         System.out.printf("Nome projeto que deseja partilhar com o utilizador: ");
         String nomeProjeto = scanner.nextLine();
 
-        verificarNomeUtilizadorConvidado(nomeUtilizador);
+        verificarNomeUtilizadorConvidado(nomeUtilizador.toLowerCase(), database);
         verificarNomeProjeto(nomeProjeto.toLowerCase());
 
-        if (!verificarNomeUtilizadorConvidado(nomeUtilizador.toLowerCase())
-                || !verificarNomeProjeto(nomeProjeto.toLowerCase())) {
-            System.out.println("Invalido!!!");
+        // FAZER VERIFICACAO PARA ADICIONAR APENAS USERS QUE NAO SEJAM O USER LOGADO
+        // ESTA A ADICIONAR O UTILIZADOR LOGADO NAO PODE!!!!
+        if (!verificarNomeUtilizadorConvidado(nomeUtilizador.toLowerCase(), database)) {
+            System.out.println("Nome de utilizador Invalido!!!");
             return;
         }
 
-        linkaUsernameProjeto(nomeProjeto, getSpecificUtilizador(nomeUtilizador));
-        getSpecificUtilizador(nomeUtilizador).setProjeto(nomeProjeto);
+        if (!verificarNomeProjeto(nomeProjeto.toLowerCase())) {
+            // !verificarNomeUtilizadorConvidado(nomeUtilizador.toLowerCase())
+            System.out.println("Nome Projeto Invalido!!!");
+            return;
+
+        }
+
+        linkaUsernameProjeto(nomeProjeto, getSpecificUtilizador(nomeUtilizador, database));
+        getSpecificUtilizador(nomeUtilizador, database).setProjeto(nomeProjeto);
     }
 
     // Menu que nos mostra a lista de utilizadores
     public void opcaoMenuEscolheUtilizador() {
         Scanner scanner = new Scanner(System.in);
-        int opcaoVerTarefas;
+        int opcaoVerUtilizadores;
         // AutenticacaoService autenticacaoService = new AutenticacaoService(database);
 
         while (true) {
-
             System.out.printf("\nPretende ver a sua lista de Utilizadores?");
 
             System.out.println("\n1 - Sim");
             System.out.println("2 - Nao");
 
             System.out.printf("Escolha a Opcao: ");
-            opcaoVerTarefas = scanner.nextInt();
+            opcaoVerUtilizadores = scanner.nextInt();
 
-            switch (opcaoVerTarefas) {
+            switch (opcaoVerUtilizadores) {
                 case 1:
                     // listarUtilizadores();
                     // autenticacaoService.listarUtilizadores();
-                    listarUtilizadorUserParaConvidar();
+                    listarUtilizadorUserParaConvidar(database);
                     return;
                 case 2:
                     return;
@@ -521,27 +536,33 @@ public class User extends Utilizador {
     }
 
     // VAI SE PUDER CONVIDAR SÓ USERS OU TODOS OS UTILIZADORES?
-    public void listarUtilizadorUserParaConvidar() {
-        Database database = new Database();
-        for (int i = 0; i < database.getUtilizadores().size(); i++) {
-            // for (int i = 0; i < this.usersConvidados.size(); i++) {
-            // if (database.getUtilizadores().get(i) instanceof User) {
-            System.out.println(database.getUtilizadores().get(i).toString());
-            // }
+    public void listarUtilizadorUserParaConvidar(Database database) {
+        this.database = database;
+        // System.out.println("teste1");
+        for (int i = 0; i < this.database.getUtilizadores().size(); i++) {
+            // System.out.println("teste2");
+            System.out.println(this.database.getUtilizadores().get(i).toString());
+        }
+    }
+
+    public void listarUtilizadorUserConvidados() {
+        for (int i = 0; i < this.usersConvidados.size(); i++) {
+            System.out.println(this.usersConvidados.get(i).toString());
         }
     }
 
     // Retorna o arraylist dos utilizadores
-    public Utilizador getSpecificUtilizador(String nomeUtilizador) {
-        for (int index = 0; index < this.usersConvidados.size(); index++) {
-            if (this.usersConvidados.get(index).getUsername().equals(nomeUtilizador)) {
-                return this.usersConvidados.get(index);
+    public Utilizador getSpecificUtilizador(String nomeUtilizador, Database database) {
+        this.database = database;
+        for (int index = 0; index < this.database.getUtilizadores().size(); index++) {
+            if (this.database.getUtilizadores().get(index).getUsername().equals(nomeUtilizador)) {
+                return this.database.getUtilizadores().get(index);
             }
         }
         return null;
     }
 
-    //
+    // associa o nome do projeto ao user
     public void linkaUsernameProjeto(String nomeProjeto, Utilizador user) {
         for (int index = 0; index < this.projetos.size(); index++) {
             if (this.projetos.get(index).getNomeProjeto().equals(nomeProjeto)) {
