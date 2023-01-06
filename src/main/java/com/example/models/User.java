@@ -3,7 +3,9 @@ package com.example.models;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.function.DoubleToIntFunction;
 
+import com.example.controllers.AutenticacaoController;
 import com.example.database.Database;
 import com.example.enums.EstadoPedido;
 import com.example.enums.EstadoTarefa;
@@ -16,6 +18,7 @@ public class User extends Utilizador {
 
     private Database database; // arraylist de utilizadores usado para
                                // o
+    private Projeto projeto;
     // case 11
 
     // passamos a database
@@ -30,6 +33,10 @@ public class User extends Utilizador {
 
     public ArrayList<Projeto> getProjetos() {
         return this.projetos;
+    }
+
+    public ArrayList<Utilizador> getUsersConvidados() {
+        return this.usersConvidados;
     }
 
     public void editaDadosDaSuaConta() {
@@ -72,9 +79,9 @@ public class User extends Utilizador {
 
     public void listarProjetos() {
         for (int index = 0; index < this.projetos.size(); index++) {
-            // if (this.projetos.isEmpty()) {
-            // System.out.println("Ainb");
-            // }
+            if (this.projetos == null) {
+                System.out.println("Nao tem Projetos!!!");
+            }
 
             System.out.println(this.projetos.get(index).toString());
         }
@@ -403,6 +410,17 @@ public class User extends Utilizador {
         return false;
     }
 
+    public boolean verificarNomeUtilizador(String nome, Database database) {
+        this.database = database;
+        for (int i = 0; i < this.database.getUtilizadores().size(); i++) {
+            if (this.database.getUtilizadores().get(i).getUsername().equals(nome)) {
+                this.database.getUtilizadores().get(i).setEstadoPedido(EstadoPedido.ACEITE);
+                return true;
+            }
+        }
+        return false;
+    }
+
     // verifica nome do user convidado
     public boolean verificarNomeUtilizadorConvidado(String nome, Database database) {
         this.database = database;
@@ -470,11 +488,13 @@ public class User extends Utilizador {
     }
 
     // convidar utilizador CASE 11
-    public void convidaUtilizadorParaParticiparNumProjeto() { // Database database
+    public void convidaUtilizadorParaParticiparNumProjeto(Projeto projeto, Database database) { // Database database
         // this.database = database;
         Scanner scanner = new Scanner(System.in);
+        this.database = database;
+        this.projeto = projeto;
 
-        opcaoMenuEscolheUtilizador();
+        opcaoMenuEscolheUtilizador(database);
 
         System.out.printf("Nome do utilizador que deseja convidar: ");
         String nomeUtilizador = scanner.nextLine();
@@ -490,7 +510,7 @@ public class User extends Utilizador {
         // FAZER VERIFICACAO PARA ADICIONAR APENAS USERS QUE NAO SEJAM O USER LOGADO
         // ESTA A ADICIONAR O UTILIZADOR LOGADO NAO PODE!!!!
         if (!verificarNomeUtilizadorConvidado(nomeUtilizador.toLowerCase(), database)) {
-            System.out.println("Nome de utilizador Invalido!!!");
+            System.out.println("Nome Utilizador Invalido!!!");
             return;
         }
 
@@ -498,41 +518,13 @@ public class User extends Utilizador {
             // !verificarNomeUtilizadorConvidado(nomeUtilizador.toLowerCase())
             System.out.println("Nome Projeto Invalido!!!");
             return;
-
         }
 
         linkaUsernameProjeto(nomeProjeto, getSpecificUtilizador(nomeUtilizador, database));
         getSpecificUtilizador(nomeUtilizador, database).setProjeto(nomeProjeto);
-    }
-
-    // Menu que nos mostra a lista de utilizadores
-    public void opcaoMenuEscolheUtilizador() {
-        Scanner scanner = new Scanner(System.in);
-        int opcaoVerUtilizadores;
-        // AutenticacaoService autenticacaoService = new AutenticacaoService(database);
-
-        while (true) {
-            System.out.printf("\nPretende ver a sua lista de Utilizadores?");
-
-            System.out.println("\n1 - Sim");
-            System.out.println("2 - Nao");
-
-            System.out.printf("Escolha a Opcao: ");
-            opcaoVerUtilizadores = scanner.nextInt();
-
-            switch (opcaoVerUtilizadores) {
-                case 1:
-                    // listarUtilizadores();
-                    // autenticacaoService.listarUtilizadores();
-                    listarUtilizadorUserParaConvidar(database);
-                    return;
-                case 2:
-                    return;
-                default:
-                    System.out.println("Opcao Invalida!!!\nEscolha a opcao correta.");
-                    break;
-            }
-        }
+        // projeto.getUsersConvidados().add(getSpecificUtilizador(nomeUtilizador,
+        // database));
+        // this.projeto.addConviteProjeto(nomeProjeto, usersConvidados);
     }
 
     // VAI SE PUDER CONVIDAR SÓ USERS OU TODOS OS UTILIZADORES?
@@ -545,9 +537,40 @@ public class User extends Utilizador {
         }
     }
 
-    public void listarUtilizadorUserConvidados() {
-        for (int i = 0; i < this.usersConvidados.size(); i++) {
-            System.out.println(this.usersConvidados.get(i).toString());
+    public void listarUtilizadorConvidados(Projeto projeto) {
+        this.projeto = projeto;
+        System.out.println("teste1");
+        for (int i = 0; i < this.projeto.getUsersConvidados().size(); i++) {
+            System.out.println("teste2");
+            System.out.println(this.projetos.get(i).getUsersConvidados());
+        }
+    }
+
+    // Menu que nos mostra a lista de utilizadores
+    public void opcaoMenuEscolheUtilizador(Database database) {
+        Scanner scanner = new Scanner(System.in);
+        this.database = database;
+        int opcaoVerUtilizadores;
+
+        while (true) {
+            System.out.printf("\nPretende ver a sua lista de Utilizadores?");
+
+            System.out.println("\n1 - Sim");
+            System.out.println("2 - Nao");
+
+            System.out.printf("Escolha a Opcao: ");
+            opcaoVerUtilizadores = scanner.nextInt();
+
+            switch (opcaoVerUtilizadores) {
+                case 1:
+                    listarUtilizadorUserParaConvidar(database);
+                    return;
+                case 2:
+                    return;
+                default:
+                    System.out.println("Opcao Invalida!!!\nEscolha a opcao correta.");
+                    break;
+            }
         }
     }
 
@@ -570,4 +593,151 @@ public class User extends Utilizador {
             }
         }
     }
+
+    public void listarConvitesPorAceitar(Projeto projeto) {
+        this.projeto = projeto;
+        // for (int i = 0; i < this.projeto.getConvitesProjetos().size(); i++) {
+
+        // if (this.projeto.getConvitesProjetos() == null) { // .isEmpty()
+        // System.out.println("Nao existem convites por aceitar!!!");
+        // }
+
+        // System.out.println(this.projeto.getConvitesProjetos().get(i).toString());
+        // // if
+        // //
+        // (this.projeto.getConvitesProjetos().get(i).getEstadoPedido().equals(EstadoPedido.EMESPERA))
+        // // {
+        // // System.out.println(this.projeto.getConvitesProjetos().get(i).toString());
+        // // }
+        // }
+
+        // for (int i = 0; i < this.usersConvidados.size(); i++) {
+        // System.out.println(this.usersConvidados.toString());
+        // }
+    }
+
+    public void opcaoMenuAceitaConvite() {
+        Scanner scanner = new Scanner(System.in);
+        int opcao;
+
+        while (true) {
+            System.out.printf("\nPretende ver se tem convites para Aceitar?");
+
+            System.out.println("\n1 - Sim");
+            System.out.println("2 - Nao");
+
+            System.out.printf("Escolha a Opcao: ");
+            opcao = scanner.nextInt();
+
+            switch (opcao) {
+                case 1:
+                    listarConvitesPorAceitar(projeto);
+                    return;
+                case 2:
+                    return;
+                default:
+                    System.out.println("Opcao Invalida!!!\nEscolha a opcao correta.");
+                    break;
+            }
+        }
+    }
+
+    public void aceitaConvite(Database database) { // Database database
+        // for (int i = 0; i < this.usersConvidados.size(); i++) {
+        // if
+        // (this.usersConvidados.get(i).getEstadoPedido().equals(EstadoPedido.EMESPERA))
+        // {
+        // this.usersConvidados.get(i).setEstadoPedido(EstadoPedido.ACEITE);
+        // }
+        // }
+
+        // Verificar o Username e so depois alterar o estado de pedido em espera, se
+        // este tiver, para aceite;
+
+        Scanner scanner = new Scanner(System.in);
+        this.database = database;
+        String nomeUser;
+
+        // String nomeUtilizador;
+        // System.out.println((Utilizador) nomeUtilizador.get);
+
+        opcaoMenuEscolheUtilizador(database);
+
+        System.out.printf("Insere o seu username, para aceitar os seus pedidos:  ");
+        nomeUser = scanner.nextLine();
+
+        verificarNomeUtilizador(nomeUser, database);
+
+        if (!verificarNomeUtilizador(nomeUser, database)) {
+            System.out.println("Invalido");
+            return;
+        }
+
+        // this.database = database;
+        // for (int i = 0; i < this.database.getUtilizadores().size(); i++) {
+        // System.out.println(this.database.getUtilizadores().get(i).getUsername());
+        // System.out.println("----------------------------------------------------");
+        // AutenticacaoController autenticacaoController = new
+        // AutenticacaoController(database);
+        // // System.out.println(autenticacaoController.login().getUsername());
+
+        // if (this.database.getUtilizadores().get(i).getEstadoPedido() == null
+        // && this.database.getUtilizadores().get(i).getProjeto() == null) {
+        // System.out.println("Nao tem pedidos por Aceitar");
+        // }
+
+        // // mudar estado para somente o user que esta logado
+        // if
+        // (this.database.getUtilizadores().get(i).getEstadoPedido().equals(EstadoPedido.EMESPERA))
+        // {
+        // this.database.getUtilizadores().get(i).setEstadoPedido(EstadoPedido.ACEITE);
+        // }
+        // }
+        System.out.println("O(s) pedido(s) foram aceite(s)");
+    }
+
+    // public void aceitaConvite() {
+    // int opcaoAceita;
+
+    // System.out.printf("Verifique o seu Username, para puder verificar se tem
+    // Convites: ");
+    // // this.username = scanner.next();
+
+    // // this.utilizador = this.autenticacaoService.login(this.username);
+
+    // // if (/*this.utilizador == null*/) {
+    // // System.out.println("Nao existe este utilizador!\n");
+    // // return;
+    // // }
+
+    // // if (/*this.utilizador.getEstadoPedido() == null*/) {
+    // // System.out.println("Nao tem pedidos, para puder Aceitar.");
+    // // return;
+    // // }
+
+    // while (true) {
+    // System.out.printf("\nPretende aceitar o convite?");
+
+    // System.out.println("\n1 - Sim");
+    // System.out.println("2 - Nao");
+
+    // System.out.printf("Escolha a Opcao: ");
+    // // opcaoAceita = scanner.nextInt();
+
+    // // switch (opcaoAceita) {
+    // // case 1:
+    // // // this.utilizador.setEstadoPedido(EstadoPedido.ACEITE);
+    // // return;
+    // // case 2:
+    // // return;
+    // // default:
+    // // System.out.println("Opcao Invalida!!!\nEscolha a opcao correta.");
+    // // break;
+    // // }
+    // }
+    // }
+
+    public void removeConvidadosDoProjeto() {
+    }
+
 }

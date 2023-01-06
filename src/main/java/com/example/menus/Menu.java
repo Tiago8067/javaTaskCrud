@@ -14,6 +14,7 @@ public class Menu {
     Util util;
     Database database;
     int opcao = 0;
+    Projeto projeto;
 
     public Menu(Database database) {
         this.scanner = new Scanner(System.in);
@@ -202,6 +203,7 @@ public class Menu {
             System.out.println("12 - Aceitar convites de Projetos");
             System.out.println("13 - Remover Utilizadores Convidados");
             System.out.println("14 - listar utilizadores");
+            System.out.println("15 - listar convites por aceitar");
             System.out.println("0 - Sair");
             System.out.println("\n");
 
@@ -280,13 +282,14 @@ public class Menu {
                     break;
                 case 11:
                     this.util.clearConsole();
-                    user.convidaUtilizadorParaParticiparNumProjeto(); // database
+                    user.convidaUtilizadorParaParticiparNumProjeto(projeto, database); // database
+                    this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 12:
                     this.util.clearConsole();
-                    // user.aceitaConvite();
+                    user.aceitaConvite(database);
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
@@ -299,7 +302,13 @@ public class Menu {
                 case 14:
                     this.util.clearConsole();
                     // user.listarUtilizadorUserParaConvidar(database);
-                    user.listarUtilizadorUserConvidados();
+                    user.listarUtilizadorConvidados(projeto);
+                    this.util.waitForCont();
+                    this.util.clearConsole();
+                    break;
+                case 15:
+                    this.util.clearConsole();
+                    user.listarConvitesPorAceitar(projeto);
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;

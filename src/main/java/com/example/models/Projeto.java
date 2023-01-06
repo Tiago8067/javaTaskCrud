@@ -2,11 +2,16 @@ package com.example.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+// import java.util.HashMap;
+// import java.util.Map;
 
 import com.example.database.Database;
 
 public class Projeto implements Serializable {
     private ArrayList<Tarefa> tarefas = new ArrayList<Tarefa>();
+    private ArrayList<Projeto> convitesProjetos = new ArrayList<Projeto>();
+    // private Map<String, ArrayList<Utilizador>> convitesProjetos = new
+    // HashMap<String, ArrayList<Utilizador>>();
     private String user;
     private ArrayList<Utilizador> usersConvidados = new ArrayList<Utilizador>();
     private String nomeProjeto;
@@ -46,15 +51,6 @@ public class Projeto implements Serializable {
         return this.user;
     }
 
-    public void addTarefa(Tarefa tarefa) {
-        this.tarefas.add(tarefa);
-    }
-
-    // adiciona um utilizador convidado aos projetos
-    public void addUserConvidado(Utilizador user) {
-        this.usersConvidados.add(user);
-    }
-
     public ArrayList<Tarefa> getTarefas() {
         return this.tarefas;
     }
@@ -64,15 +60,42 @@ public class Projeto implements Serializable {
         return this.usersConvidados;
     }
 
+    public ArrayList<Projeto> getConvitesProjetos() {
+        return this.convitesProjetos;
+    }
+
+    // public Map<String, ArrayList<Utilizador>> getConvitesProjetos() {
+    // return this.convitesProjetos;
+    // }
+
+    public void addTarefa(Tarefa tarefa) {
+        this.tarefas.add(tarefa);
+    }
+
+    // adiciona um utilizador convidado aos projetos
+    public void addUserConvidado(Utilizador user) {
+        this.usersConvidados.add(user);
+    }
+
+    public void addConviteProjeto(Projeto projeto) {
+        this.convitesProjetos.add(projeto);
+    }
+
+    // public void addConviteProjeto(String nomeProjeto, ArrayList<Utilizador>
+    // usersConvidados) {
+    // this.getConvitesProjetos().put(nomeProjeto, usersConvidados);
+    // }
+
     @Override
     public String toString() {
         return "{" +
-                ", user='" + getUser() + "'" +
+                "user='" + getUser() + "'" +
                 ", nomeProjeto='" + getNomeProjeto() + "'" +
                 ", nomeCliente='" + getNomeCliente() + "'" +
                 ", precoPorHora='" + getPrecoPorHora() + "'" +
                 ", tarefas='" + getTarefas() + "'" +
                 ", usersConvidados='" + getUsersConvidados() + "'" +
+                ", convites='" + getConvitesProjetos() + "'" +
                 "}";
     }
 }
