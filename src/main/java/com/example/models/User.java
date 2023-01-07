@@ -452,7 +452,6 @@ public class User extends Utilizador {
         return false;
     }
 
-    // verifica nome do user convidado
     public boolean verificarNomeUtilizadorConvidado(String nome, Database database) {
         this.database = database;
         for (int i = 0; i < this.database.getUtilizadores().size(); i++) {
@@ -483,6 +482,13 @@ public class User extends Utilizador {
                     listarProjetos();
                     return;
                 case 2:
+                    Util util = new Util(database);
+                    if (this.projetos.isEmpty() == true) {
+                        System.out.println("Nao tem Projetos!!!\nVai ser reencaminhado para puder criar projetos");
+                        util.waitForCont();
+                        util.clearConsole();
+                        criaProjeto();
+                    }
                     return;
                 default:
                     System.out.println("Opcao Invalida!!!\nEscolha a opcao correta.");
@@ -510,6 +516,13 @@ public class User extends Utilizador {
                     listarTarefas();
                     return;
                 case 2:
+                    Util util = new Util(database);
+                    if (this.tarefas.isEmpty() == true) {
+                        System.out.println("Nao tem Tarefas!!!\nVai ser reencaminhado para puder criar tarefas");
+                        util.waitForCont();
+                        util.clearConsole();
+                        criarTarefa();
+                    }
                     return;
                 default:
                     System.out.println("Opcao Invalida!!!\nEscolha a opcao correta.");
@@ -527,29 +540,25 @@ public class User extends Utilizador {
         System.out.printf("Nome do utilizador que deseja convidar: ");
         String nomeUtilizador = scanner.nextLine();
 
-        opcaoMenuEscolheProjeto();
-
-        System.out.printf("Nome projeto que deseja partilhar com o utilizador: ");
-        String nomeProjeto = scanner.nextLine();
-
-        verificarNomeUtilizadorConvidado(nomeUtilizador.toLowerCase(), database);
-        verificarNomeProjeto(nomeProjeto.toLowerCase());
-
-        // FAZER VERIFICACAO PARA ADICIONAR APENAS USERS QUE NAO SEJAM O USER LOGADO
-        // ESTA A ADICIONAR O UTILIZADOR LOGADO NAO PODE!!!!
-        if (!verificarNomeUtilizadorConvidado(nomeUtilizador.toLowerCase(), database)) {
-            System.out.println("Nome Utilizador Invalido!!!");
+        if (nomeUtilizador.equals(getUsername())) {
+            System.out.println("Nao se pode autoconvidar!!!Invalido!!!");
             return;
         }
 
-        if (!verificarNomeProjeto(nomeProjeto.toLowerCase())) {
-            // !verificarNomeUtilizadorConvidado(nomeUtilizador.toLowerCase())
-            System.out.println("Nome Projeto Invalido!!!");
+        opcaoMenuEscolheProjeto();
+
+        System.out.printf("\nNome projeto que deseja partilhar com o utilizador: ");
+        String nomeProjeto = scanner.nextLine();
+
+        verificarNomeUtilizadorConvidado(nomeUtilizador, database);
+        verificarNomeProjeto(nomeProjeto);
+
+        if (!verificarNomeUtilizadorConvidado(nomeUtilizador, database) || !verificarNomeProjeto(nomeProjeto)) {
+            System.out.println("Nome Utilizador ou Nome Projeto Invalido!!!");
             return;
         }
 
         linkaUsernameProjeto(nomeProjeto, getSpecificUtilizador(nomeUtilizador, database));
-        getSpecificUtilizador(nomeUtilizador, database).setProjeto(nomeProjeto);
         getSpecificUtilizador(nomeUtilizador, database).getProjetosPartilhados().put(nomeProjeto,
                 EstadoPedido.EMESPERA);
     }
@@ -608,6 +617,15 @@ public class User extends Utilizador {
         }
     }
 
+    public boolean verificarNomeProjetoConvidado(String nomeProjeto) {
+        for (int i = 0; i < getProjetosPartilhados().size(); i++) {
+            if (getProjetosPartilhados().keySet().contains(nomeProjeto)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void aceitaConvite(Database database) {
         Scanner scanner = new Scanner(System.in);
         this.database = database;
@@ -616,9 +634,9 @@ public class User extends Utilizador {
         System.out.printf("Insere o seu username, para aceitar os seus pedidos: ");
         nomeUser = scanner.nextLine();
 
-        verificarNomeUtilizador(nomeUser.toLowerCase(), database);
+        verificarNomeUtilizador(nomeUser, database);
 
-        if (!verificarNomeUtilizador(nomeUser.toLowerCase(), database)) {
+        if (!verificarNomeUtilizador(nomeUser, database)) {
             System.out.println("Invalido!!!\n Nao existe este username inserido");
             return;
         }
@@ -634,22 +652,32 @@ public class User extends Utilizador {
         }
 
         for (int i = 0; i < this.database.getUtilizadores().size(); i++) {
-            System.out.println("teste1");
+            if (this.database.getUtilizadores().get(i).getProjetosPartilhados().values()
+                    .contains(EstadoPedido.EMESPERA)
+                    && this.database.getUtilizadores().get(i).getUsername().equals(nomeUser)) {
+                System.out.println(this.database.getUtilizadores().get(i).toString());
+                break;
+            }
             if (this.database.getUtilizadores().get(i).getProjetosPartilhados().values()
                     .contains(EstadoPedido.ACEITE)) {
                 System.out.println("Os projetos ja foram aceites!!!");
                 return;
             }
-            if (this.database.getUtilizadores().get(i).getProjetosPartilhados().values()
-                    .contains(EstadoPedido.EMESPERA)
-                    && this.database.getUtilizadores().get(i).getUsername().equals(nomeUser)) {
-                System.out.println("teste2");
-                System.out.println(this.database.getUtilizadores().get(i).toString());
-            }
         }
 
         System.out.printf("Insere o nome do projeto que pretende aceitar:  ");
         nomeProjeto = scanner.nextLine();
+
+        if (!verificarNomeProjetoConvidado(nomeProjeto)) {
+            System.out.println("Nome do projeto inserido e invalido!!!");
+            return;
+        }
+
+        if (getSpecificUtilizador(getUsername(), database).getProjetosPartilhados().get(nomeProjeto)
+                .equals(EstadoPedido.ACEITE)) {
+            System.out.println("Este projeto ja foi aceite!!!");
+            return;
+        }
 
         getSpecificUtilizador(getUsername(), database).getProjetosPartilhados().replace(nomeProjeto,
                 EstadoPedido.ACEITE);

@@ -288,12 +288,14 @@ public class Menu {
                 case 12:
                     this.util.clearConsole();
                     user.aceitaConvite(database);
+                    this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 13:
                     this.util.clearConsole();
                     // user.removeConvidadosDoProjeto();
+                    this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
