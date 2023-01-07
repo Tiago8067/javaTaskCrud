@@ -3,9 +3,7 @@ package com.example.models;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.function.DoubleToIntFunction;
 
-import com.example.controllers.AutenticacaoController;
 import com.example.database.Database;
 import com.example.enums.EstadoPedido;
 import com.example.enums.EstadoTarefa;
@@ -78,10 +76,21 @@ public class User extends Utilizador {
     }
 
     public void listarProjetos() {
+        // if (this.projetos.size() == 0) {//FUNCIONA
+        // System.out.println("Nao tem Projetos!!!");
+        // }
+        if (this.projetos.isEmpty() == true) {// FUNCIONA
+            System.out.println("Nao tem Projetos!!!");
+        }
+        // if (this.projetos == null) { //NAO FUNCIONA
+        // System.out.println("Nao tem Projetos!!!");
+        // }
         for (int index = 0; index < this.projetos.size(); index++) {
-            if (this.projetos == null) {
-                System.out.println("Nao tem Projetos!!!");
-            }
+            // this.projetos.isEmpty() == true
+            // this.projetos == null
+            // if (this.projetos.size() == 0) {
+            // System.out.println("Nao tem Projetos!!!");
+            // }
 
             System.out.println(this.projetos.get(index).toString());
         }
@@ -426,7 +435,7 @@ public class User extends Utilizador {
         this.database = database;
         for (int i = 0; i < this.database.getUtilizadores().size(); i++) {
             if (this.database.getUtilizadores().get(i).getUsername().equals(nome)) {
-                this.database.getUtilizadores().get(i).setEstadoPedido(EstadoPedido.EMESPERA);
+                // this.database.getUtilizadores().get(i).setEstadoPedido(EstadoPedido.EMESPERA);
                 return true;
             }
         }
@@ -522,6 +531,8 @@ public class User extends Utilizador {
 
         linkaUsernameProjeto(nomeProjeto, getSpecificUtilizador(nomeUtilizador, database));
         getSpecificUtilizador(nomeUtilizador, database).setProjeto(nomeProjeto);
+        getSpecificUtilizador(nomeUtilizador, database).getProjetosPartilhados().put(nomeProjeto,
+                EstadoPedido.EMESPERA);
         // projeto.getUsersConvidados().add(getSpecificUtilizador(nomeUtilizador,
         // database));
         // this.projeto.addConviteProjeto(nomeProjeto, usersConvidados);
@@ -533,17 +544,24 @@ public class User extends Utilizador {
         // System.out.println("teste1");
         for (int i = 0; i < this.database.getUtilizadores().size(); i++) {
             // System.out.println("teste2");
-            System.out.println(this.database.getUtilizadores().get(i).toString());
+            // restringir so a users
+            if (this.database.getUtilizadores().get(i) instanceof User) {
+                System.out.println(this.database.getUtilizadores().get(i).toString());
+            }
         }
     }
 
-    public void listarUtilizadorConvidados(Projeto projeto) {
-        this.projeto = projeto;
+    public void listarUtilizadorConvidados() { // Projeto projeto
+        // this.projeto = projeto;
+        Projeto projeto = new Projeto();
         System.out.println("teste1");
-        for (int i = 0; i < this.projeto.getUsersConvidados().size(); i++) {
-            System.out.println("teste2");
-            System.out.println(this.projetos.get(i).getUsersConvidados());
-        }
+        // for (int i = 0; i < projeto.usersConvidados.size(); i++) {
+        // System.out.println("teste2");
+        // System.out.println(projeto.usersConvidados.toString());
+        // }
+        // this.projeto.listarUtilizadorConvidados(); // NullPointerException because
+        // "this.projetos" is null
+        projeto.listarUtilizadorConvidados();
     }
 
     // Menu que nos mostra a lista de utilizadores

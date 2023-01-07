@@ -302,13 +302,16 @@ public class Menu {
                 case 14:
                     this.util.clearConsole();
                     // user.listarUtilizadorUserParaConvidar(database);
-                    user.listarUtilizadorConvidados(projeto);
+                    user.listarUtilizadorConvidados(); // projeto
+                    // this.projeto.listarUtilizadorConvidados();
+                    // Projeto projeto = new Projeto();
+                    // projeto.listarUtilizadorConvidados();
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
                 case 15:
                     this.util.clearConsole();
-                    user.listarConvitesPorAceitar(projeto);
+                    // user.listarConvitesPorAceitar(projeto);
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;

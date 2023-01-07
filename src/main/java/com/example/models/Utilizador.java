@@ -1,6 +1,8 @@
 package com.example.models;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 //import com.example.database.Database;
 import com.example.enums.EstadoPedido;
@@ -21,6 +23,11 @@ public abstract class Utilizador implements Serializable {
     // Database database;
     Util util;
     private String projeto;
+    // opcao b
+    // array para users guardar users convidados
+    // array para disponivilizar os projetos que os users convidados recebem
+    // ou sera um mapa para os dois tipos
+    private Map<String, EstadoPedido> projetosPartilhados = new HashMap<>();
 
     public Utilizador() {
     }
@@ -128,6 +135,10 @@ public abstract class Utilizador implements Serializable {
         this.projeto = nomeProjeto;
     }
 
+    public Map<String, EstadoPedido> getProjetosPartilhados() {
+        return this.projetosPartilhados;
+    }
+
     @Override
     public String toString() {
         return "{" +
@@ -140,8 +151,9 @@ public abstract class Utilizador implements Serializable {
                 ", codigoPostal='" + getCodigoPostal() + "'" +
                 ", morada='" + getMorada() + "'" +
                 ", estadoUtilizador='" + getEstadoUtilizador() + "'" +
-                ", estadoPedido='" + getEstadoPedido() + "'" +
-                ", projeto='" + getProjeto() + "'" +
+                // ",\n estadoPedido='" + getEstadoPedido() + "'" +
+                // ", nome projeto convidado='" + getProjeto() + "'" +
+                ", \nprojeto partilhado por convite='" + getProjetosPartilhados() + "'" +
                 "}";
     }
 

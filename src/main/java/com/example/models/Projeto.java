@@ -9,17 +9,19 @@ import com.example.database.Database;
 
 public class Projeto implements Serializable {
     private ArrayList<Tarefa> tarefas = new ArrayList<Tarefa>();
-    private ArrayList<Projeto> convitesProjetos = new ArrayList<Projeto>();
+    // private ArrayList<Projeto> convitesProjetos = new ArrayList<Projeto>();
     // private Map<String, ArrayList<Utilizador>> convitesProjetos = new
     // HashMap<String, ArrayList<Utilizador>>();
     private String user;
-    private ArrayList<Utilizador> usersConvidados = new ArrayList<Utilizador>();
+    // private ArrayList<Utilizador> usersConvidados = new ArrayList<Utilizador>();
+    public ArrayList<Utilizador> usersConvidados = new ArrayList<Utilizador>();
     private String nomeProjeto;
     private String nomeCliente;
     private String precoPorHora;
     Database database;
 
     public Projeto() {
+        this.usersConvidados = new ArrayList<Utilizador>();
     }
 
     public Projeto(String nomeProjeto, String user) { // , String user
@@ -60,9 +62,9 @@ public class Projeto implements Serializable {
         return this.usersConvidados;
     }
 
-    public ArrayList<Projeto> getConvitesProjetos() {
-        return this.convitesProjetos;
-    }
+    // public ArrayList<Projeto> getConvitesProjetos() {
+    // return this.convitesProjetos;
+    // }
 
     // public Map<String, ArrayList<Utilizador>> getConvitesProjetos() {
     // return this.convitesProjetos;
@@ -77,8 +79,14 @@ public class Projeto implements Serializable {
         this.usersConvidados.add(user);
     }
 
-    public void addConviteProjeto(Projeto projeto) {
-        this.convitesProjetos.add(projeto);
+    // public void addConviteProjeto(Projeto projeto) {
+    // this.convitesProjetos.add(projeto);
+    // }
+
+    public void listarUtilizadorConvidados() {
+        for (int i = 0; i < this.usersConvidados.size(); i++) {
+            System.out.println(this.usersConvidados.toString());
+        }
     }
 
     // public void addConviteProjeto(String nomeProjeto, ArrayList<Utilizador>
@@ -89,13 +97,13 @@ public class Projeto implements Serializable {
     @Override
     public String toString() {
         return "{" +
-                "user='" + getUser() + "'" +
+                "username='" + getUser() + "'" +
                 ", nomeProjeto='" + getNomeProjeto() + "'" +
                 ", nomeCliente='" + getNomeCliente() + "'" +
                 ", precoPorHora='" + getPrecoPorHora() + "'" +
-                ", tarefas='" + getTarefas() + "'" +
-                ", usersConvidados='" + getUsersConvidados() + "'" +
-                ", convites='" + getConvitesProjetos() + "'" +
+                ",\n tarefas='" + getTarefas() + "'" +
+                ",\n usersConvidados='" + getUsersConvidados() + "'" +
+                // ",\n convites='" + getConvitesProjetos() + "'" +
                 "}";
     }
 }
