@@ -7,7 +7,6 @@ public class Tarefa implements Serializable {
     private String curtaDescricao;
     private String dataInicioHora;
     private String dataHoraTermino;
-    private String projeto;
     private EstadoTarefa estadoTarefa;
 
     public Tarefa(String curtaDescricao, String dataInicioHora) {
@@ -40,14 +39,6 @@ public class Tarefa implements Serializable {
         this.dataHoraTermino = dataHoraTermino;
     }
 
-    public String getProjeto() {
-        return this.projeto;
-    }
-
-    public void setProjeto(String nomeProjeto) {
-        this.projeto = nomeProjeto;
-    }
-
     public EstadoTarefa getEstadoTarefa() {
         return this.estadoTarefa;
     }
@@ -63,7 +54,6 @@ public class Tarefa implements Serializable {
                 ", dataInicioHora='" + getDataInicioHora() + "'" +
                 ", dataHoraTermino='" + getDataHoraTermino() + "'" +
                 ", estadoTarefa='" + getEstadoTarefa() + "'" +
-                ", Nome projeto ='" + getProjeto() + "'" +
                 "}";
     }
 

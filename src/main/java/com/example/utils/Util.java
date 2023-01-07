@@ -42,4 +42,10 @@ public class Util {
         }
     }
 
+    public void clearBuffer(Scanner scanner) {
+        if (scanner.hasNextLine()) {
+            scanner.nextLine();
+        }
+    }
+
 }

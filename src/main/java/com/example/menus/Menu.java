@@ -196,15 +196,13 @@ public class Menu {
             System.out.println("5 - Agrupar tarefas a projetos");
             System.out.println("6 - Remover Projetos");
             System.out.println("7 - Terminar Tarefa em determinada data e hora");
-            System.out.println("8 - Remover Tarefas Em Curso e/ou Finalizadas");
-            System.out.println("9 - Listar Tarefas Em Curso, obter tempo total ate ao momento na Tarefa usada");
+            System.out.println("8 - Remover Tarefas Em Curso ou Finalizadas");
+            System.out.println("9 - Listar Tarefas Em Curso, obter tempo total ate ao momento usado na Tarefa");
             System.out.println("10 - Listar Tarefas Finalizadas entre duas datas");
             System.out.println("11 - Convidar outro Utilizador para participar no Projeto");
             System.out.println("12 - Aceitar convites de Projetos");
             System.out.println("13 - Remover Utilizadores Convidados");
-            System.out.println("14 - listar utilizadores");
-            System.out.println("15 - listar convites por aceitar");
-            System.out.println("0 - Sair");
+            System.out.println("0 - Sair do menu User");
             System.out.println("\n");
 
             System.out.printf("Opção: ");
@@ -282,7 +280,7 @@ public class Menu {
                     break;
                 case 11:
                     this.util.clearConsole();
-                    user.convidaUtilizadorParaParticiparNumProjeto(projeto, database); // database
+                    user.convidaUtilizadorParaParticiparNumProjeto(database); // database
                     this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();
@@ -299,24 +297,8 @@ public class Menu {
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
-                case 14:
-                    this.util.clearConsole();
-                    // user.listarUtilizadorUserParaConvidar(database);
-                    user.listarUtilizadorConvidados(); // projeto
-                    // this.projeto.listarUtilizadorConvidados();
-                    // Projeto projeto = new Projeto();
-                    // projeto.listarUtilizadorConvidados();
-                    this.util.waitForCont();
-                    this.util.clearConsole();
-                    break;
-                case 15:
-                    this.util.clearConsole();
-                    // user.listarConvitesPorAceitar(projeto);
-                    this.util.waitForCont();
-                    this.util.clearConsole();
-                    break;
                 case 0:
-                    System.out.println("Sair");
+                    this.util.clearConsole();
                     return;
                 default:
                     System.out.println("Opcao Invalida!!!");
