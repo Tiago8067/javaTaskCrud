@@ -13,7 +13,7 @@ import com.example.utils.Util;
 public class User extends Utilizador {
     private ArrayList<Projeto> projetos = new ArrayList<Projeto>();
     private ArrayList<Tarefa> tarefas = new ArrayList<Tarefa>();
-    private ArrayList<Utilizador> usersConvidados = new ArrayList<Utilizador>();
+    // private ArrayList<Utilizador> usersConvidados = new ArrayList<Utilizador>();
     private Database database;
 
     public User() {
@@ -28,9 +28,9 @@ public class User extends Utilizador {
         return this.projetos;
     }
 
-    public ArrayList<Utilizador> getUsersConvidados() {
-        return this.usersConvidados;
-    }
+    // public ArrayList<Utilizador> getUsersConvidados() {
+    // return this.usersConvidados;
+    // }
 
     public void editaDadosDaSuaConta() {
     }
@@ -201,6 +201,38 @@ public class User extends Utilizador {
     }
 
     public void editaDadosProjeto() {
+        Scanner scanner = new Scanner(System.in);
+        Util util = new Util(database);
+        String nomeProjeto, nomeCliente;
+        float precoPorHora;
+        Projeto projeto;
+
+        // fazer com switch case para so alterar/editar os dados que se querem
+
+        util.clearBuffer(scanner);
+
+        System.out.printf("Insira o novo nome do Projeto: ");
+        nomeProjeto = scanner.nextLine();
+
+        if (nomeProjeto.length() < 4) {
+            System.out
+                    .println("O Nome do Projeto tem obrigatoriamente de ter 4 carateres!" + "\nInvalido!!! Vai sair.");
+            return;
+        }
+
+        if (verificarNomeProjeto(nomeProjeto.toLowerCase())) {
+            System.out.println("Invalido!!! Nome projeto ja existe");
+            return;
+        }
+
+        System.out.printf("Insira o nome do Cliente: ");
+        nomeCliente = scanner.nextLine();
+
+        System.out.printf("Insira o preco por hora: ");
+        precoPorHora = scanner.nextFloat();
+
+        projeto = new Projeto(nomeProjeto.toLowerCase(), nomeCliente, precoPorHora, getUsername());
+        this.projetos.add(projeto);
     }
 
     public void removeProjeto() {
@@ -685,7 +717,52 @@ public class User extends Utilizador {
         System.out.println("O pedido foi aceite");
     }
 
-    public void removeConvidadosDoProjeto() {
+    public Utilizador getSpecificUtilizadorConvidado(String nomeUtilizador) {
+        for (int index = 0; index < this.projetos.size(); index++) {
+            if (this.projetos.get(index).getUsersConvidados().get(index).getUsername().equals(nomeUtilizador)) {
+                return this.projetos.get(index).getUsersConvidados().get(index);
+            }
+        }
+        return null;
     }
 
+    public String getSpecificProjetosPartilhados(String nomeUtilizador) {
+        for (int index = 0; index < this.projetos.size(); index++) {
+            if (this.projetos.get(index).getUsersConvidados().get(index).getUsername().equals(nomeUtilizador)) {
+                return this.projetos.get(index).getNomeProjeto();
+            }
+        }
+        return null;
+    }
+
+    public void removeConvidadosDoProjeto(Database database) {
+        Scanner scanner = new Scanner(System.in);
+        this.database = database;
+        String nomeUserConvidadoParaRemover, nomeProjeto;
+
+        opcaoMenuEscolheProjeto();
+
+        System.out.printf("Insere o nome do utilizador que pretende remover:  ");
+        nomeUserConvidadoParaRemover = scanner.nextLine();
+
+        if (!verificarNomeUtilizadorConvidado(nomeUserConvidadoParaRemover, database)) {
+            System.out.println("Nome do utilizador inserido e invalido!!!");
+            return;
+        }
+
+        System.out.printf("Insere o nome do projeto que pretende remover:  ");
+        nomeProjeto = scanner.nextLine();
+
+        // Nao consigo remover no mapa
+        getProjetosPartilhados().remove(nomeProjeto, getProjetosPartilhados().get(nomeProjeto));
+
+        for (int index = 0; index < this.projetos.size(); index++) {
+            if (this.projetos.get(index).getUsersConvidados().get(index).getUsername()
+                    .equals(nomeUserConvidadoParaRemover)) {
+                this.projetos.get(index).getUsersConvidados()
+                        .remove(getSpecificUtilizadorConvidado(nomeUserConvidadoParaRemover));
+            }
+            // this.usersConvidados.get(index).getProjetosPartilhados().remove(nomeProjeto);
+        }
+    }
 }

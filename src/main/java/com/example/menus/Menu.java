@@ -294,7 +294,7 @@ public class Menu {
                     break;
                 case 13:
                     this.util.clearConsole();
-                    // user.removeConvidadosDoProjeto();
+                    user.removeConvidadosDoProjeto(database);
                     this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();

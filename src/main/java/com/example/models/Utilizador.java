@@ -6,7 +6,6 @@ import java.util.Map;
 
 import com.example.enums.EstadoPedido;
 import com.example.enums.EstadoUtilizador;
-import com.example.utils.Util;
 
 public abstract class Utilizador implements Serializable {
     private String username;
