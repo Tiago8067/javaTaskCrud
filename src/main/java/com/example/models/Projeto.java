@@ -25,6 +25,10 @@ public class Projeto implements Serializable {
         this.user = user;
     }
 
+    public void setNomeProjeto(String nomeProjeto) {
+        this.nomeProjeto = nomeProjeto;
+    }
+
     public String getNomeProjeto() {
         return this.nomeProjeto;
     }

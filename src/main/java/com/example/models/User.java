@@ -203,36 +203,69 @@ public class User extends Utilizador {
     public void editaDadosProjeto() {
         Scanner scanner = new Scanner(System.in);
         Util util = new Util(database);
-        String nomeProjeto, nomeCliente;
-        float precoPorHora;
+        String nomeProjeto, novoNomeProjeto, novoNomeCliente;
+        float novoPrecoPorHora;
         Projeto projeto;
-
-        // fazer com switch case para so alterar/editar os dados que se querem
+        int opcao;
 
         util.clearBuffer(scanner);
 
-        System.out.printf("Insira o novo nome do Projeto: ");
+        opcaoMenuEscolheProjeto();
+
+        System.out.printf("Insere o nome do Projeto que deseja alterar/editar:  ");
         nomeProjeto = scanner.nextLine();
 
-        if (nomeProjeto.length() < 4) {
-            System.out
-                    .println("O Nome do Projeto tem obrigatoriamente de ter 4 carateres!" + "\nInvalido!!! Vai sair.");
+        if (!verificarNomeProjeto(nomeProjeto)) {
+            System.out.println("Invalido");
             return;
         }
 
-        if (verificarNomeProjeto(nomeProjeto.toLowerCase())) {
-            System.out.println("Invalido!!! Nome projeto ja existe");
-            return;
+        System.out.println("Alterar/editar informacoes dos projetos");
+        System.out.println("1 - Nome do Projeto");
+        System.out.println("2 - Nome do Cliente");
+        System.out.println("3 - Preco por Hora");
+        System.out.println("0 - Sair");
+
+        System.out.println("Opcao: ");
+        opcao = scanner.nextInt();
+
+        switch (opcao) {
+            case 1:
+                util.clearBuffer(scanner);
+                System.out.printf("Insira o novo nome do Projeto: ");
+                novoNomeProjeto = scanner.nextLine();
+
+                if (novoNomeProjeto.length() < 4) {
+                    System.out
+                            .println("O Nome do Projeto tem obrigatoriamente de ter 4 carateres!"
+                                    + "\nInvalido!!! Vai sair.");
+                    return;
+                }
+
+                if (verificarNomeProjeto(novoNomeProjeto.toLowerCase())) {
+                    System.out.println("Invalido!!! Nome projeto ja existe");
+                    return;
+                }
+                getSpecificProjeto(nomeProjeto).setNomeProjeto(novoNomeProjeto);
+                break;
+            case 2:
+                util.clearBuffer(scanner);
+                System.out.printf("Insira o nome do Cliente: ");
+                novoNomeCliente = scanner.nextLine();
+                getSpecificProjeto(nomeProjeto).setNomeCliente(novoNomeCliente);
+                break;
+            case 3:
+                util.clearBuffer(scanner);
+                System.out.printf("Insira o preco por hora: ");
+                novoPrecoPorHora = scanner.nextFloat();
+                getSpecificProjeto(nomeProjeto).setPrecoPorHora(novoPrecoPorHora);
+                break;
+            case 0:
+                return;
+            default:
+                System.out.println("Opcao Invalida!!!");
+                return;
         }
-
-        System.out.printf("Insira o nome do Cliente: ");
-        nomeCliente = scanner.nextLine();
-
-        System.out.printf("Insira o preco por hora: ");
-        precoPorHora = scanner.nextFloat();
-
-        projeto = new Projeto(nomeProjeto.toLowerCase(), nomeCliente, precoPorHora, getUsername());
-        this.projetos.add(projeto);
     }
 
     public void removeProjeto() {
@@ -754,7 +787,8 @@ public class User extends Utilizador {
         nomeProjeto = scanner.nextLine();
 
         // Nao consigo remover no mapa
-        getProjetosPartilhados().remove(nomeProjeto, getProjetosPartilhados().get(nomeProjeto));
+        // EstadoPedido valormapa = getProjetosPartilhados().get(nomeProjeto);
+        // getProjetosPartilhados().remove(nomeProjeto, valormapa);
 
         for (int index = 0; index < this.projetos.size(); index++) {
             if (this.projetos.get(index).getUsersConvidados().get(index).getUsername()
@@ -763,6 +797,12 @@ public class User extends Utilizador {
                         .remove(getSpecificUtilizadorConvidado(nomeUserConvidadoParaRemover));
             }
             // this.usersConvidados.get(index).getProjetosPartilhados().remove(nomeProjeto);
+        }
+
+        for (int i = 0; i < getProjetosPartilhados().size(); i++) {
+            if (getProjetosPartilhados().get(nomeProjeto).equals(EstadoPedido.EMESPERA)) {
+                getProjetosPartilhados().remove(nomeProjeto);
+            }
         }
     }
 }
