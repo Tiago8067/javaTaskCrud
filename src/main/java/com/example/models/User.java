@@ -200,7 +200,6 @@ public class User extends Utilizador {
         Util util = new Util(database);
         String nomeProjeto, novoNomeProjeto, novoNomeCliente;
         float novoPrecoPorHora;
-        Projeto projeto;
         int opcao;
 
         util.clearBuffer(scanner);
