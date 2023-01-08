@@ -2,7 +2,10 @@ package com.example.models;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Month;
 import java.util.*;
+
+import org.supercsv.cellprocessor.ParseInt;
 
 import com.example.database.Database;
 import com.example.enums.EstadoPedido;
@@ -365,6 +368,19 @@ public class User extends Utilizador {
         String dataCalculaTempoTarefa;
         Date data1, data2;
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        int contador = 0;
+
+        for (int i = 0; i < this.tarefas.size(); i++) {
+            // if (!this.tarefas.get(i).getEstadoTarefa().equals(EstadoTarefa.FINALIZADO))
+            if (this.tarefas.get(i).getEstadoTarefa().equals(EstadoTarefa.FINALIZADO)) {
+                contador++;
+            }
+        }
+
+        if (this.tarefas.size() == contador) {
+            System.out.println("Nao existem tarefas em curso!!!");
+            return;
+        }
 
         System.out.printf(
                 "Insira a data e hora, para calcular o tempo despendido ate ao momento em todas as tarefas em curso,\n no seguinte formato: dd(31)/MM(12)/AAAA HH:mm:ss: ");
@@ -425,12 +441,18 @@ public class User extends Utilizador {
         String data1, data2;
         Date data1Format, data2Format, dataTermino;
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        int contador = 0;
 
         for (int i = 0; i < this.tarefas.size(); i++) {
-            if (!this.tarefas.get(i).getEstadoTarefa().equals(EstadoTarefa.FINALIZADO)) {
-                System.out.println("Nao existem tarefas finalizadas!!!");
-                return;
+            // if (!this.tarefas.get(i).getEstadoTarefa().equals(EstadoTarefa.FINALIZADO))
+            if (this.tarefas.get(i).getEstadoTarefa().equals(EstadoTarefa.EMCURSO)) {
+                contador++;
             }
+        }
+
+        if (this.tarefas.size() == contador) {
+            System.out.println("Nao existem tarefas finalizadas!!!");
+            return;
         }
 
         System.out.printf("Insira a primeira data, no seguinte formato: dd(31)/MM(12)/AAAA HH:mm:ss: ");
@@ -533,7 +555,6 @@ public class User extends Utilizador {
         int opcaoVerProjetos;
 
         while (true) {
-
             System.out.printf("\nPretende ver a sua lista de Projetos: ");
 
             System.out.println("\n1 - Sim");
@@ -805,4 +826,119 @@ public class User extends Utilizador {
             }
         }
     }
+
+    public boolean validarMes(int dataMes) {
+        // Scanner mes = new Scanner(System.in);
+        // dataMes = Integer.parseInt(mes.toString());
+        if (dataMes > 0 && dataMes < 13) {
+            return true;
+        }
+        return false;
+    }
+
+    // private boolean verificaMesnaData(Date dataRecebida) {
+    // Date today = new Date();
+
+    // return dataRecebida.getMonth() == today.getMonth() && dataRecebida.getYear()
+    // == today.getYear();
+    // }
+
+    public void listarTarefasFinalizadasMensal() {
+        Scanner scanner = new Scanner(System.in);
+        SimpleDateFormat formatter = new SimpleDateFormat("MM");
+        int dataMes;
+        Date dataTermino;// , data1Format;
+        dataTermino = new Date();
+        Calendar cal = Calendar.getInstance();
+        dataMes = cal.get(Calendar.MONTH);
+
+        System.out.printf("\nInsira o mes: ");
+        dataMes = scanner.nextInt();
+
+        validarMes(dataMes);
+
+        if (!validarMes(dataMes)) {
+            System.out.println("Mes invalido!\n Insira um mes entre 1 e 12!!!");
+            return;
+        }
+
+        try {
+            // data1Format = formatter.parse(dataMes.toString());
+            for (int i = 0; i < this.tarefas.size(); i++) {
+                if (this.tarefas.get(i).getEstadoTarefa().equals(EstadoTarefa.FINALIZADO)) {
+                    dataTermino = formatter.parse(this.tarefas.get(i).getDataHoraTermino());
+                    // formatter.setCalendar(cal);
+                    // dataMes = dataTermino.getMonth();
+                    if (dataTermino.equals(dataMes)) { // NAO ENTRA NO FILHA DA PUTA DO IF PUTA QUE O PARIU
+                        System.out.println("teste5");
+
+                        System.out.println("dataMes = " + dataMes);
+                        System.out.println("dataTermino = " + dataTermino);
+
+                        System.out.println("\t->"
+                                + "Descricao da tarefa: " + this.tarefas.get(i).getCurtaDescricao()
+                                + "\tData inico: "
+                                + this.tarefas.get(i).getDataInicioHora() + "\t-> Estado: "
+                                + this.tarefas.get(i).getEstadoTarefa());
+                    } else {
+                        System.out.println("sai do sol");
+                    }
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void listarProjetosMensal() {
+        Scanner scanner = new Scanner(System.in);
+        SimpleDateFormat formatter = new SimpleDateFormat("MM");
+        int dataMes;
+        Date dataTermino;// , data1Format;
+        dataTermino = new Date();
+        Calendar cal = Calendar.getInstance();
+        dataMes = cal.get(Calendar.MONTH);
+
+        for (int i = 0; i < this.tarefas.size(); i++) {
+            if (this.tarefas.get(i).getEstadoTarefa().equals(EstadoTarefa.EMCURSO)) {
+                break;
+            }
+            if (!this.tarefas.get(i).getEstadoTarefa().equals(EstadoTarefa.FINALIZADO)) {
+                System.out.println("Nao existem tarefas finalizadas!!!");
+                return;
+            }
+        }
+
+        System.out.printf("\nInsira o mes: ");
+        dataMes = scanner.nextInt();
+
+        validarMes(dataMes);
+
+        if (!validarMes(dataMes)) {
+            System.out.println("Mes invalido!\n Insira um mes entre 1 e 12!!!");
+            return;
+        }
+        try {
+            // data1Format = formatter.parse(dataMes.toString());
+            for (int i = 0; i < this.projetos.size(); i++) {
+                dataTermino = formatter.parse(this.tarefas.get(i).getDataHoraTermino());
+                System.out.println("teste69");
+                dataMes = dataTermino.getMonth();
+                System.out.println("teste70");
+                if (dataTermino.equals(dataMes)) { // NAO ENTRA NO FILHA DA PUTA DO IF PUTA QUE O PARIU
+                    System.out.println("teste5");
+
+                    System.out.println("dataMes = " + dataMes);
+                    System.out.println("dataTermino = " + dataTermino);
+
+                    System.out.println("\n" + this.projetos.get(i).toString());
+                } else {
+                    System.out.println("sai do sol");
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

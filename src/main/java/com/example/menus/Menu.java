@@ -203,6 +203,7 @@ public class Menu {
             System.out.println("12 - Aceitar convites de Projetos");
             System.out.println("13 - Remover Utilizadores Convidados");
             System.out.println("14 - Alterar/editar informacoes dos projetos");
+            System.out.println("15 - Listar tarefas finalizadas mensal");
             System.out.println("0 - Sair do menu User");
             System.out.println("\n");
 
@@ -307,6 +308,18 @@ public class Menu {
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
+                case 15:
+                    this.util.clearConsole();
+                    user.listarTarefasFinalizadasMensal();
+                    this.database.atualizaFicheiro();
+                    this.util.waitForCont();
+                    this.util.clearConsole();
+                case 16:
+                    this.util.clearConsole();
+                    user.listarProjetosMensal();
+                    this.database.atualizaFicheiro();
+                    this.util.waitForCont();
+                    this.util.clearConsole();
                 case 0:
                     this.util.clearConsole();
                     return;
