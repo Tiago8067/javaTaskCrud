@@ -6,14 +6,9 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-// import com.example.database.Database;
-
 public class RegexDados {
 
-    // Database database;
-
-    public RegexDados() { // Database database
-        // this.database = database;
+    public RegexDados() {
     }
 
     public boolean isValidPassword(String password) {// Regex to check valid password.

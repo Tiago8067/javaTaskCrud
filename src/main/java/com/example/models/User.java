@@ -2,10 +2,7 @@ package com.example.models;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Month;
 import java.util.*;
-
-import org.supercsv.cellprocessor.ParseInt;
 
 import com.example.database.Database;
 import com.example.enums.EstadoPedido;
@@ -16,7 +13,6 @@ import com.example.utils.Util;
 public class User extends Utilizador {
     private ArrayList<Projeto> projetos = new ArrayList<Projeto>();
     private ArrayList<Tarefa> tarefas = new ArrayList<Tarefa>();
-    // private ArrayList<Utilizador> usersConvidados = new ArrayList<Utilizador>();
     private Database database;
 
     public User() {
@@ -30,10 +26,6 @@ public class User extends Utilizador {
     public ArrayList<Projeto> getProjetos() {
         return this.projetos;
     }
-
-    // public ArrayList<Utilizador> getUsersConvidados() {
-    // return this.usersConvidados;
-    // }
 
     public void editaDadosDaSuaConta() {
     }
