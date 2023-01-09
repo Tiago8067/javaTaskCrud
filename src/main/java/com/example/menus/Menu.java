@@ -311,7 +311,6 @@ public class Menu {
                 case 15:
                     this.util.clearConsole();
                     user.relatorioTarefasFinalizadasMensal();
-                    // user.buscarMes();
                     this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();
