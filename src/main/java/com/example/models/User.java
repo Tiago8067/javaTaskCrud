@@ -802,6 +802,15 @@ public class User extends Utilizador {
         // EstadoPedido valormapa = getProjetosPartilhados().get(nomeProjeto);
         // getProjetosPartilhados().remove(nomeProjeto, valormapa);
 
+        for (int i = 0; i < getSpecificUtilizador(nomeUserConvidadoParaRemover, database).getProjetosPartilhados()
+                .size(); i++) {
+            if (getSpecificUtilizador(nomeUserConvidadoParaRemover, database).getProjetosPartilhados().get(nomeProjeto)
+                    .equals(EstadoPedido.EMESPERA)) {
+                getSpecificUtilizador(nomeUserConvidadoParaRemover, database).getProjetosPartilhados()
+                        .remove(nomeProjeto);
+            }
+        }
+
         for (int index = 0; index < this.projetos.size(); index++) {
             if (this.projetos.get(index).getUsersConvidados().get(index).getUsername()
                     .equals(nomeUserConvidadoParaRemover)) {
@@ -809,12 +818,6 @@ public class User extends Utilizador {
                         .remove(getSpecificUtilizadorConvidado(nomeUserConvidadoParaRemover));
             }
             // this.usersConvidados.get(index).getProjetosPartilhados().remove(nomeProjeto);
-        }
-
-        for (int i = 0; i < getProjetosPartilhados().size(); i++) {
-            if (getProjetosPartilhados().get(nomeProjeto).equals(EstadoPedido.EMESPERA)) {
-                getProjetosPartilhados().remove(nomeProjeto);
-            }
         }
     }
 
