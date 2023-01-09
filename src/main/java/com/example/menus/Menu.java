@@ -315,12 +315,15 @@ public class Menu {
                     this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();
+                    break;
                 case 16:
                     this.util.clearConsole();
+                    user.escolheMes();
                     // user.listarProjetosMensal();
                     this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();
+                    break;
                 case 0:
                     this.util.clearConsole();
                     return;
