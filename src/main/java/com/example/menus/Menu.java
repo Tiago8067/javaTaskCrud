@@ -310,13 +310,14 @@ public class Menu {
                     break;
                 case 15:
                     this.util.clearConsole();
-                    user.listarTarefasFinalizadasMensal();
+                    user.relatorioTarefasFinalizadasMensal();
+                    // user.buscarMes();
                     this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();
                 case 16:
                     this.util.clearConsole();
-                    user.listarProjetosMensal();
+                    // user.listarProjetosMensal();
                     this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();
