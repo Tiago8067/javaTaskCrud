@@ -129,7 +129,7 @@ public class Menu {
                     this.util.clearConsole();
                     break;
                 case 0:
-                    System.out.println("Sair");
+                    this.util.clearConsole();
                     return;
                 default:
                     System.out.println("Opcao Invalida!!!");
@@ -189,7 +189,7 @@ public class Menu {
                     this.util.clearConsole();
                     break;
                 case 0:
-                    System.out.println("Sair");
+                    this.util.clearConsole();
                     return;
                 default:
                     System.out.println("Opcao Invalida!!!");
