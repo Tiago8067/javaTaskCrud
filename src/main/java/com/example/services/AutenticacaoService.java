@@ -14,6 +14,15 @@ public class AutenticacaoService {
         this.util = new Util(database);
     }
 
+    public Utilizador loginIncio(String username, String pass) {
+        for (int i = 0; i < this.database.getUtilizadores().size(); i++) {
+            if (this.database.getUtilizadores().get(i).getUsername().equals(username)) {
+                return this.database.getUtilizadores().get(i);
+            }
+        }
+        return null;
+    }
+
     public Utilizador login(String username) {
         for (int i = 0; i < this.database.getUtilizadores().size(); i++) {
             if (this.database.getUtilizadores().get(i).getUsername().equals(username)) {

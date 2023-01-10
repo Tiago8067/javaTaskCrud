@@ -121,7 +121,7 @@ public abstract class Utilizador implements Serializable {
         return "{" +
                 " username='" + getUsername() + "'" +
                 ", email='" + getEmail() + "'" +
-                ", password='" + getPassword() + "'" +
+                // ", password='" + getPassword() + "'" +
                 ", nome='" + getNome() + "'" +
                 ", genero='" + getGenero() + "'" +
                 ", dataDeNascimento='" + getDataDeNascimento() + "'" +

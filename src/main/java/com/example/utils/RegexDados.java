@@ -25,21 +25,21 @@ public class RegexDados {
         return m.matches();
     }
 
-    public boolean isValidPassword(String password) {// Regex to check valid password.
+    public boolean isValidPassword(String pass) {// Regex to check valid password.
         String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()-_.[{}]:;',?/*~$^+=<>]).{4,20}$";
         // Compile the ReGex
         Pattern p = Pattern.compile(regex);
 
         // If the password is empty
         // return false
-        if (password == null) {
+        if (pass == null) {
             return false;
         }
 
         // Pattern class contains matcher() method
         // to find matching between given password
         // and regular expression.
-        Matcher m = p.matcher(password);
+        Matcher m = p.matcher(pass);
 
         // Return if the password
         // matched the ReGex

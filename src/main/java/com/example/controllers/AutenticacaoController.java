@@ -1,5 +1,6 @@
 package com.example.controllers;
 
+import java.io.Console;
 import java.util.*;
 
 import com.example.services.*;
@@ -24,26 +25,37 @@ public class AutenticacaoController {
     }
 
     public Utilizador login() {
-        String username;
+        String username; // , pass;
 
         this.util.clearConsole();
 
         System.out.printf("username: ");
         username = this.scanner.next();
 
-        this.utilizador = this.autenticacaoService.login(username);
+        // System.out.printf("Password: ");
+        // pass = this.scanner.next();
+
+        Console console = System.console();
+        if (console == null) {
+            System.out.println("Não foi possível obter a instância do console");
+            System.exit(0);
+        }
+
+        char[] password = console.readPassword("Password: ");
+        for (int i = 0; i < password.length; i++) {
+            System.out.print("*");
+        }
+
+        this.utilizador = this.autenticacaoService.loginIncio(username, String.valueOf(password));
+        // this.utilizador = this.autenticacaoService.login(username);
 
         return this.utilizador;
-    }
-
-    public void registoEmail() {
-
     }
 
     public void registar() {
         RegexDados regex = new RegexDados();
         int opcao;
-        String username, email, pass, nome, genero, morada, codPostal, dataNascimento;
+        String username, email, nome, genero, morada, codPostal, dataNascimento; // pass
 
         this.util.clearConsole();
 
@@ -63,7 +75,7 @@ public class AutenticacaoController {
             return;
         }
 
-        System.out.print("Insira o email: ");
+        System.out.print("\nInsira o email: ");
         email = scanner.next();
 
         if (!regex.validateEmail(email)) {
@@ -72,13 +84,24 @@ public class AutenticacaoController {
             this.util.clearConsole();
             return;
         } else {
-            System.out.println("Email Valido");
+            System.out.print("\t -> Email Valido");
         }
 
-        System.out.print("Insira a password: ");
-        pass = scanner.next();
+        Console console = System.console();
+        if (console == null) {
+            System.out.println("Não foi possível obter a instância do console");
+            System.exit(0);
+        }
 
-        if (!regex.isValidPassword(pass)) {
+        char[] pass = console.readPassword("\n\nInsira a password: ");
+        for (int i = 0; i < pass.length; i++) {
+            System.out.print("*");
+        }
+
+        // System.out.print("Insira a password: ");
+        // pass = scanner.next();
+
+        if (!regex.isValidPassword(String.valueOf(pass))) {
             System.out.println("A password deve ter entre 4 e 20 catacteres e conter pelo menos:" +
                     " \num digito numerico" +
                     " \numa letra maiúscula" +
@@ -89,14 +112,14 @@ public class AutenticacaoController {
             this.util.clearConsole();
             return;
         } else {
-            System.out.println("Password Válida !");
+            System.out.print("\t -> Password Válida !");
         }
 
         this.util.clearBuffer(scanner);
-        System.out.print("Insira o nome: ");
+        System.out.print("\n\nInsira o nome: ");
         nome = scanner.nextLine();
 
-        System.out.println("Insira o genero do utilizador: ");
+        System.out.println("\nInsira o genero do utilizador: ");
         System.out.println("1 - Masculino");
         System.out.println("2 - Feminino");
         System.out.println("Caso nao se identifique seleciona outro numero");
@@ -120,10 +143,10 @@ public class AutenticacaoController {
         }
 
         this.util.clearBuffer(scanner);
-        System.out.print("Insira a morada: ");
+        System.out.print("\nInsira a morada: ");
         morada = scanner.nextLine();
 
-        System.out.print("Insira o codigo postal: ");
+        System.out.print("\nInsira o codigo postal: ");
         codPostal = scanner.next();
 
         if (!regex.isValidCP(codPostal)) {
@@ -132,22 +155,23 @@ public class AutenticacaoController {
             this.util.clearConsole();
             return;
         } else {
-            System.out.print("Código Postal Válido !");
+            System.out.print("\t -> Código Postal Válido !");
         }
 
         this.util.clearBuffer(scanner);
-        System.out.print("Introduza data de nascimento: ");
+        System.out.print("\n\nIntroduza data de nascimento: ");
         dataNascimento = scanner.next();
 
         if (regex.validateJavaDate(dataNascimento)) {
-            System.out.println("Data de nascimento Válida");
+            System.out.print("\t ->Data de nascimento Válida");
         } else {
             System.out
                     .println(dataNascimento
                             + " não é uma data válida, introduza uma com o seguinte formato: dd(31)/MM(12)/AAAA");
         }
 
-        Utilizador utilizadores = new User(username.toLowerCase(), email, pass, nome, genero, morada, codPostal,
+        Utilizador utilizadores = new User(username.toLowerCase(), email, String.valueOf(pass), nome, genero, morada,
+                codPostal,
                 dataNascimento);
 
         this.autenticacaoService.registar(utilizadores);
@@ -260,7 +284,7 @@ public class AutenticacaoController {
     public void editaDadosUtilizador() {
         RegexDados regex = new RegexDados();
         int opcao;
-        String username, email, pass, nome, genero, morada, codPostal, dataNascimento;
+        String username, email, nome, genero, morada, codPostal, dataNascimento; // pass
 
         System.out.println("Alterar/editar informacoes do Utilizador");
         System.out.println("1 - Username");
@@ -313,10 +337,18 @@ public class AutenticacaoController {
 
                 break;
             case 3:
-                System.out.print("Insira a Nova password: ");
-                pass = scanner.next();
+                Console console = System.console();
+                if (console == null) {
+                    System.out.println("Não foi possível obter a instância do console");
+                    System.exit(0);
+                }
 
-                if (!regex.isValidPassword(pass)) {
+                char[] pass = console.readPassword("\n\nInsira a Nova password: ");
+                for (int i = 0; i < pass.length; i++) {
+                    System.out.print("*");
+                }
+
+                if (!regex.isValidPassword(String.valueOf(pass))) {
                     System.out.println("A password deve ter entre 4 e 20 catacteres e conter pelo menos:" +
                             " \num digito numerico" +
                             " \numa letra maiúscula" +
@@ -327,10 +359,10 @@ public class AutenticacaoController {
                     this.util.clearConsole();
                     return;
                 } else {
-                    System.out.println("Password Válida !");
+                    System.out.print("\t -> Password Válida !");
                 }
 
-                this.utilizador.setPassword(pass);
+                this.utilizador.setPassword(String.valueOf(pass));
 
                 break;
             case 4:
