@@ -22,6 +22,11 @@ public abstract class Utilizador implements Serializable {
     public Utilizador() {
     }
 
+    public Utilizador(String username, String pass) {
+        this.username = username;
+        this.password = pass;
+    }
+
     public Utilizador(String username) {
         this.username = username;
         this.estadoUtilizador = EstadoUtilizador.INATIVO;

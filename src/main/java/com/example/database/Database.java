@@ -20,7 +20,7 @@ public class Database implements Serializable {
     public void criaFicheiroSeNaoExistir() {
         if (!this.arquivo.exists() && !this.arquivo.isDirectory()) {
 
-            Admin admin = new Admin("admin");
+            Admin admin = new Admin("admin", "admin");
             admin.setEstadoUtilizador(EstadoUtilizador.ATIVO);
 
             // User user = new User("user");

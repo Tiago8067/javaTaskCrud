@@ -9,6 +9,10 @@ public class Admin extends Utilizador {
         super(username);
     }
 
+    public Admin(String username, String pass) {
+        super(username, pass);
+    }
+
     public Admin(String username, String email, String pass, String nome, String genero, String morada,
             String codPostal, String dataNascimento) {
         super(username, email, pass, nome, genero, morada, codPostal, dataNascimento);
