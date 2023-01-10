@@ -23,6 +23,11 @@ public class User extends Utilizador {
         super(username);
     }
 
+    public User(String username, String email, String pass, String nome, String genero, String morada,
+            String codPostal, String dataNascimento) {
+        super(username, email, pass, nome, genero, morada, codPostal, dataNascimento);
+    }
+
     public ArrayList<Projeto> getProjetos() {
         return this.projetos;
     }
@@ -262,6 +267,18 @@ public class User extends Utilizador {
         }
     }
 
+    // public Map<String, EstadoPedido> getSpecifMap(String nomeProjeto) {
+    // for (int i = 0; i < this.projetos.get(i).getUsersConvidados().size(); i++) {
+    // if
+    // (this.projetos.get(i).getUsersConvidados().get(i).getProjetosPartilhados().keySet()
+    // .equals(nomeProjeto)) {
+    // return
+    // this.projetos.get(i).getUsersConvidados().get(i).getProjetosPartilhados().get(i);
+    // }
+    // }
+    // return null;
+    // }
+
     public void removeProjeto() {
         Scanner scanner = new Scanner(System.in);
         String nomeProjeto;
@@ -277,6 +294,38 @@ public class User extends Utilizador {
         }
 
         this.projetos.remove(getSpecificProjeto(nomeProjeto));
+
+        // for (int i = 0; i < this.projetos.get(i).getUsersConvidados().size(); i++) {
+        // if
+        // (this.projetos.get(i).getUsersConvidados().get(i).getProjetosPartilhados().get(nomeProjeto)
+        // .equals(EstadoPedido.EMESPERA)) {
+        // this.projetos.get(i).getUsersConvidados().get(i).getProjetosPartilhados().remove(nomeProjeto);
+        // }
+        // }
+
+        // // if
+        // (getProjetosPartilhados().get(nomeProjeto).equals(EstadoPedido.EMESPERA))
+        // // {
+        // // getProjetosPartilhados().remove(nomeProjeto);
+        // // }
+
+        // // if (getProjetosPartilhados().get(nomeProjeto).equals(EstadoPedido.ACEITE))
+        // {
+        // // getProjetosPartilhados().remove(nomeProjeto);
+        // // }
+
+        // // for (int i = 0; i < getSpecificUtilizador(nomeUserConvidadoParaRemover,
+        // // database).getProjetosPartilhados()
+        // // .size(); i++) {
+        // // if (getSpecificUtilizador(nomeUserConvidadoParaRemover,
+        // // database).getProjetosPartilhados()
+        // // .get(nomeProjeto)
+        // // .equals(EstadoPedido.EMESPERA)) {
+        // // getSpecificUtilizador(nomeUserConvidadoParaRemover,
+        // // database).getProjetosPartilhados()
+        // // .remove(nomeProjeto);
+        // // }
+        // // }
     }
 
     public void terminaTarefa() {
@@ -798,14 +847,13 @@ public class User extends Utilizador {
         System.out.printf("Insere o nome do projeto que pretende remover:  ");
         nomeProjeto = scanner.nextLine();
 
-        // Nao consigo remover no mapa
-        // EstadoPedido valormapa = getProjetosPartilhados().get(nomeProjeto);
-        // getProjetosPartilhados().remove(nomeProjeto, valormapa);
-
         for (int i = 0; i < getSpecificUtilizador(nomeUserConvidadoParaRemover, database).getProjetosPartilhados()
                 .size(); i++) {
             if (getSpecificUtilizador(nomeUserConvidadoParaRemover, database).getProjetosPartilhados().get(nomeProjeto)
-                    .equals(EstadoPedido.EMESPERA)) {
+                    .equals(EstadoPedido.EMESPERA)
+                    || getSpecificUtilizador(nomeUserConvidadoParaRemover, database).getProjetosPartilhados()
+                            .get(nomeProjeto)
+                            .equals(EstadoPedido.ACEITE)) {
                 getSpecificUtilizador(nomeUserConvidadoParaRemover, database).getProjetosPartilhados()
                         .remove(nomeProjeto);
             }
@@ -817,180 +865,6 @@ public class User extends Utilizador {
                 this.projetos.get(index).getUsersConvidados()
                         .remove(getSpecificUtilizadorConvidado(nomeUserConvidadoParaRemover));
             }
-            // this.usersConvidados.get(index).getProjetosPartilhados().remove(nomeProjeto);
-        }
-    }
-
-    public boolean validarMes(int dataMes) {
-        if (dataMes > 0 && dataMes < 13) {
-            return true;
-        }
-        return false;
-    }
-
-    public void buscarMes() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date dataTermino = null;
-        SimpleDateFormat dateFormat2 = new SimpleDateFormat("MM", new Locale("pt", "PT"));
-
-        try {
-            for (int i = 0; i < this.tarefas.size(); i++) {
-                dataTermino = formatter.parse(this.tarefas.get(i).getDataHoraTermino());
-                System.out.println(dateFormat2.format(dataTermino));
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void escolheMes() {
-        Scanner scanner = new Scanner(System.in);
-        SimpleDateFormat formatterMes = new SimpleDateFormat("MM");
-        SimpleDateFormat dateFormat2 = new SimpleDateFormat("MMMM", new Locale("pt", "PT"));
-        Date opcaoData;
-
-        // int opcao = 0;
-        String opcao;
-        System.out.println("1-Janeiro");
-        System.out.println("2-Fevereiro");
-        System.out.println("3-Março");
-        System.out.println("4-Abril");
-        System.out.println("5-Maio");
-        System.out.println("6-Junho");
-        System.out.println("7-Julho");
-        System.out.println("8-Agosto");
-        System.out.println("9-Setembro");
-        System.out.println("10-Outubro");
-        System.out.println("11-Novembro");
-        System.out.println("12-Dezembro");
-
-        System.out.println("Insira o mes que pretende: ");
-        opcao = scanner.next(); // nextInt();
-
-        switch (opcao) {
-            case "1":
-                try {
-                    opcaoData = formatterMes.parse(opcao);
-                    System.out.println(dateFormat2.format(opcaoData));
-                } catch (ParseException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-                break;
-            case "2":
-                try {
-                    opcaoData = formatterMes.parse(opcao);
-                    System.out.println(dateFormat2.format(opcaoData));
-                } catch (ParseException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-                break;
-            case "3":
-                try {
-                    opcaoData = formatterMes.parse(opcao);
-                    System.out.println(dateFormat2.format(opcaoData));
-                } catch (ParseException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-                break;
-            case "4":
-                try {
-                    opcaoData = formatterMes.parse(opcao);
-                    System.out.println(dateFormat2.format(opcaoData));
-                } catch (ParseException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-                break;
-            case "5":
-                try {
-                    opcaoData = formatterMes.parse(opcao);
-                    System.out.println(dateFormat2.format(opcaoData));
-                } catch (ParseException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-                break;
-            case "6":
-                try {
-                    opcaoData = formatterMes.parse(opcao);
-                    System.out.println(dateFormat2.format(opcaoData));
-                } catch (ParseException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-                break;
-            case "7":
-                try {
-                    opcaoData = formatterMes.parse(opcao);
-                    System.out.println(dateFormat2.format(opcaoData));
-                } catch (ParseException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-                break;
-            case "8":
-                try {
-                    opcaoData = formatterMes.parse(opcao);
-                    System.out.println(dateFormat2.format(opcaoData));
-                } catch (ParseException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-                break;
-            case "9":
-                try {
-                    opcaoData = formatterMes.parse(opcao);
-                    System.out.println(dateFormat2.format(opcaoData));
-                } catch (ParseException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-                break;
-            case "10":
-                try {
-                    opcaoData = formatterMes.parse(opcao);
-                    System.out.println(dateFormat2.format(opcaoData));
-                } catch (ParseException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-                break;
-            case "11":
-                try {
-                    opcaoData = formatterMes.parse(opcao);
-                    System.out.println(dateFormat2.format(opcaoData));
-                } catch (ParseException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-                break;
-            case "12":
-                try {
-                    opcaoData = formatterMes.parse(opcao);
-                    System.out.println(dateFormat2.format(opcaoData));
-                } catch (ParseException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-                break;
-
-            default:
-                break;
         }
     }
 
@@ -1020,7 +894,7 @@ public class User extends Utilizador {
         System.out.println("12-Dezembro");
 
         System.out.println("Insira o mes que pretende: ");
-        opcao = scanner.next(); // nextInt();
+        opcao = scanner.next();
 
         switch (opcao) {
             case "1":
@@ -1028,7 +902,6 @@ public class User extends Utilizador {
                     opcaoData = formatterMes.parse(opcao);
                     System.out.println(dateFormat2.format(opcaoData));
                 } catch (ParseException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
@@ -1038,7 +911,6 @@ public class User extends Utilizador {
                     opcaoData = formatterMes.parse(opcao);
                     System.out.println(dateFormat2.format(opcaoData));
                 } catch (ParseException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
@@ -1048,7 +920,6 @@ public class User extends Utilizador {
                     opcaoData = formatterMes.parse(opcao);
                     System.out.println(dateFormat2.format(opcaoData));
                 } catch (ParseException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
@@ -1058,7 +929,6 @@ public class User extends Utilizador {
                     opcaoData = formatterMes.parse(opcao);
                     System.out.println(dateFormat2.format(opcaoData));
                 } catch (ParseException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
@@ -1068,7 +938,6 @@ public class User extends Utilizador {
                     opcaoData = formatterMes.parse(opcao);
                     System.out.println(dateFormat2.format(opcaoData));
                 } catch (ParseException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
@@ -1078,7 +947,6 @@ public class User extends Utilizador {
                     opcaoData = formatterMes.parse(opcao);
                     System.out.println(dateFormat2.format(opcaoData));
                 } catch (ParseException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
@@ -1088,7 +956,6 @@ public class User extends Utilizador {
                     opcaoData = formatterMes.parse(opcao);
                     System.out.println(dateFormat2.format(opcaoData));
                 } catch (ParseException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
@@ -1098,7 +965,6 @@ public class User extends Utilizador {
                     opcaoData = formatterMes.parse(opcao);
                     System.out.println(dateFormat2.format(opcaoData));
                 } catch (ParseException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
@@ -1108,7 +974,6 @@ public class User extends Utilizador {
                     opcaoData = formatterMes.parse(opcao);
                     System.out.println(dateFormat2.format(opcaoData));
                 } catch (ParseException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
@@ -1118,7 +983,6 @@ public class User extends Utilizador {
                     opcaoData = formatterMes.parse(opcao);
                     System.out.println(dateFormat2.format(opcaoData));
                 } catch (ParseException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
@@ -1128,7 +992,6 @@ public class User extends Utilizador {
                     opcaoData = formatterMes.parse(opcao);
                     System.out.println(dateFormat2.format(opcaoData));
                 } catch (ParseException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
@@ -1138,7 +1001,6 @@ public class User extends Utilizador {
                     opcaoData = formatterMes.parse(opcao);
                     System.out.println(dateFormat2.format(opcaoData));
                 } catch (ParseException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
@@ -1147,42 +1009,51 @@ public class User extends Utilizador {
             default:
                 break;
         }
-        // System.out.printf("\nInsira o mes: ");
-        // dataMes = scanner.nextInt();
 
-        // validarMes(dataMes);
-
-        // if (!validarMes(dataMes)) {
-        // System.out.println("Mes invalido!\n Insira um mes entre 1 e 12!!!");
-        // return;
-        // }
-
-        // dataMesString = String.valueOf(dataMes);
-        // dataMesString = Integer.toString(dataMes);
+        if (this.tarefas.isEmpty() == true) {
+            System.out.println("Nao tem Tarefas!!!");
+            return;
+        }
 
         try {
             for (int i = 0; i < this.tarefas.size(); i++) {
+                if (!this.tarefas.get(i).getEstadoTarefa().equals(EstadoTarefa.FINALIZADO)) {
+                    System.out.println("Nao tem tarefas finalizadas");
+                    return;
+                }
                 if (this.tarefas.get(i).getEstadoTarefa().equals(EstadoTarefa.FINALIZADO)) {
                     util.clearBuffer(scanner);
                     dataTermino = formatter.parse(this.tarefas.get(i).getDataHoraTermino());
-                    // dataMesdate = formatter.parse(dataMesString);
 
-                    System.out.println(dateFormat2.format(dataTermino));
-                    System.out.println("***************************************");
-                    System.out.println(dateFormat2.format(opcaoData)); // TA A LISTAR MAL - SEMPRE COMO JANEIRO
+                    // System.out.println(dateFormat2.format(dataTermino));
+                    // System.out.println("***************************************");
+                    // System.out.println(dateFormat2.format(opcaoData)); // TA A LISTAR MAL -
+                    // SEMPRE COMO JANEIRO
+                    if (!dateFormat2.format(opcaoData).equals(dateFormat2.format(dataTermino))) {
+                        System.out.println("\t->"
+                                + "Descricao da tarefa: " + this.tarefas.get(i).getCurtaDescricao()
+                                + "\tO mes da data termino nao e correspondente");
+                    }
 
                     if (dateFormat2.format(opcaoData).equals(dateFormat2.format(dataTermino))) {
-                        System.out.println("dataMesdate = " + opcaoData);
-                        System.out.println("dataTermino = " + dataTermino);
+                        // System.out.println("dataMesdate = " + opcaoData);
+                        // System.out.println("dataTermino = " + dataTermino);
+
+                        // if (this.projetos.get) {
+
+                        // }
 
                         System.out.println("\t->"
                                 + "Descricao da tarefa: " + this.tarefas.get(i).getCurtaDescricao()
+                                + "\tData Inicio: "
+                                + this.tarefas.get(i).getDataInicioHora()
                                 + "\tData termino: "
                                 + this.tarefas.get(i).getDataHoraTermino() + "\t-> Estado: "
                                 + this.tarefas.get(i).getEstadoTarefa());
-                    } else {
-                        System.out.println("Nao tem tarefas finalizadas no mes inserido!!!");
                     }
+                    // else {
+                    // System.out.println("Nao tem tarefas finalizadas no mes inserido!!!");
+                    // }
                 }
             }
         } catch (ParseException e) {
@@ -1190,48 +1061,191 @@ public class User extends Utilizador {
         }
     }
 
-    // public void listarProjetosMensal() {
-    // Scanner scanner = new Scanner(System.in);
-    // SimpleDateFormat formatter = new SimpleDateFormat("MM");
-    // int dataMes;
-    // Date dataTermino;
+    public void relatorioProjetosTarefasFinalizadasMensal() {
+        Scanner scanner = new Scanner(System.in);
+        Util util = new Util(database);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        SimpleDateFormat formatterMes = new SimpleDateFormat("MM");
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("MMMM", new Locale("pt", "PT"));
+        Date dataTermino = null;
+        Date opcaoData = null;
+        String opcao;
 
-    // for (int i = 0; i < this.tarefas.size(); i++) {
-    // if (this.tarefas.get(i).getEstadoTarefa().equals(EstadoTarefa.EMCURSO)) {
-    // break;
-    // }
-    // if (!this.tarefas.get(i).getEstadoTarefa().equals(EstadoTarefa.FINALIZADO)) {
-    // System.out.println("Nao existem tarefas finalizadas!!!");
-    // return;
-    // }
-    // }
+        util.clearBuffer(scanner);
 
-    // System.out.printf("\nInsira o mes: ");
-    // dataMes = scanner.nextInt();
+        if (this.projetos.isEmpty() == true) {
+            System.out.println("Nao tem Projetos!!!");
+            return;
+        }
 
-    // validarMes(dataMes);
+        System.out.println("1-Janeiro");
+        System.out.println("2-Fevereiro");
+        System.out.println("3-Março");
+        System.out.println("4-Abril");
+        System.out.println("5-Maio");
+        System.out.println("6-Junho");
+        System.out.println("7-Julho");
+        System.out.println("8-Agosto");
+        System.out.println("9-Setembro");
+        System.out.println("10-Outubro");
+        System.out.println("11-Novembro");
+        System.out.println("12-Dezembro");
 
-    // if (!validarMes(dataMes)) {
-    // System.out.println("Mes invalido!\n Insira um mes entre 1 e 12!!!");
-    // return;
-    // }
-    // try {
-    // for (int i = 0; i < this.projetos.size(); i++) {
-    // dataTermino = formatter.parse(this.tarefas.get(i).getDataHoraTermino());
-    // if (dataTermino.equals(dataMes)) {
-    // System.out.println("teste5");
+        System.out.println("Insira o mes que pretende: ");
+        opcao = scanner.next();
 
-    // System.out.println("dataMes = " + dataMes);
-    // System.out.println("dataTermino = " + dataTermino);
+        switch (opcao) {
+            case "1":
+                try {
+                    opcaoData = formatterMes.parse(opcao);
+                    System.out.println(dateFormat2.format(opcaoData));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
-    // System.out.println("\n" + this.projetos.get(i).toString());
-    // } else {
-    // System.out.println("Data invalida!!!");
-    // }
-    // }
-    // } catch (ParseException e) {
-    // e.printStackTrace();
-    // }
-    // }
+                break;
+            case "2":
+                try {
+                    opcaoData = formatterMes.parse(opcao);
+                    System.out.println(dateFormat2.format(opcaoData));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
+                break;
+            case "3":
+                try {
+                    opcaoData = formatterMes.parse(opcao);
+                    System.out.println(dateFormat2.format(opcaoData));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            case "4":
+                try {
+                    opcaoData = formatterMes.parse(opcao);
+                    System.out.println(dateFormat2.format(opcaoData));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            case "5":
+                try {
+                    opcaoData = formatterMes.parse(opcao);
+                    System.out.println(dateFormat2.format(opcaoData));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            case "6":
+                try {
+                    opcaoData = formatterMes.parse(opcao);
+                    System.out.println(dateFormat2.format(opcaoData));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            case "7":
+                try {
+                    opcaoData = formatterMes.parse(opcao);
+                    System.out.println(dateFormat2.format(opcaoData));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            case "8":
+                try {
+                    opcaoData = formatterMes.parse(opcao);
+                    System.out.println(dateFormat2.format(opcaoData));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            case "9":
+                try {
+                    opcaoData = formatterMes.parse(opcao);
+                    System.out.println(dateFormat2.format(opcaoData));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            case "10":
+                try {
+                    opcaoData = formatterMes.parse(opcao);
+                    System.out.println(dateFormat2.format(opcaoData));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            case "11":
+                try {
+                    opcaoData = formatterMes.parse(opcao);
+                    System.out.println(dateFormat2.format(opcaoData));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            case "12":
+                try {
+                    opcaoData = formatterMes.parse(opcao);
+                    System.out.println(dateFormat2.format(opcaoData));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+
+            default:
+                break;
+        }
+
+        try {
+
+            for (int index = 0; index < this.projetos.size(); index++) {
+                if (this.projetos.get(index).getTarefas().isEmpty() == true) {
+                    System.out.println("Nao tem Tarefas associadas ao projeto!!!");
+                    return;
+                }
+                if (this.projetos.get(index).getUsersConvidados().isEmpty() == true) {
+                    System.out.println("Nao tem utilizadores convidados nos seus projetos!!!");
+                    return;
+                }
+
+                if (!this.projetos.get(index).getTarefas().get(index).getEstadoTarefa()
+                        .equals(EstadoTarefa.FINALIZADO)) {
+                    System.out.println("Nao tem tarefas finalizadas");
+                    return;
+                }
+
+                if (this.projetos.get(index).getTarefas().get(index).getEstadoTarefa()
+                        .equals(EstadoTarefa.FINALIZADO)) {
+                    util.clearBuffer(scanner);
+                    dataTermino = formatter
+                            .parse(this.projetos.get(index).getTarefas().get(index).getDataHoraTermino());
+
+                    if (!dateFormat2.format(opcaoData).equals(dateFormat2.format(dataTermino))) {
+                        System.out.println("\t->"
+                                + "Descricao da tarefa: "
+                                + this.projetos.get(index).getTarefas().get(index).getCurtaDescricao()
+                                + "\tO mes da data termino nao e correspondente");
+                    }
+
+                    if (dateFormat2.format(opcaoData).equals(dateFormat2.format(dataTermino))) {
+                        System.out.println("\n" + this.projetos.get(index).toString());
+                    }
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
 }

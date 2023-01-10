@@ -11,12 +11,22 @@ public class RegexDados {
     public RegexDados() {
     }
 
-    public boolean isValidPassword(String password) {// Regex to check valid password.
-        String regex = "^(?=.*[0-9])"
-                + "(?=.*[a-z])(?=.*[A-Z])"
-                + "(?=.*[@#$%^&+=])"
-                + "(?=\\S+$).{4,20}$";
+    public boolean validateEmail(String email) {
+        String emailRegex = "^[\\w!#$%&amp;'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&amp;'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 
+        Pattern p = Pattern.compile(emailRegex);
+
+        if (email == null || email.isEmpty()) {
+            return false;
+        }
+
+        Matcher m = p.matcher(email);
+
+        return m.matches();
+    }
+
+    public boolean isValidPassword(String password) {// Regex to check valid password.
+        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()-_.[{}]:;',?/*~$^+=<>]).{4,20}$";
         // Compile the ReGex
         Pattern p = Pattern.compile(regex);
 

@@ -89,6 +89,7 @@ public class Menu {
             System.out.println("1 - Visualizar todos os registos disponiveis");
             System.out.println("2 - Alterar estado dos utilizadores");
             System.out.println("3 - Alterar permissao dos utilizadores");
+            System.out.println("4- Alterar/Editar dados do seu perfil");
             System.out.println("0 - Sair");
             System.out.println("\n");
 
@@ -120,6 +121,13 @@ public class Menu {
                     this.util.waitForCont();
                     this.util.clearConsole();
                     break;
+                case 4:
+                    this.util.clearConsole();
+                    this.autenticacaoController.editaDadosUtilizador();
+                    this.database.atualizaFicheiro();
+                    this.util.waitForCont();
+                    this.util.clearConsole();
+                    break;
                 case 0:
                     System.out.println("Sair");
                     return;
@@ -140,6 +148,7 @@ public class Menu {
             System.out.println("1 - Visualizar todos os registos disponiveis");
             System.out.println("2 - Alterar estado dos utilizadores");
             System.out.println("3 - Alterar permissao dos utilizadores");
+            System.out.println("4- Alterar/Editar dados do seu perfil");
             System.out.println("0 - Sair");
             System.out.println("\n");
 
@@ -168,6 +177,13 @@ public class Menu {
                 case 3:
                     this.util.clearConsole();
                     this.autenticacaoController.alterarPermissaoDosUtilizadoresUserManager();
+                    this.database.atualizaFicheiro();
+                    this.util.waitForCont();
+                    this.util.clearConsole();
+                    break;
+                case 4:
+                    this.util.clearConsole();
+                    this.autenticacaoController.editaDadosUtilizador();
                     this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();
@@ -203,7 +219,10 @@ public class Menu {
             System.out.println("12 - Aceitar convites de Projetos");
             System.out.println("13 - Remover Utilizadores Convidados");
             System.out.println("14 - Alterar/editar informacoes dos projetos");
-            System.out.println("15 - Listar tarefas finalizadas mensal");
+            System.out.println("15 - Relatorio tarefas finalizadas mensal");
+            System.out.println(
+                    "16 - Relatorio do projeto com os users convidados e tarefas associadas finalizadas mensal");
+            System.out.println("17- Alterar/Editar dados do seu perfil");
             System.out.println("0 - Sair do menu User");
             System.out.println("\n");
 
@@ -317,8 +336,14 @@ public class Menu {
                     break;
                 case 16:
                     this.util.clearConsole();
-                    user.escolheMes();
-                    // user.listarProjetosMensal();
+                    user.relatorioProjetosTarefasFinalizadasMensal();
+                    this.database.atualizaFicheiro();
+                    this.util.waitForCont();
+                    this.util.clearConsole();
+                    break;
+                case 17:
+                    this.util.clearConsole();
+                    this.autenticacaoController.editaDadosUtilizador();
                     this.database.atualizaFicheiro();
                     this.util.waitForCont();
                     this.util.clearConsole();

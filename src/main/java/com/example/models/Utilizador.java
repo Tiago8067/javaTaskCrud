@@ -27,13 +27,16 @@ public abstract class Utilizador implements Serializable {
         this.estadoUtilizador = EstadoUtilizador.INATIVO;
     }
 
-    public Utilizador(String username, String email, String password, String nome, String genero, String morada) {
+    public Utilizador(String username, String email, String pass, String nome, String genero, String morada,
+            String codPostal, String dataNascimento) {
         this.username = username;
         this.email = email;
-        this.password = password;
+        this.password = pass;
         this.nome = nome;
         this.genero = genero;
         this.morada = morada;
+        this.codigoPostal = codPostal;
+        this.dataDeNascimento = dataNascimento;
         this.estadoUtilizador = EstadoUtilizador.INATIVO;
     }
 

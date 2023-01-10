@@ -23,17 +23,17 @@ public class Database implements Serializable {
             Admin admin = new Admin("admin");
             admin.setEstadoUtilizador(EstadoUtilizador.ATIVO);
 
-            User user = new User("user");
-            user.setEstadoUtilizador(EstadoUtilizador.ATIVO);
+            // User user = new User("user");
+            // user.setEstadoUtilizador(EstadoUtilizador.ATIVO);
 
-            User gabriel = new User("gabriel");
-            gabriel.setEstadoUtilizador(EstadoUtilizador.ATIVO);
+            // User gabriel = new User("gabriel");
+            // gabriel.setEstadoUtilizador(EstadoUtilizador.ATIVO);
 
             // user.provisoria();
 
             this.utilizadores.add(admin);
-            this.utilizadores.add(user);
-            this.utilizadores.add(gabriel);
+            // this.utilizadores.add(user);
+            // this.utilizadores.add(gabriel);
 
             try {
                 FileOutputStream outFileStream = new FileOutputStream(this.arquivo);
