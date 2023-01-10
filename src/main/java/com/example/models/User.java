@@ -1005,9 +1005,9 @@ public class User extends Utilizador {
                 }
 
                 break;
-
             default:
-                break;
+                System.out.println("opcao Invalida");
+                return;
         }
 
         if (this.tarefas.isEmpty() == true) {
@@ -1203,9 +1203,9 @@ public class User extends Utilizador {
                 }
 
                 break;
-
             default:
-                break;
+                System.out.println("opcao Invalida");
+                return;
         }
 
         try {
